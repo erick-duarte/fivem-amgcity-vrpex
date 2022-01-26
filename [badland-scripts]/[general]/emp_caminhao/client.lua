@@ -2,6 +2,7 @@ local Tunnel = module("vrp","lib/Tunnel")
 local Proxy = module("vrp","lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 emP = Tunnel.getInterface("emp_caminhao")
+cfg = module("emp_caminhao", "config")
 
 local blips = false
 local blipentregafinal = false
@@ -11,9 +12,6 @@ local modules = ""
 local servico = false
 local servehicle = nil
 local caminhao = nil
-local CoordenadaX = 1159.38
-local CoordenadaY = -3273.07
-local CoordenadaZ = 5.90
 local CoordenadaX2 = 0.0
 local CoordenadaY2 = 0.0
 local CoordenadaZ2 = 0.0
@@ -23,44 +21,6 @@ local temposhow = 0
 local tempowoods = 0
 local tempocars = 0
 
-local locentregafinal = {
-	[1] = { x=1185.5405273438,y=-3222.9682617188,z=5.7997798919678} -- ponto final
-}
------------------------------------------------------------------------------------------------------------------------------------------
--- DIESEL
------------------------------------------------------------------------------------------------------------------------------------------
-local diesel = {
-	[1] = { ['x'] = -84.96, ['y'] = 6423.42, ['z'] = 31.07 },
-	[2] = { ['x'] = 167.3, ['y'] = 6603.91, ['z'] = 31.85 }
-}
------------------------------------------------------------------------------------------------------------------------------------------
--- GAS
------------------------------------------------------------------------------------------------------------------------------------------
-local gas = {
-	[1] = { ['x'] = 167.3, ['y'] = 6603.91, ['z'] = 31.85 },
-	[2] = { ['x'] = -84.96, ['y'] = 6423.42, ['z'] = 31.07 }
-}
------------------------------------------------------------------------------------------------------------------------------------------
--- CARS
------------------------------------------------------------------------------------------------------------------------------------------
-local cars = {
-	[1] = { ['x'] = 129.31, ['y'] = 6624.37, ['z'] = 31.35 },
-	[2] = { ['x'] = -699.74, ['y'] = 5775.75, ['z'] = 16.91 }
-}
------------------------------------------------------------------------------------------------------------------------------------------
--- WOODS
------------------------------------------------------------------------------------------------------------------------------------------
-local woods = {
-	[1] = { ['x'] = -1529.87, ['y'] = 4475.42, ['z'] = 17.87 },
-	[2] = { ['x'] = 407.66, ['y'] = 6631.81, ['z'] = 27.91 }
-}
------------------------------------------------------------------------------------------------------------------------------------------
--- SHOWS
------------------------------------------------------------------------------------------------------------------------------------------
-local show = {
-	[1] = { ['x'] = -241.64, ['y'] = 6233.63, ['z'] = 31.48 },
-	[2] = { ['x'] = -2173.49, ['y'] = 4272.84, ['z'] = 48.98 }
-}
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- FUNCTION
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -83,7 +43,28 @@ RegisterNUICallback("ButtonClick",function(data,cb)
 		TriggerEvent("Notify","negado","Você já pegou uma carga")
 		ToggleActionMenu()
 	else
-		if data == "gas" then
+		tempogas = 300
+		TriggerEvent('deletarveiculo',nveh2)
+		spawnVehicle(cfg.entregas[data]['veiculos']['cavalo']['nome'],cfg.entregas[data]['veiculos']['cavalo']['spawn'])
+		spawnVehicle2(cfg.entregas[data]['veiculos']['carreta']['nome'],cfg.entregas[data]['veiculos']['carreta']['spawn'])
+		ToggleActionMenu()
+		servico = true
+		modules = data
+		servehicle = 1956216962 --tanker2
+		caminhao = 569305213 --packer
+		localizacao = math.random(1,2)
+		CoordenadaX2 = gas[localizacao].x
+		CoordenadaY2 = gas[localizacao].y
+		CoordenadaZ2 = gas[localizacao].z
+		CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
+		TriggerEvent("Notify","importante","Entrega de <b>Combustível</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
+			
+
+
+
+
+
+		if data == "gasolina" then
 			if tempogas <= 0 then
 				tempogas = 300
 				TriggerEvent('deletarveiculo',nveh2)

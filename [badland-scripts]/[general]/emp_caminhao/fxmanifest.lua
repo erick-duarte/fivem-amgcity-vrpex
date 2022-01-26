@@ -16,6 +16,7 @@ server_scripts {
 files {
 	"nui/ui.html",
 	"nui/ui.js",
-	"nui/ui.css"
+	"nui/ui.css",
+	"config.lua"
 }
 
