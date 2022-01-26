@@ -1,0 +1,468 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:wght@100,200,300,400,500,600,700,800,900&display=swap');
+
+body
+{
+	padding: 0;
+	margin: 0;
+	display: none;
+}
+
+.allstar__princi
+{
+	position: absolute;
+	width: 590px;
+	height: 480px;
+	background: #343a3d;
+	border-radius: 5px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	z-index: 1;
+	display: block;
+}
+
+.allstar__princi .princi__name
+{
+	position: absolute;
+	top: 0;
+	width: 100%;
+	left: 0;
+	height: 70px;
+	background: rgba(0,0,0,0.1);
+	border-bottom: 2px solid rgba(0,0,0,.3);
+	border-radius: 5px 5px 0px 0px;
+	display: flex;
+	align-items: center;
+}
+
+.allstar__princi .princi__name .allstar__money
+{
+	right: 20px;
+	top: 50%;
+	transform: translateY(-50%);
+	position: absolute;
+	width: 200px;
+	height: 64%;
+	background: rgba(0,0,0,.3);
+	border-radius: 10px;
+	color: #fff;
+	font-family: 'Poppins';
+	font-weight: 300;
+	display: grid;
+	place-items: center;
+}
+
+.allstar__princi .princi__name i
+{
+	position: absolute;
+	right: 50px;
+	transition: 0.2s;
+}
+
+.allstar__princi .princi__name i:hover
+{
+	transform: scale(1.3);
+}
+
+.allstar__princi .princi__name .fuel
+{
+	left: 30px;
+	position: relative;
+	color: #fff;
+	font-family: 'Poppins';
+	font-size: 50px;
+}
+
+.allstar__princi .user__fuel
+{
+	width: 45%;
+	background: rgba(0,0,0,.3);
+	height: 100px;
+	border-radius: 5px;
+	position: absolute;
+	top: 100px;
+	left: 2.5%;
+	display: grid;
+	place-items: center;
+}
+
+.allstar__princi .user__fuel .user__fuelling
+{
+	color: #fff;
+	position: relative;
+	font-size: 25px;
+	top: -2.5%;
+	font-family: 'Poppins';
+	font-weight: 300;
+}
+
+.allstar__princi .user__fuel .allstar__fuel
+{
+	width: 65%;
+	height: 30px;
+	background: rgba(0,0,0,.2);
+	position: absolute;
+	border-radius: 5px;
+	bottom: 20px;
+	left: 6%;
+	overflow: hidden;
+}
+
+.allstar__princi .user__fuel .allstar__fuel .completion
+{
+	width: 50%;
+	height: 100%;
+	background: linear-gradient(90deg, #0de6ff 0%, #9900FF 100%);
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.allstar__princi .user__fuel .allstar__fuel__porcentagem
+{
+	width: 20%;
+	height: 30px;
+	background: #fff;
+	position: relative;
+	left: 90px;
+	bottom: 12px;
+	border-radius: 5px;
+	font-family: 'Poppins';
+	background: rgba(0,0,0,.2);
+	color: #fff;
+	font-weight: 200;
+}
+
+.allstar__princi .user__fuel .allstar__fuel__porcentagem .allstar__porcentagem
+{
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+.allstar__princi .user__fuel__price
+{
+	width: 45%;
+	background: rgba(0,0,0,.3);
+	height: 100px;
+	border-radius: 5px;
+	position: absolute;
+	top: 100px;
+	right: 2.5%;
+	display: grid;
+	place-items: center;
+}
+
+.allstar__princi .user__fuel__price .fuel__price
+{
+	color: #fff;
+	position: relative;
+	font-size: 25px;
+	top: -2.5%;
+	font-family: 'Poppins';
+	font-weight: 300;
+}
+
+.allstar__princi .user__fuel__price .fuel__preco
+{
+	width: 90%;
+	height: 30px;
+	background: rgba(0,0,0,.2);
+	position: relative;
+	border-radius: 5px;
+	bottom: 10px;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+	color: #fff;
+}
+
+.allstar__princi .user__fuel__price .fuel__preco .price
+{
+	font-family: 'Poppins';
+	font-weight: 200;
+	position: relative;
+	top: -2px;
+}
+
+.allstar__princi .user__vehicle
+{
+	width: 45%;
+	background: rgba(0,0,0,.3);
+	height: 230px;
+	border-radius: 5px;
+	position: absolute;
+	top: 230px;
+	left: 2.5%;
+}
+
+.allstar__princi .user__vehicle .vehicle__model .model
+{
+	max-height: 120px;
+	bottom: 20px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.allstar__princi .user__vehicle .vehicle__name__model
+{
+	color: #fff;
+	position: absolute;
+	font-size: 25px;
+	top: 2.5%;
+	left: 50%;
+	transform: translateX(-50%);
+	font-family: 'Poppins';
+	font-weight: 300;
+}
+
+.allstar__princi .user__preco
+{
+	width: 45%;
+	background: rgba(0,0,0,.3);
+	height: 100px;
+	border-radius: 5px;
+	position: absolute;
+	top: 230px;
+	right: 2.5%;
+}
+
+.allstar__princi .user__preco .user__price
+{
+	color: #fff;
+	position: absolute;
+	font-size: 25px;
+	top: 2.5%;
+	left: 50%;
+	transform: translateX(-50%);
+	font-family: 'Poppins';
+	font-weight: 300;
+}
+
+.allstar__princi .user__preco .allstar__preco
+{
+	width: 50%;
+	height: 30px;
+	background: rgba(0,0,0,.2);
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 5px;
+	bottom: 20px;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+	color: #fff;
+	border: 0;
+	outline: none;
+	font-family: 'Poppins';
+	text-align: center;
+}
+
+.allstar__princi .user__preco .allstar__more span,
+.allstar__princi .user__preco .allstar__minus span
+{
+	pointer-events: none;
+}
+
+.allstar__princi .user__preco .allstar__more
+{
+	width: 15%;
+	height: 30px;
+	background: rgba(0,0,0,.2);
+	position: absolute;
+	left: 5%;
+	border-radius: 5px;
+	bottom: 20px;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+	color: #fff;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+}
+
+.allstar__princi .user__preco .allstar__more:active,
+.allstar__princi .user__preco .allstar__minus:active
+{
+	background: rgba(0,0,0,.3);
+}
+
+.allstar__princi .user__preco .allstar__minus
+{
+	width: 15%;
+	height: 30px;
+	background: rgba(0,0,0,.2);
+	position: absolute;
+	right: 5%;
+	border-radius: 5px;
+	bottom: 20px;
+	overflow: hidden;
+	display: grid;
+	place-items: center;
+	color: #fff;
+	border: 0;
+	outline: none;
+	cursor: pointer;		
+}
+
+.allstar__princi .allstar__action
+{
+	width: 45%;
+	background: rgba(0,0,0,.3);
+	height: 100px;
+	border-radius: 5px;
+	position: absolute;
+	top: 360px;
+	right: 2.5%;	
+}
+
+.allstar__princi .allstar__action .allstar__completar
+{
+	width: 80%;
+	left: 50%;
+	transform: translateX(-50%);
+	position: absolute;
+	height: 35px;
+	background: rgba(0,0,0,.2);
+	top: 10%;
+	border-radius: 5px;
+	display: grid;
+	place-items: center;
+	color: #fff;
+	font-family: 'Poppins';
+	font-weight: 200;
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.allstar__princi .allstar__action .allstar__completar:hover,
+.allstar__princi .allstar__action .allstar__abastecer:hover
+{
+	background: #0064f8;
+	transform: translateX(-50%);
+}
+
+.allstar__princi .allstar__action .allstar__abastecer
+{
+	width: 80%;
+	left: 50%;
+	transform: translateX(-50%);
+	position: absolute;
+	height: 35px;
+	background: rgba(0,0,0,.2);
+	bottom: 10%;
+	border-radius: 5px;
+	display: grid;
+	place-items: center;
+	color: #fff;
+	font-family: 'Poppins';
+	font-weight: 200;
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+.modal
+{
+	width: 500px;
+	height: 200px;
+	background: #343a3d;
+	position: absolute;
+	border-radius: 5px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	z-index: 10000;
+}
+
+.modal span
+{
+	color: #fff;
+	position: absolute;
+	font-size: 20px;
+	font-family: 'Poppins';
+	top: 20%;
+	left: 8%;
+}
+
+.modal .accept
+{
+	width: 100px;
+	height: 30px;
+	background: rgba(0,0,0,.3);
+	border: none;
+	border-radius: 5px;
+	font-family: 'Poppins';
+	color: #fff;
+	font-size: 20px;
+	outline: none;
+	left: 25%;
+	bottom: 40px;
+	position: absolute;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+.modal .accept:hover
+{
+	background: #3bb143;
+	transform: scale(1.1);
+}
+
+.modal .recuse:hover
+{
+	background: #c21807;
+	transform: scale(1.1);
+}
+
+.modal .recuse
+{
+	width: 100px;
+	height: 30px;
+	background: rgba(0,0,0,.3);
+	border: none;
+	border-radius: 5px;
+	font-family: 'Poppins';
+	color: #fff;
+	font-size: 20px;
+	outline: none;
+	right: 25%;
+	bottom: 40px;
+	position: absolute;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+
+body::after
+{
+	content: '';
+	width: 602px;
+	height: 492px;
+	background: linear-gradient(#0de6ff,#9900FF);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	z-index: -1;
+	border-radius: 5px;
+	transition: 0.3s;
+}
+
+body.disable::after
+{
+	opacity: 0;
+}
+
+.allstar__princi::before
+{
+	content: '';
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 95%;
+	height: 2px;
+	background: rgba(0,0,0,0.3);
+}

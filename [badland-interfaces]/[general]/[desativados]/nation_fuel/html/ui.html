@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Allstar_fuel</title>
+    <link rel="stylesheet" type="text/css" href="ui.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;1,200&display=swap" rel="stylesheet">
+    <script src="ui.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="allstar__princi">
+			<div class="princi__name"><span class="fuel">GASOLINA</span><div class="allstar__money"><span class="money">$ 2134</span></div></div>
+
+			<div class="user__fuel">
+				<span class="user__fuelling">NÍVEL DO TANQUE</span>
+				<div class="allstar__fuel"><div class="completion"></div></div><div class="allstar__fuel__porcentagem"><span class="allstar__porcentagem">95%</span></div>
+			</div>
+
+			<div class="user__fuel__price">
+				<span class="fuel__price">PREÇO POR LITRO</span>
+				<div class="fuel__preco"><span class="price">$1.00</span></div>
+			</div>
+
+			<div class="user__vehicle">
+				<span class="vehicle__name__model">MODELO</span>
+				<div class="vehicle__model"><img class="model" src="https://wolkesoft.com/fcp/powerserver/allstar/vehicles/baller3.png"></div>
+			</div>
+
+			<div class="user__preco">
+				<span class="user__price">LITROS</span>
+				<div class="allstar__more"><span onclick="addToPanel('add')" id="plus">+</span></div><input type="text" placeholder="Litros" id="allstar__preco" class="allstar__preco"><div onclick="addToPanel('remove')" class="allstar__minus"><span id="minus">-</span></div>
+			</div>
+
+			<div class="allstar__action">
+				<div class="allstar__completar">COMPLETAR</div>
+				<div class="allstar__abastecer">ABASTECER</div>
+			</div>
+		</div>
+
+		<div class="modal">
+	            <span>Aceita abastecer o tanque com<b> $ 85,00</b> ?</span>
+	            <button class="accept">Aceitar</button>
+	            <button class="recuse">Recusar</button>
+	    </div>
+	</div>
+</body>
+</html>

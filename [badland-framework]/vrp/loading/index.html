@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Loading Screen</title>
+  <link rel="stylesheet" href="./css/font.css" type="text/css">
+  <link rel='stylesheet' href='https://ps.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'><link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <audio id="loading" autoplay="autoplay">
+    <source hidden="true" autostart="true" loop="true" src="musi.mp3" />
+  </audio>
+<div class="slider-box">
+<!--  <div class="range">
+    <p>Música :</p>
+    <div class="space3"></div>
+    <p class="font">The Weeknd - Blinding Lights</p>
+  </div>-->
+</div>
+<div class="center">
+  <img class="img-header" src="img/logo.png" width="416" height="263">
+  <div class="space"></div>
+<!--  <h1 class="name-title">AMG RolePlay - Season 2</h1>
+  <div class="space"></div>-->
+  <div class="box-info">
+    <p class="info">RR às : <b> 18:00 e 06:00</b></p>
+    <p class="space2"></p>
+    <p class="divider">|</p>
+    <p class="space2"></p>
+    <p class="info">Discord: <b> FKMM2t336D</b></p>
+    <p class="space2"></p>
+    <p class="divider">|</p>
+    <p class="space2"></p>
+    <p class="info">TeamSpeak: <b> amgcity</b></p>
+  </div>
+</div>
+<ul id="scene" data-friction-x="0.03"
+  data-friction-y="0.05">
+  <li class="layer" id="specks" data-depth="0.1"></li>
+  <li class="layer" id="layer-1" data-depth="0.15">
+    <div class="img" id="img-1"></div>
+  </li>
+  <li class="layer" id="layer-2" data-depth="0.25">
+    <div class="img" id="img-2"></div>
+  </li>
+  <li class="layer" id="layer-3" data-depth="0.45">
+    <div class="img" id="img-3"></div>
+  </li>
+</ul>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/parallax/2.1.3/jquery.parallax.min.js'></script><script  src="./script.js"></script>
+
+
+<script>
+  var music = document.getElementById("loading");
+    music.volume = 0.1;
+    document.addEventListener('keypress', (event) => {
+      if(event.key == "p") {
+          if(music.paused) {
+              music.play();
+          }else{
+              music.pause();
+          }
+      }else if(event.key == "s") {
+          music.volume = music.volume-0.05;
+      }else if(event.key == "w") {
+          music.volume = music.volume+0.05;
+      }
+    });
+</script>
+
+<script type="text/javascript">
+var count = 0;
+var thisCount = 0;
+
+const handlers = {
+ startInitFunctionOrder(data)
+ {
+     count = data.count;
+
+     document.querySelector('.letni h3').innerHTML += emoji[data.type][data.order - 1] || '';
+ },
+
+ initFunctionInvoking(data)
+ {
+     document.querySelector('.thingy').style.left = '0%';
+     document.querySelector('.thingy').style.width = ((data.idx / count) * 100) + '%';
+ },
+
+ startDataFileEntries(data)
+ {
+     count = data.count;
+
+     document.querySelector('.letni h3').innerHTML += "\u{1f358}";
+ },
+
+ performMapLoadFunction(data)
+ {
+     ++thisCount;
+
+     document.querySelector('.thingy').style.left = '0%';
+     document.querySelector('.thingy').style.width = ((thisCount / count) * 100) + '%';
+ },
+
+ onLogLine(data)
+ {
+     document.querySelector('.letni p').innerHTML = data.message + "..!";
+ }
+};
+
+window.addEventListener('message', function(e)
+{
+ (handlers[e.data.eventName] || function() {})(e.data);
+});
+</script>
+
+</body>
+</html>

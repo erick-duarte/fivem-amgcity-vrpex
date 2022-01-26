@@ -1,0 +1,160 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  background: linear-gradient(135deg, rgb(24, 24, 24) 50%, #0084ff 100%)
+  fixed;
+  overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.img-header {
+  border-radius: 10px;
+}
+
+.space {
+  margin-top: 50px;
+  color: white;
+}
+
+.space2 {
+  padding-left: 2.5%;
+}
+
+.divider {
+  color: white;
+  font-size: 25px;
+}
+
+.space3 {
+  margin-top: 0px;
+}
+
+.font {
+  font-weight: 700;
+}
+
+#specks {
+  position: absolute;
+  z-index: 999;
+  height: 100vh;
+  width: 100vw;
+}
+
+.speck {
+  opacity: 0;
+  height: 4px;
+  width: 4px;
+  background: url('http://i1272.photobucket.com/albums/y391/matthew_williams10/speck_zpsu9xym9zl.png');
+  background-size: cover;
+  position: absolute;
+  border-radius: 10px;
+  z-index: 99;
+}
+
+.img {
+  position: absolute;
+  height: 100000px;
+  width: 100000px;
+  top: -8500px;
+  left: -8000px;
+  animation-timing-function: cubic-bezier(0.250, 0.250, 0.750, 0.750);
+  animation-name: float;
+  animation-iteration-count: infinite;
+}
+
+#img-1 {
+  opacity: 0.25;
+  background: url('https://image.ibb.co/jcTvpv/dust1.jpg');
+  background-repeat: repeat;
+  animation-duration: 600s;
+}
+
+#img-2 {
+  opacity: 0.2;
+  background: url('https://image.ibb.co/goU1Uv/dust2.jpg');
+  background-repeat: repeat;
+  animation-duration: 450s;
+}
+
+#img-3 {
+  opacity: 0.15;
+  background: url('https://image.ibb.co/cymRwa/dust3.jpg');
+  background-repeat: repeat;
+  animation-duration: 350s;
+}
+/*ANIMATIONS*/
+
+@keyframes twinkle {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  30% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.75;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate(175px, 100px);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  100% {
+      transform:translate(8000px, 4000px);
+  }
+}
+
+.slider-box {
+  position: relative;
+  z-index: 999;
+  padding-left: 0px;
+}
+
+.range {
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.name-title {
+  color: white;
+  font-size: 40px;
+}
+
+.info {
+  color: white;
+}
+
+.box-info {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
