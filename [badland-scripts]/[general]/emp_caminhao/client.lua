@@ -15,11 +15,14 @@ local caminhao = nil
 local CoordenadaX2 = 0.0
 local CoordenadaY2 = 0.0
 local CoordenadaZ2 = 0.0
+local coordenadas = 0.0
 local tempogas = 0
 local tempodiesel = 0
 local temposhow = 0
 local tempowoods = 0
 local tempocars = 0
+local delay = 0
+local pointspawn = 1
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- FUNCTION
@@ -43,129 +46,131 @@ RegisterNUICallback("ButtonClick",function(data,cb)
 		TriggerEvent("Notify","negado","Você já pegou uma carga")
 		ToggleActionMenu()
 	else
-		tempogas = 300
-		TriggerEvent('deletarveiculo',nveh2)
-		spawnVehicle(cfg.entregas[data]['veiculos']['cavalo']['nome'],cfg.entregas[data]['veiculos']['cavalo']['spawn'])
-		spawnVehicle2(cfg.entregas[data]['veiculos']['carreta']['nome'],cfg.entregas[data]['veiculos']['carreta']['spawn'])
-		ToggleActionMenu()
-		servico = true
-		modules = data
-		servehicle = 1956216962 --tanker2
-		caminhao = 569305213 --packer
-		localizacao = math.random(1,2)
-		CoordenadaX2 = gas[localizacao].x
-		CoordenadaY2 = gas[localizacao].y
-		CoordenadaZ2 = gas[localizacao].z
-		CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
-		TriggerEvent("Notify","importante","Entrega de <b>Combustível</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
-			
-
-
-
-
-
-		if data == "gasolina" then
-			if tempogas <= 0 then
-				tempogas = 300
-				TriggerEvent('deletarveiculo',nveh2)
-				spawnVehicle("tanker2",1142.50,-3264.00,5.90)
-				spawnVehicle2("packer",1185.20,-3251.40,6.02)
-				ToggleActionMenu()
-				servico = true
-				modules = data
-				servehicle = 1956216962 --tanker2
-				caminhao = 569305213 --packer
-				localizacao = math.random(1,2)
-				CoordenadaX2 = gas[localizacao].x
-				CoordenadaY2 = gas[localizacao].y
-				CoordenadaZ2 = gas[localizacao].z
-				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
-				TriggerEvent("Notify","importante","Entrega de <b>Combustível</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
-			else
-				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempogas.."</b> segundos",5000)
-			end
-		elseif data == "diesel" then
-			if tempodiesel <= 0 then
-				tempodiesel = 300
-				TriggerEvent('deletarveiculo',nveh2)
-				spawnVehicle("armytanker",1142.50,-3264.00,5.90)
-				spawnVehicle2("packer",1185.20,-3251.40,6.02)
-				ToggleActionMenu()
-				servico = true
-				modules = data
-				servehicle = -1207431159 --armytanker
-				caminhao = 569305213 --packer
-				localizacao = math.random(1,2)
-				CoordenadaX2 = diesel[localizacao].x
-				CoordenadaY2 = diesel[localizacao].y
-				CoordenadaZ2 = diesel[localizacao].z
-				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
-				TriggerEvent("Notify","importante","Entrega de <b>Diesel</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
-			else
-				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempodiesel.."</b> segundos",5000)
-			end
-		elseif data == "show" then
-			if temposhow <= 0 then
-				temposhow = 300
-				TriggerEvent('deletarveiculo',nveh2)
-				spawnVehicle("tvtrailer",1142.50,-3264.00,5.90)
-				spawnVehicle2("packer",1185.20,-3251.40,6.02)
-				ToggleActionMenu()
-				servico = true
-				modules = data
-				servehicle = -1770643266 --tvtrailer
-				caminhao = 569305213 --packer
-				localizacao = math.random(1,2)
-				CoordenadaX2 = show[localizacao].x
-				CoordenadaY2 = show[localizacao].y
-				CoordenadaZ2 = show[localizacao].z
-				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
-				TriggerEvent("Notify","importante","Entrega de <b>Shows</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
-			else
-				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..temposhow.."</b> segundos",5000)
-			end
-		elseif data == "woods" then
-			if tempowoods <= 0 then
-				tempowoods = 300
-				TriggerEvent('deletarveiculo',nveh2)
-				spawnVehicle("trailerlogs",1142.50,-3264.00,5.90)
-				spawnVehicle2("packer",1185.20,-3251.40,6.02)
-				ToggleActionMenu()
-				servico = true
-				modules = data
-				servehicle = 2016027501 --trailerlogs
-				caminhao = 569305213 --packer
-				localizacao = math.random(1,2)
-				CoordenadaX2 = woods[localizacao].x
-				CoordenadaY2 = woods[localizacao].y
-				CoordenadaZ2 = woods[localizacao].z
-				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
-				TriggerEvent("Notify","importante","Entrega de <b>Madeiras</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
-			else
-				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempowoods.."</b> segundos",5000)
-			end
-		elseif data == "cars" then
-			if tempocars <= 0 then
-				tempocars = 300
-				TriggerEvent('deletarveiculo',nveh2)
-				spawnVehicle("tr4",1142.50,-3264.00,5.90)
-				spawnVehicle2("packer",1185.20,-3251.40,6.02)
-				ToggleActionMenu()
-				servico = true
-				modules = data
-				servehicle = 2091594960 --tr4
-				caminhao = 569305213 --packer
-				localizacao = math.random(1,2)
-				CoordenadaX2 = cars[localizacao].x
-				CoordenadaY2 = cars[localizacao].y
-				CoordenadaZ2 = cars[localizacao].z
-				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
-				TriggerEvent("Notify","importante","Entrega de <b>Veículos</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
-			else
-				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempocars.."</b> segundos",5000)
-			end	
-		elseif data == "fechar" then
+		if data == "fechar" then
 			ToggleActionMenu()
+
+		elseif delay <= 0 then
+			ToggleActionMenu()
+			servico = true
+			delay = cfg.entregas['config'].delay
+			
+			caminhao = cfg.entregas[data]['veiculos']['cavalo'].hash
+			servehicle = cfg.entregas[data]['veiculos']['carreta'].hash
+			spawnVehicle(caminhao,servehicle)
+			
+			numloc = math.random(1,2)
+			coordenadas = cfg.entregas[data]['localizacao'][numloc]
+
+			CriandoBlip(coordenadas)
+			TriggerEvent("Notify","importante","Entrega de <b>"..data.."</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
+--			
+--
+--
+--
+--
+--
+--		if data == "gasolina" then
+--			if tempogas <= 0 then
+--				tempogas = 300
+--				TriggerEvent('deletarveiculo',nveh2)
+--				spawnVehicle("tanker2",1142.50,-3264.00,5.90)
+--				spawnVehicle2("packer",1185.20,-3251.40,6.02)
+--				ToggleActionMenu()
+--				servico = true
+--				modules = data
+--				servehicle = 1956216962 --tanker2
+--				caminhao = 569305213 --packer
+--				localizacao = math.random(1,2)
+--				CoordenadaX2 = gas[localizacao].x
+--				CoordenadaY2 = gas[localizacao].y
+--				CoordenadaZ2 = gas[localizacao].z
+--				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
+--				TriggerEvent("Notify","importante","Entrega de <b>Combustível</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
+--			else
+--				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempogas.."</b> segundos",5000)
+--			end
+--		elseif data == "diesel" then
+--			if tempodiesel <= 0 then
+--				tempodiesel = 300
+--				TriggerEvent('deletarveiculo',nveh2)
+--				spawnVehicle("armytanker",1142.50,-3264.00,5.90)
+--				spawnVehicle2("packer",1185.20,-3251.40,6.02)
+--				ToggleActionMenu()
+--				servico = true
+--				modules = data
+--				servehicle = -1207431159 --armytanker
+--				caminhao = 569305213 --packer
+--				localizacao = math.random(1,2)
+--				CoordenadaX2 = diesel[localizacao].x
+--				CoordenadaY2 = diesel[localizacao].y
+--				CoordenadaZ2 = diesel[localizacao].z
+--				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
+--				TriggerEvent("Notify","importante","Entrega de <b>Diesel</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
+--			else
+--				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempodiesel.."</b> segundos",5000)
+--			end
+--		elseif data == "show" then
+--			if temposhow <= 0 then
+--				temposhow = 300
+--				TriggerEvent('deletarveiculo',nveh2)
+--				spawnVehicle("tvtrailer",1142.50,-3264.00,5.90)
+--				spawnVehicle2("packer",1185.20,-3251.40,6.02)
+--				ToggleActionMenu()
+--				servico = true
+--				modules = data
+--				servehicle = -1770643266 --tvtrailer
+--				caminhao = 569305213 --packer
+--				localizacao = math.random(1,2)
+--				CoordenadaX2 = show[localizacao].x
+--				CoordenadaY2 = show[localizacao].y
+--				CoordenadaZ2 = show[localizacao].z
+--				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
+--				TriggerEvent("Notify","importante","Entrega de <b>Shows</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
+--			else
+--				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..temposhow.."</b> segundos",5000)
+--			end
+--		elseif data == "woods" then
+--			if tempowoods <= 0 then
+--				tempowoods = 300
+--				TriggerEvent('deletarveiculo',nveh2)
+--				spawnVehicle("trailerlogs",1142.50,-3264.00,5.90)
+--				spawnVehicle2("packer",1185.20,-3251.40,6.02)
+--				ToggleActionMenu()
+--				servico = true
+--				modules = data
+--				servehicle = 2016027501 --trailerlogs
+--				caminhao = 569305213 --packer
+--				localizacao = math.random(1,2)
+--				CoordenadaX2 = woods[localizacao].x
+--				CoordenadaY2 = woods[localizacao].y
+--				CoordenadaZ2 = woods[localizacao].z
+--				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
+--				TriggerEvent("Notify","importante","Entrega de <b>Madeiras</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
+--			else
+--				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempowoods.."</b> segundos",5000)
+--			end
+--		elseif data == "cars" then
+--			if tempocars <= 0 then
+--				tempocars = 300
+--				TriggerEvent('deletarveiculo',nveh2)
+--				spawnVehicle("tr4",1142.50,-3264.00,5.90)
+--				spawnVehicle2("packer",1185.20,-3251.40,6.02)
+--				ToggleActionMenu()
+--				servico = true
+--				modules = data
+--				servehicle = 2091594960 --tr4
+--				caminhao = 569305213 --packer
+--				localizacao = math.random(1,2)
+--				CoordenadaX2 = cars[localizacao].x
+--				CoordenadaY2 = cars[localizacao].y
+--				CoordenadaZ2 = cars[localizacao].z
+--				CriandoBlip(CoordenadaX2,CoordenadaY2,CoordenadaZ2)
+--				TriggerEvent("Notify","importante","Entrega de <b>Veículos</b> iniciada, pegue o caminhão, a carga e vá até o destino marcado.",5000)
+--			else
+--				TriggerEvent("Notify","aviso","Não temos essa carga no momento, volte daqui <b>"..tempocars.."</b> segundos",5000)
+--			end	
+--		elseif data == "fechar" then
+--			ToggleActionMenu()
 		end
 	end
 end)
@@ -358,41 +363,68 @@ function CriandoBlipEntregaCaminhao(locentregafinal,destino)
 	EndTextCommandSetBlipName(blipentregafinal)
 end
 
-function spawnVehicle(name,x,y,z)
-	mhash = GetHashKey(name)
-	while not HasModelLoaded(mhash) do
+function spawnVehicle(vehname,trailername)
+	local checkslot = 1
+	local mhash = GetHashKey('packer')
+	local thash = GetHashKey('tanker2')
+--	while not HasModelLoaded(mhash) and not HasModelLoaded(thash) do
 		RequestModel(mhash)
-		Citizen.Wait(10)
-	end
+		RequestModel(thash)
+--		Citizen.Wait(1)
+--	end
 
-	if HasModelLoaded(mhash) then
-		nveh = CreateVehicle(mhash,x,y,z+0.5,270.90,true,false)
+--	if HasModelLoaded(mhash) and HasModelLoaded(thash) then
+		while true do
+			local checkPos = GetClosestVehicle(cfg.posicoes['cavalo'][checkslot],3.001,0,71)
+			if DoesEntityExist(checkPos) and checkPos ~= nil then
+				checkslot = checkslot + 1
+				if checkslot > #cfg.posicoes['cavalo'] then
+					checkslot = -1
+					TriggerEvent("Notify","importante","Todas as vagas estão ocupadas no momento.",10000)
+					break
+				end
+			else
+				break
+			end
+			Citizen.Wait(10)
+		end
 
-		SetVehicleOnGroundProperly(nveh)
-		SetVehicleNumberPlateText(nveh,vRP.getRegistrationNumber())
-		SetEntityAsMissionEntity(nveh,true,true)
+		if checkslot ~= -1 then
 
-		SetModelAsNoLongerNeeded(mhash)
-	end
+			local nveh = CreateVehicle(mhash,cfg.posicoes['cavalo'][checkslot]+0.5,270.90,true,false)
+
+			local truckTrailer = CreateVehicle(thash,1178.76,-3265.23,5.71+0.5,270.90,true)
+
+			SetVehicleOnGroundProperly(nveh)
+			SetVehicleNumberPlateText(nveh,vRP.getRegistrationNumber())
+			SetEntityAsMissionEntity(nveh,true,true)
+			SetVehicleDoorOpen(truckTrailer, 5, false, false)
+			
+			AttachVehicleToTrailer(nveh,truckTrailer,10.0)
+
+			SetModelAsNoLongerNeeded(mhash)
+			SetModelAsNoLongerNeeded(thash)
+		end
+--	end
 end
 
-function spawnVehicle2(name,x,y,z)
-	mhash2 = GetHashKey(name)
-	while not HasModelLoaded(mhash2) do
-		RequestModel(mhash2)
-		Citizen.Wait(10)
-	end
-
-	if HasModelLoaded(mhash2) then
-		nveh2 = CreateVehicle(mhash2,x,y,z+0.5,270.90,true,false)
-
-		SetVehicleOnGroundProperly(nveh2)
-		SetVehicleNumberPlateText(nveh2,vRP.getRegistrationNumber())
-		SetEntityAsMissionEntity(nveh2,true,true)
-
-		SetModelAsNoLongerNeeded(mhash2)
-	end
-end
+--function spawnVehicle2(name)
+--	mhash2 = GetHashKey(name)
+--	while not HasModelLoaded(mhash2) do
+--		RequestModel(mhash2)
+--		Citizen.Wait(10)
+--	end
+--
+--	if HasModelLoaded(mhash2) then
+--		nveh2 = CreateVehicle(mhash2,cfg.posicoes['carreta'][2]+0.5,270.90,true,false)
+--
+--		SetVehicleOnGroundProperly(nveh2)
+--		SetVehicleNumberPlateText(nveh2,vRP.getRegistrationNumber())
+--		SetEntityAsMissionEntity(nveh2,true,true)
+--
+--		SetModelAsNoLongerNeeded(mhash2)
+--	end
+--end
 
 function drawTxt(text,font,x,y,scale,r,g,b,a)
 	SetTextFont(font)

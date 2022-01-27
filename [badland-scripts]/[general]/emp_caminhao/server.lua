@@ -24,7 +24,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- CHECKPAYMENT
 -----------------------------------------------------------------------------------------------------------------------------------------
-function emP.checkPayment(mod)
+function emP.checkPayment()
     local source = source
     local user_id = vRP.getUserId(source)
 	vRP.antiflood(source,"Emprego Caminhao",2)
