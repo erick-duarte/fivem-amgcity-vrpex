@@ -3,12 +3,12 @@ local Proxy = module("vrp","lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 vRPex = Tunnel.getInterface("vrp_mecanico")
 
-pontoX = -206.96
-pontoY = -1341.75
-pontoZ = 34.9
-systemX = -196.51
-systemY = -1319.46
-systemZ = 31.09
+pontoX = 1025.65
+pontoY = -2316.06
+pontoZ = 30.51
+systemX = 1006.31
+systemY = -2369.84
+systemZ = 30.53
 onMenu = false
 
 -- -196.51,-1319.46,31.09
