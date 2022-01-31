@@ -7,16 +7,60 @@ local currentpos = nil
 local currentgarage = 0
 
 local garages = { 
---	[1] = { locked = false, camera = { x = 936.52, y = -973.89, z = 39.76, heading = 206.36 }, driveout = { x = 938.38, y = -977.67, z = 39.16, heading = 3.70 }, drivein = { x = 938.38, y = -977.67, z = 39.16, heading = 3.70 }, outside = { x = 938.38, y = -977.67, z = 39.16, heading = 3.70 }, inside = { x = 938.38, y = -977.67, z = 39.16, heading = 3.70 }},
---	[2] = { locked = false, camera = { x = 939.11, y = -965.67, z = 39.76, heading = 31.84 }, driveout = { x = 937.2, y = -962.06, z = 39.16, heading = 183.66 }, drivein = { x = 937.2, y = -962.06, z = 39.16, heading = 183.66 }, outside = { x = 937.2, y = -962.06, z = 39.16, heading = 183.66 }, inside = { x = 937.2, y = -962.06, z = 39.16, heading = 183.66 }},
---	[3] = { locked = false, camera = { x = 934.54, y = -968.41, z = 39.8, heading = 120.84 }, driveout = { x = 930.72, y = -970.31, z = 39.16, heading = 273.10 }, drivein = { x = 930.72, y = -970.31, z = 39.16, heading = 273.10 }, outside = { x = 930.72, y = -970.31, z = 39.16, heading = 273.10 }, inside = { x = 930.72, y = -970.31, z = 39.16, heading = 273.10 }},
---	[4] = { locked = false, camera = { x = 960.18, y = -972.98, z = 39.76, heading = 134.97 }, driveout = { x = 957.68, y = -975.37, z = 39.3, heading = 302.10 }, drivein = { x = 957.68, y = -975.37, z = 39.3, heading = 302.10 }, outside = { x = 957.68, y = -975.37, z = 39.3, heading = 302.10 }, inside = { x = 957.68, y = -975.37, z = 39.3, heading = 302.10 }},
---	[5] = { locked = false, camera = { x = 115.75, y = 6624.31, z = 31.8, heading = 74.49 }, driveout = { x = 111.02, y = 6626.27, z = 31.19, heading = 224.40 }, drivein = { x = 111.02, y = 6626.27, z = 31.19, heading = 224.40 }, outside = { x = 111.02, y = 6626.27, z = 31.19, heading = 224.40 }, inside = { x = 111.02, y = 6626.27, z = 31.19, heading = 224.40 }},
---	[6] = { locked = false, camera = { x = -1163.51, y = -1712.92, z = 4.45, heading = 245.31 }, driveout = { x = -1158.71, y = -1715.5, z = 3.93, heading = 35.83 }, drivein = { x = -1158.71, y = -1715.5, z = 3.93, heading = 35.83 }, outside = { x = -1158.71, y = -1715.5, z = 3.93, heading = 35.83 }, inside = { x = -1158.71, y = -1715.5, z = 3.93, heading = 35.83 }},
---	[7] = { locked = false, camera = { x = -1163.56, y = -1693.21, z = 4.45, heading = 326.79 }, driveout = { x = -1160.21, y = -1688.53, z = 3.93, heading = 123.86 }, drivein = { x = -1160.21, y = -1688.53, z = 3.93, heading = 123.86 }, outside = { x = -1160.21, y = -1688.53, z = 3.93, heading = 123.86 }, inside = { x = -1160.21, y = -1688.53, z = 3.93, heading = 123.86 }},
-	[1] = { locked = false, camera = { x = -227.28, y = -1327.96, z = 30.89, heading = 89.70 }, driveout = { x = -222.50, y = -1329.67, z = 30.89, heading = 89.70 }, drivein = { x = -222.50, y = -1329.67, z = 30.89, heading = 89.70 }, outside = { x = -222.50, y = -1329.67, z = 30.89, heading = 89.70 }, inside = { x = -222.50, y = -1329.67, z = 30.89, heading = 89.70 }},
-	[2] = { locked = false, camera = { x = -227.10, y = -1321.01, z = 30.89, heading = 89.70 }, driveout = { x = -222.66, y = -1323.13, z = 30.89, heading = 89.70 }, drivein = { x = -222.66, y = -1323.13, z = 30.89, heading = 89.70 }, outside = { x = -222.66, y = -1323.13, z = 30.89, heading = 89.70 }, inside = { x = -222.66, y = -1323.13, z = 30.89, heading = 89.70 }},
-	[3] = { locked = false, camera = { x = -216.10, y = -1326.76, z = 30.89, heading = 180.23 }, driveout = { x = -213.42, y = -1319.66, z = 30.89, heading = 180.23 }, drivein = { x = -213.42, y = -1319.66, z = 30.89, heading = 180.23 }, outside = { x = -213.42, y = -1319.66, z = 30.89, heading = 180.23 }, inside = { x = -213.42, y = -1319.66, z = 30.89, heading = 180.23 }}
+
+	[1] = { 
+		locked = false, 
+		camera = { x = 1023.93, y = -2359.22, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1023.87, y = -2365.69, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1023.87, y = -2365.69, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1023.87, y = -2365.69, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1023.87, y = -2365.69, z = 30.51, heading = 180.23 }
+	},
+
+	[2] = { 
+		locked = false, 
+		camera = { x = 1017.67, y = -2357.82, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1016.89, y = -2364.79, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1016.89, y = -2364.79, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1016.89, y = -2364.79, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1016.89, y = -2364.79, z = 30.51, heading = 180.23 }
+	},
+
+	[3] = { 
+		locked = false, 
+		camera = { x = 1009.65, y = -2364.15, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }
+	},
+
+	[4] = { 
+		locked = false, 
+		camera = { x = 1003.16, y = -2358.59, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }
+	},
+
+	[5] = { 
+		locked = false, 
+		camera = { x = 1009.56, y = -2333.8, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }
+	},
+
+	[6] = { 
+		locked = false, 
+		camera = { x = 1002.44, y = -2332.91, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }
+	}
 
 }
 

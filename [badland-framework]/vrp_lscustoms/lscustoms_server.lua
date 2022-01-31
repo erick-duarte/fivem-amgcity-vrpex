@@ -16,10 +16,10 @@ end
 local tbl = {
 	[1] = { locked = false, player = nil },
 	[2] = { locked = false, player = nil },
-	[3] = { locked = false, player = nil }
---	[4] = { locked = false, player = nil },
---	[5] = { locked = false, player = nil },
---	[6] = { locked = false, player = nil },
+	[3] = { locked = false, player = nil },
+	[4] = { locked = false, player = nil },
+	[5] = { locked = false, player = nil },
+	[6] = { locked = false, player = nil },
 --	[7] = { locked = false, player = nil }
 }
 
