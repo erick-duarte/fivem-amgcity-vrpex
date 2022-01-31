@@ -28,38 +28,38 @@ local garages = {
 
 	[3] = { 
 		locked = false, 
-		camera = { x = 1009.65, y = -2364.15, z = 30.51, heading = 180.23 }, 
-		driveout = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }, 
-		drivein = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }, 
-		outside = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }, 
-		inside = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }
+		camera = { x = 1010.55, y = -2357.27, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1009.65, y = -2364.15, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1009.65, y = -2364.15, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1009.65, y = -2364.15, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1009.65, y = -2364.15, z = 30.51, heading = 180.23 }
 	},
 
 	[4] = { 
 		locked = false, 
-		camera = { x = 1003.16, y = -2358.59, z = 30.51, heading = 180.23 }, 
-		driveout = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }, 
-		drivein = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }, 
-		outside = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }, 
-		inside = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }
+		camera = { x = 1003.67, y = -2350.75, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1003.16, y = -2358.59, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1003.16, y = -2358.59, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1003.16, y = -2358.59, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1003.16, y = -2358.59, z = 30.51, heading = 180.23 }
 	},
 
 	[5] = { 
 		locked = false, 
-		camera = { x = 1009.56, y = -2333.8, z = 30.51, heading = 180.23 }, 
-		driveout = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }, 
-		drivein = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }, 
-		outside = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }, 
-		inside = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }
+		camera = { x = 1008.86, y = -2341.21, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1009.56, y = -2333.8, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1009.56, y = -2333.8, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1009.56, y = -2333.8, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1009.56, y = -2333.8, z = 30.51, heading = 180.23 }
 	},
 
 	[6] = { 
 		locked = false, 
-		camera = { x = 1002.44, y = -2332.91, z = 30.51, heading = 180.23 }, 
-		driveout = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }, 
-		drivein = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }, 
-		outside = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }, 
-		inside = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }
+		camera = { x = 1001.35, y = -2339.97, z = 30.51, heading = 180.23 }, 
+		driveout = { x = 1002.44, y = -2332.91, z = 30.51, heading = 180.23 }, 
+		drivein = { x = 1002.44, y = -2332.91, z = 30.51, heading = 180.23 }, 
+		outside = { x = 1002.44, y = -2332.91, z = 30.51, heading = 180.23 }, 
+		inside = { x = 1002.44, y = -2332.91, z = 30.51, heading = 180.23 }
 	}
 
 }
