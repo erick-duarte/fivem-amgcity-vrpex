@@ -18,6 +18,7 @@ local lastFuel = 0
 local isFuel = false
 local vehFuels = {}
 local vehTypeFuels = {}
+local checkMoney, maxFuel, maxTotalFuel = nil
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- VEHCLASS
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -339,7 +340,7 @@ Citizen.CreateThread(function()
 											typeFuelname = "GASOLINA COMUM"
 										end
 
-										
+										if parseInt(vehFuel) < parseInt(maxTotalFuel) then
 											isPrice = isPrice + pricecomb
 											SetVehicleFuelLevel(vehicle,vehFuel+0.02)
 											text3D(coordsVeh.x,coordsVeh.y,coordsVeh.z+1,"~g~E~w~  CANCELAR")
@@ -358,7 +359,18 @@ Citizen.CreateThread(function()
 												isFuel = false
 												isPrice = 0
 											end
-										
+										else
+											print(isPrice)
+											if vSERVER.paymentFuel(isPrice) then
+												TriggerServerEvent("engine:tryFuel",VehToNet(vehicle),vehFuel)
+											else
+												TriggerServerEvent("engine:tryFuel",VehToNet(vehicle),lastFuel)
+											end
+											StopAnimTask(ped,"timetable@gardener@filling_can","gar_ig_5_filling_can",2.0)
+											RemoveAnimDict("timetable@gardener@filling_can")
+											isFuel = false
+											isPrice = 0
+										end
 									end
 								end
 
@@ -377,7 +389,15 @@ Citizen.CreateThread(function()
 									else
 										if vehFuel < 100.0 then
 											local typeFuel = vehTypeFuels[vRP.vehListHash(hashveh)]
-											if vSERVER.checkMoney(vehFuel, typeFuel) then
+											checkMoney, maxFuel = vSERVER.checkMoney(vehFuel, typeFuel)
+--											print(checkMoney)
+--											print(maxFuel)
+											if checkMoney then
+
+												if maxFuel < 100 then
+													maxTotalFuel = (tonumber(parseInt(vehFuel)) + tonumber(maxFuel))
+												end
+
 												lastFuel = vehFuel
 												TaskTurnPedToFaceEntity(ped,vehicle,5000)
 												loadAnim("timetable@gardener@filling_can")

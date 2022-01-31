@@ -47,20 +47,30 @@ function cRP.checkMoney(vehFuel, typeFuel)
 	local getwalletmoney = vRP.getMoney(user_id)
 	local priceFuel = 0
 	
-	if typeFuel == 1 then
-		priceFuel = 70
-	elseif typeFuel == 2 then
-		priceFuel = 35
-	else
-		priceFuel = 40
-	end 
+	if getwalletmoney > 69 then
 
-	local priceTotalFuel = priceFuel * (100 - parseInt(vehFuel))
+		if typeFuel == 1 then
+			priceFuel = 70
+		elseif typeFuel == 2 then
+			priceFuel = 35
+		else
+			priceFuel = 40
+		end 
 
-	if getwalletmoney > priceTotalFuel then
-		return true
+		local priceTotalFuel = priceFuel * (100 - parseInt(vehFuel))
+
+		if getwalletmoney > priceTotalFuel then
+			return true, 100
+		else
+			local maxFuel = parseInt(getwalletmoney) / priceFuel
+			if parseInt(maxFuel) > 2 then
+				return true, parseInt(maxFuel)
+			else
+				return false, false
+			end
+		end
 	else
-		return false
+		return false, false
 	end
 end
 
