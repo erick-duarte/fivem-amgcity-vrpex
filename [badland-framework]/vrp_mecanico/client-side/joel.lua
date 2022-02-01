@@ -11,6 +11,10 @@ systemY = -2369.84
 systemZ = 30.53
 onMenu = false
 
+local listBoats = {
+    -311022263
+}
+
 -- -196.51,-1319.46,31.09
 
 local menuactive = false
@@ -153,8 +157,14 @@ AddEventHandler('synctowboat',function(vehid,rebid)
             if reboque == nil then
                 if vehicle ~= rebocado then
                     local min,max = GetModelDimensions(GetEntityModel(rebocado))
-                    AttachEntityToEntity(rebocado,vehicle,GetEntityBoneIndexByName(vehicle,"chassis"),0,-2.2,-0.3-min.z,0,0,0,1,1,0,1,0,1)
-                    reboque = rebocado
+                    for k,v in pairs(listBoats) do
+                        if v == GetEntityModel(rebocado) then
+                            AttachEntityToEntity(rebocado,vehicle,GetEntityBoneIndexByName(vehicle,"chassis"),0,-2.2,-0.3-min.z,0,0,0,1,1,0,1,0,1)
+                            reboque = rebocado
+                        else
+                            TriggerEvent("Notify","negado","Veículo não permitido.")
+                        end
+                    end
                 end
             else
                 AttachEntityToEntity(reboque,vehicle,20,-0.5,-15.0,-0.3,0.0,0.0,0.0,false,false,true,false,20,true)
