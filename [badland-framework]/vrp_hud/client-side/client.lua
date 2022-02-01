@@ -135,6 +135,9 @@ function updateDisplayHud(ped)
 		local vehicle = GetVehiclePedIsUsing(ped)
 		local fuel = GetVehicleFuelLevel(vehicle)
 		local speed = GetEntitySpeed(vehicle) * 1.60934
+--		SendNUIMessage({ vehicle = true, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hours, minutes = minutes, direction = direction, voice = voice, fuel = fuel, speed = speed, seatbelt = beltLock })
+--	else
+--		SendNUIMessage({ vehicle = false, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hours, minutes = minutes, direction = direction, voice = voice, timeAndDateString = timeAndDateString })
 		SendNUIMessage({ vehicle = true, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hour, minutes = minute, voice = voice, fuel = fuel, speed = speed, seatbelt = beltLock })
 	else
 		SendNUIMessage({ vehicle = false, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hour, minutes = minute, voice = voice, timeAndDateString = timeAndDateString })
@@ -204,18 +207,32 @@ AddEventHandler("vrp_hud:discordFalse",function(status)
 		SendNUIMessage({ hood = false })
 	end
 end)
+-------------------------------------------------------------------------------------------------------------------------------------------
+---- STATUSHUNGER
+-------------------------------------------------------------------------------------------------------------------------------------------
+--RegisterNetEvent("statusHunger")
+--AddEventHandler("statusHunger",function(number)
+--	hunger = parseInt(number)
+--end)
+-------------------------------------------------------------------------------------------------------------------------------------------
+---- STATUSTHIRST
+-------------------------------------------------------------------------------------------------------------------------------------------
+--RegisterNetEvent("statusThirst")
+--AddEventHandler("statusThirst",function(number)
+--	thirst = parseInt(number)
+--end)
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- STATUSHUNGER
 -----------------------------------------------------------------------------------------------------------------------------------------
-RegisterNetEvent("statusHunger")
-AddEventHandler("statusHunger",function(number)
+RegisterNetEvent("statusFome")
+AddEventHandler("statusFome",function(number)
 	hunger = parseInt(number)
 end)
 -----------------------------------------------------------------------------------------------------------------------------------------
--- STATUSTHIRST
+-- FOME
 -----------------------------------------------------------------------------------------------------------------------------------------
-RegisterNetEvent("statusThirst")
-AddEventHandler("statusThirst",function(number)
+RegisterNetEvent("statusSede")
+AddEventHandler("statusSede",function(number)
 	thirst = parseInt(number)
 end)
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -352,59 +369,59 @@ end)
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- THREADHEALTHREDUCE
 -----------------------------------------------------------------------------------------------------------------------------------------
-Citizen.CreateThread(function()
-	while true do
-		local ped = PlayerPedId()
-		local health = GetEntityHealth(ped)
-
-		if health > 101 then
-			if hunger >= 10 and hunger <= 20 then
-				SetFlash(0,0,500,1000,500)
-				SetEntityHealth(ped,health-1)
-			elseif hunger <= 9 then
-				SetFlash(0,0,500,1000,500)
-				SetEntityHealth(ped,health-2)
-			end
-
-			if thirst >= 10 and thirst <= 20 then
-				SetFlash(0,0,500,1000,500)
-				SetEntityHealth(ped,health-1)
-			elseif thirst <= 9 then
-				SetFlash(0,0,500,1000,500)
-				SetEntityHealth(ped,health-2)
-			end
-		end
-
-		Citizen.Wait(5000)
-	end
-end)
------------------------------------------------------------------------------------------------------------------------------------------
--- THREADHEALTHREDUCE
------------------------------------------------------------------------------------------------------------------------------------------
-Citizen.CreateThread(function()
-	while true do
-		local ped = PlayerPedId()
-		local health = GetEntityHealth(ped)
-
-		if health > 101 then
-			if stress >= 80 then
-				ShakeGameplayCam("LARGE_EXPLOSION_SHAKE",0.10)
-				if parseInt(math.random(3)) >= 3 and not IsPedInAnyVehicle(ped) then
-					SetPedToRagdoll(ped,5000,5000,0,0,0,0)
-					TriggerServerEvent("vrp_inventory:Cancel")
-				end
-			elseif stress >= 60 and stress <= 79 then
-				ShakeGameplayCam("LARGE_EXPLOSION_SHAKE",0.05)
-				if parseInt(math.random(3)) >= 3 and not IsPedInAnyVehicle(ped) then
-					SetPedToRagdoll(ped,3000,3000,0,0,0,0)
-					TriggerServerEvent("vrp_inventory:Cancel")
-				end
-			end
-		end
-
-		Citizen.Wait(10000)
-	end
-end)
+--Citizen.CreateThread(function()
+--	while true do
+--		local ped = PlayerPedId()
+--		local health = GetEntityHealth(ped)
+--
+--		if health > 101 then
+--			if hunger >= 10 and hunger <= 20 then
+--				SetFlash(0,0,500,1000,500)
+--				SetEntityHealth(ped,health-1)
+--			elseif hunger <= 9 then
+--				SetFlash(0,0,500,1000,500)
+--				SetEntityHealth(ped,health-2)
+--			end
+--
+--			if thirst >= 10 and thirst <= 20 then
+--				SetFlash(0,0,500,1000,500)
+--				SetEntityHealth(ped,health-1)
+--			elseif thirst <= 9 then
+--				SetFlash(0,0,500,1000,500)
+--				SetEntityHealth(ped,health-2)
+--			end
+--		end
+--
+--		Citizen.Wait(5000)
+--	end
+--end)
+-------------------------------------------------------------------------------------------------------------------------------------------
+---- THREADHEALTHREDUCE
+-------------------------------------------------------------------------------------------------------------------------------------------
+--Citizen.CreateThread(function()
+--	while true do
+--		local ped = PlayerPedId()
+--		local health = GetEntityHealth(ped)
+--
+--		if health > 101 then
+--			if stress >= 80 then
+--				ShakeGameplayCam("LARGE_EXPLOSION_SHAKE",0.10)
+--				if parseInt(math.random(3)) >= 3 and not IsPedInAnyVehicle(ped) then
+--					SetPedToRagdoll(ped,5000,5000,0,0,0,0)
+--					TriggerServerEvent("vrp_inventory:Cancel")
+--				end
+--			elseif stress >= 60 and stress <= 79 then
+--				ShakeGameplayCam("LARGE_EXPLOSION_SHAKE",0.05)
+--				if parseInt(math.random(3)) >= 3 and not IsPedInAnyVehicle(ped) then
+--					SetPedToRagdoll(ped,3000,3000,0,0,0,0)
+--					TriggerServerEvent("vrp_inventory:Cancel")
+--				end
+--			end
+--		end
+--
+--		Citizen.Wait(10000)
+--	end
+--end)
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- THREADGPS
 -----------------------------------------------------------------------------------------------------------------------------------------

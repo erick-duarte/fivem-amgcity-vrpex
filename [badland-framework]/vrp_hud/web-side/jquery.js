@@ -134,13 +134,13 @@ $(document).ready(function(){
 		if (lastWater !== event["data"]["thirst"]){
 			lastWater = event["data"]["thirst"];
 
-			$(".waterDisplay").css("stroke-dashoffset",100 - event["data"]["thirst"]);
+			$(".waterDisplay").css("stroke-dashoffset",0 + event["data"]["thirst"]);
 		}
 
 		if (lastHunger !== event["data"]["hunger"]){
 			lastHunger = event["data"]["hunger"];
 
-			$(".foodDisplay").css("stroke-dashoffset",100 - event["data"]["hunger"]);
+			$(".foodDisplay").css("stroke-dashoffset",0 + event["data"]["hunger"]);
 		}
 
 		if (lastOxigen !== event["data"]["oxigen"]){
