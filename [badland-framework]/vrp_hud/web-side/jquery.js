@@ -167,11 +167,13 @@ $(document).ready(function(){
 		}
 
 		if (event["data"]["hours"] <= 9){
-			event["data"]["hours"] = "0" + event["data"]["hours"]
+//			event["data"]["hours"] = "0" + event["data"]["hours"]
+			event["data"]["hours"] = event["data"]["hours"]
 		}
 
 		if (event["data"]["minutes"] <= 9){
-			event["data"]["minutes"] = "0" + event["data"]["minutes"]
+//			event["data"]["minutes"] = "0" + event["data"]["minutes"]
+			event["data"]["minutes"] = event["data"]["minutes"]
 		}
 
 		if (event["data"]["vehicle"] !== undefined){

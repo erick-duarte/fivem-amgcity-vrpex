@@ -33,14 +33,29 @@ local direction = "Norte"
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- DATE
 -----------------------------------------------------------------------------------------------------------------------------------------
-local hours = 13
-local minutes = 0
+local hour = 0
+local minute = 0
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- SEATBELT
 -----------------------------------------------------------------------------------------------------------------------------------------
 local beltSpeed = 0
 local entVelocity = 0
 local beltLock = false
+-----------------------------------------------------------------------------------------------------------------------------------------
+-- CALCULATETIMEDISPLAY
+-----------------------------------------------------------------------------------------------------------------------------------------
+function calculateTimeDisplay()
+	hour = GetClockHours()
+	minute = GetClockMinutes()
+
+	if hour <= 9 then
+		hour = "0"..hour
+	end
+
+	if minute <= 9 then
+		minute = "0"..minute
+	end
+end
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- UPDATETALKING
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -115,17 +130,14 @@ end)
 -- UPDATEDISPLAYHUD
 -----------------------------------------------------------------------------------------------------------------------------------------
 function updateDisplayHud(ped)
+	calculateTimeDisplay()
 	if IsPedInAnyVehicle(ped) then
 		local vehicle = GetVehiclePedIsUsing(ped)
 		local fuel = GetVehicleFuelLevel(vehicle)
 		local speed = GetEntitySpeed(vehicle) * 1.60934
-
---		SendNUIMessage({ vehicle = true, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hours, minutes = minutes, direction = direction, voice = voice, fuel = fuel, speed = speed, seatbelt = beltLock })
---	else
---		SendNUIMessage({ vehicle = false, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hours, minutes = minutes, direction = direction, voice = voice, timeAndDateString = timeAndDateString })
-		SendNUIMessage({ vehicle = true, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hours, minutes = minutes, voice = voice, fuel = fuel, speed = speed, seatbelt = beltLock })
+		SendNUIMessage({ vehicle = true, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hour, minutes = minute, voice = voice, fuel = fuel, speed = speed, seatbelt = beltLock })
 	else
-		SendNUIMessage({ vehicle = false, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hours, minutes = minutes, voice = voice, timeAndDateString = timeAndDateString })
+		SendNUIMessage({ vehicle = false, talking = talking, health = health, armour = armour, thirst = thirst, hunger = hunger, stress = stress, oxigen = GetPlayerUnderwaterTimeRemaining(PlayerId()), street = street, radio = radioDisplay, hours = hour, minutes = minute, voice = voice, timeAndDateString = timeAndDateString })
 
 	end
 end
@@ -307,36 +319,36 @@ end)
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- SYNCTIMERS
 -----------------------------------------------------------------------------------------------------------------------------------------
-RegisterNetEvent("vrp_hud:syncTimers")
-AddEventHandler("vrp_hud:syncTimers",function(timer)
-	minutes = parseInt(timer[1])
-	hours = parseInt(timer[2])
-end)
+--RegisterNetEvent("vrp_hud:syncTimers")
+--AddEventHandler("vrp_hud:syncTimers",function(timer)
+--	minutes = parseInt(timer[1])
+--	hours = parseInt(timer[2])
+--end)
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- SYNCTIMERS
 -----------------------------------------------------------------------------------------------------------------------------------------
-local homeInterior = false
-RegisterNetEvent("vrp_homes:Hours")
-AddEventHandler("vrp_homes:Hours",function(status)
-	homeInterior = status
-end)
+--local homeInterior = false
+--RegisterNetEvent("vrp_homes:Hours")
+--AddEventHandler("vrp_homes:Hours",function(status)
+--	homeInterior = status
+--end)
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- THREADTIMERS
 -----------------------------------------------------------------------------------------------------------------------------------------
-Citizen.CreateThread(function()
-	while true do
-		SetWeatherTypeNow("CLEAR")
-		SetWeatherTypePersist("CLEAR")
-		SetWeatherTypeNowPersist("CLEAR")
-
-		if homeInterior then
-			NetworkOverrideClockTime(00,00,00)
-		else
-			NetworkOverrideClockTime(hours,minutes,00)
-		end
-		Citizen.Wait(0)
-	end
-end)
+--Citizen.CreateThread(function()
+--	while true do
+--		SetWeatherTypeNow("CLEAR")
+--		SetWeatherTypePersist("CLEAR")
+--		SetWeatherTypeNowPersist("CLEAR")
+--
+--		if homeInterior then
+--			NetworkOverrideClockTime(00,00,00)
+--		else
+--			NetworkOverrideClockTime(hours,minutes,00)
+--		end
+--		Citizen.Wait(0)
+--	end
+--end)
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- THREADHEALTHREDUCE
 -----------------------------------------------------------------------------------------------------------------------------------------
