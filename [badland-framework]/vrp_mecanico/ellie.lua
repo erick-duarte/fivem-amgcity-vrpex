@@ -47,6 +47,11 @@ RegisterServerEvent("trytow")
 AddEventHandler("trytow",function(nveh,rveh)
 	TriggerClientEvent("synctow",-1,nveh,rveh)
 end)
+
+RegisterServerEvent("trytowboat")
+AddEventHandler("trytowboat",function(nveh,rveh)
+	TriggerClientEvent("synctowboat",-1,nveh,rveh)
+end)
 -- [ EVENTO REPARAR ] --
 RegisterServerEvent("tryreparar")
 AddEventHandler("tryreparar",function(nveh)

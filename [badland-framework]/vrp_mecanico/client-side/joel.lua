@@ -102,6 +102,25 @@ RegisterCommand("tow",function(source,args)
     end
 end)
 
+local vehicleTrail = nil
+RegisterCommand("preparar",function(source,args)
+    vehicleTrail = vRP.getNearestVehicle(4)
+	if vehicleTrail ~= nil then
+		print(vehicleTrail)
+		TriggerEvent("Notify","sucesso","Carretinha pronta.")
+	end
+end)
+
+RegisterCommand("towboat",function(source,args)
+    local vehicletow = IsVehicleModel(vehicleTrail,GetHashKey("boattrailer"))
+    if vehicletow and not IsPedInAnyVehicle(PlayerPedId()) then
+        rebocado = getVehicleInDirection(GetEntityCoords(PlayerPedId()),GetOffsetFromEntityInWorldCoords(PlayerPedId(),0.0,10.0,0.0))
+        if IsEntityAVehicle(vehicleTrail) and IsEntityAVehicle(rebocado) then
+            TriggerServerEvent("trytowboat",VehToNet(vehicleTrail),VehToNet(rebocado))
+        end
+    end
+end)
+
 RegisterNetEvent('synctow')
 AddEventHandler('synctow',function(vehid,rebid)
     if NetworkDoesNetworkIdExist(vehid) and NetworkDoesNetworkIdExist(rebid) then
@@ -112,6 +131,29 @@ AddEventHandler('synctow',function(vehid,rebid)
                 if vehicle ~= rebocado then
                     local min,max = GetModelDimensions(GetEntityModel(rebocado))
                     AttachEntityToEntity(rebocado,vehicle,GetEntityBoneIndexByName(vehicle,"bodyshell"),0,-2.2,0.4-min.z,0,0,0,1,1,0,1,0,1)
+                    reboque = rebocado
+                end
+            else
+                AttachEntityToEntity(reboque,vehicle,20,-0.5,-15.0,-0.3,0.0,0.0,0.0,false,false,true,false,20,true)
+                DetachEntity(reboque,false,false)
+                PlaceObjectOnGroundProperly(reboque)
+                reboque = nil
+                rebocado = nil
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('synctowboat')
+AddEventHandler('synctowboat',function(vehid,rebid)
+    if NetworkDoesNetworkIdExist(vehid) and NetworkDoesNetworkIdExist(rebid) then
+        local vehicle = NetToVeh(vehid)
+        local rebocado = NetToVeh(rebid)
+        if DoesEntityExist(vehicle) and DoesEntityExist(rebocado) then
+            if reboque == nil then
+                if vehicle ~= rebocado then
+                    local min,max = GetModelDimensions(GetEntityModel(rebocado))
+                    AttachEntityToEntity(rebocado,vehicle,GetEntityBoneIndexByName(vehicle,"chassis"),0,-2.2,-0.3-min.z,0,0,0,1,1,0,1,0,1)
                     reboque = rebocado
                 end
             else
