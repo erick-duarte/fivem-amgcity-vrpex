@@ -2,6 +2,7 @@ local Tunnel = module("vrp","lib/Tunnel")
 local Proxy = module("vrp","lib/Proxy")
 local Tools = module("vrp","lib/Tools")
 vRP = Proxy.getInterface("vRP")
+empCaminhao = Proxy.getInterface("emp_caminhao")
 vRPclient = Tunnel.getInterface("vRP")
 vPlayerclient = Tunnel.getInterface("vrp_player")
 local idgens = Tools.newIDGenerator()
@@ -64,6 +65,61 @@ RegisterCommand('debug',function(source,args,rawCommand)
 		end
 	end
 end)
+
+vRP.prepare("empresa/getCaixaProdutos","SELECT caixa,produtos,encomendas from amg_empresas where cnpj = @cnpj")
+vRP.prepare("empresa/debitCaixa","UPDATE amg_empresas set caixa = @caixa where cnpj = @cnpj")
+vRP.prepare("empresa/getEncomendas","SELECT encomendas from amg_empresas where cnpj = @cnpj")
+vRP.prepare("empresa/setEncomendas","UPDATE amg_empresas set encomendas = JSON_SET(encomendas, @nomeProduto, @qtdProduto)")
+
+--empCaminhao.receberPedidos(args[1])
+RegisterCommand('encomendar',function(source,args,rawCommand)
+	local source = source
+	local user_id = vRP.getUserId(source)
+	local cnpj = nil
+
+	if vRP.hasPermission(user_id,"bennysceo.permission") or vRP.hasPermission(user_id,"bennysmanager.permission") then
+		cnpj = 1
+	elseif vRP.hasPermission(user_id,"diretor.permission") then
+		cnpj = 1
+	else
+		TriggerClientEvent("Notify",source,"negado","Você não tem permissão")
+	end
+
+	if args[1] == nil or args[2] == nil then
+		TriggerClientEvent("Notify",source,"negado","Comando inválido")
+		Citizen.Wait(1500)
+		TriggerClientEvent("Notify",source,"importante","Utilize o /encomendar PRODUTO QTD")
+		
+	else
+		if args[2]%10 == 0 and parseInt(args[2]) > 1 then
+			local nomeProduto = args[1]
+			local totalKit = args[2] * 1
+			local rows = vRP.query("empresa/getCaixaProdutos",{ cnpj = cnpj })
+			local resultEmpresa = rows[1]
+
+			local totalCaixa = resultEmpresa.caixa
+			local allProdutos = json.decode(resultEmpresa.produtos)
+			local allEncomendas = json.decode(resultEmpresa.encomendas)
+
+			if allProdutos.produtos[nomeProduto] == nil then
+				TriggerClientEvent("Notify",source,"negado","Produto não identificado")
+			else
+				local valorTotal = parseInt(totalKit) * allProdutos.produtos[nomeProduto]
+				if totalCaixa > valorTotal then
+					local newNomeProduto = "$.encomendas."..nomeProduto..""
+					vRP.query("empresa/debitCaixa",{ caixa = (parseInt(totalCaixa) - parseInt(valorTotal)), cnpj = cnpj })
+					vRP.query("empresa/setEncomendas",{ nomeProduto = newNomeProduto, qtdProduto = (parseInt(allEncomendas.encomendas[nomeProduto]) + parseInt(totalKit)) })
+					TriggerClientEvent("Notify",source,"sucesso","Pedido efetuado")
+				else
+					TriggerClientEvent("Notify",source,"negado","A empresa não possui saldo")
+				end
+			end
+		else
+			TriggerClientEvent("Notify",source,"negado","O pedido só pode ser feito em multiplos de 10")
+		end
+	end
+end)
+
 -- [ SALARIO CFG & THREAD ] --
 --local salarios = {
 --
