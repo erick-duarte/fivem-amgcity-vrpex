@@ -38,12 +38,12 @@ Citizen.CreateThread(function()
 			if not IsPedInAnyVehicle(ped) then
 				local x,y,z = table.unpack(GetEntityCoords(ped))
 				local distance = Vdist(x, y, z, rocks[selected].x, rocks[selected].y, rocks[selected].z)
-				local lastVehicle = GetEntityModel(GetPlayersLastVehicle())
+--				local lastVehicle = GetEntityModel(GetPlayersLastVehicle())
 				if distance <= 100.0 then
 					idle = 5
 					DrawMarker(21, rocks[selected].x, rocks[selected].y, rocks[selected].z-0.3, 0, 0, 0, 0, 180.0, 130.0, 0.6, 0.8, 0.5, 50, 150, 50, 180, 1, 0, 0, 1)
 					if distance <= 1.2 and IsControlJustPressed(1,38) then
-						if lastVehicle == 48339065 then
+--						if lastVehicle == 48339065 then
 							if miner.checkWeight() then
 								working = true
 								vRP.DeletarObjeto()
@@ -68,9 +68,9 @@ Citizen.CreateThread(function()
 							else
 								TriggerEvent("Notify","negado","<b>Ferramenta</b> ou <b>espaço na mochila</b> insuficientes.")
 							end
-						else
-							TriggerEvent("Notify","negado","Você precisa do <b>veículo da mineradora</b> para fazer isso.")
-						end
+--						else
+--							TriggerEvent("Notify","negado","Você precisa do <b>veículo da mineradora</b> para fazer isso.")
+--						end
 					end
 				end
 			end
