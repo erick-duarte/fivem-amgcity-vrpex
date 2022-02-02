@@ -4,7 +4,10 @@ vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP")
 emP = {}
 Tunnel.bindInterface("emp_caminhao",emP)
+addCaminhao = {}
+Proxy.addInterface("emp_caminhao",addCaminhao)
 AMGCoin = Proxy.getInterface("AMG_Coin")
+local cnpj = nil
 
 function emP.addEmprego()
 	local source = source
@@ -40,4 +43,40 @@ function emP.checkPayment()
         	TriggerClientEvent("Notify",source,"sucesso","Você recebeu $"..valorpago.." dólares",3000)
 		end
     end
+end
+
+function emP.verificaEncomendas(data)
+    local source = source
+    local user_id = vRP.getUserId(source)
+	local kitreparoQtd = 0
+	local pneuQtd = 0
+
+	if data == "mecanica" then
+		cnpj = 1
+	elseif data == "hospital" then
+		cnpj = 2
+	end
+
+	local rows = vRP.query("empresa/getEncomendas",{ cnpj = cnpj })
+	local resultEncomendas = rows[1]
+	local totalEncomendas = json.decode(resultEncomendas.encomendas)
+	
+	for k, v in pairs(totalEncomendas.encomendas) do
+		if k == "kitreparo" then
+			kitreparoQtd = v
+		end
+		if k == "pneu" then
+			pneuQtd = v
+		end
+	end
+	local codEncomenda = vRP.prompt(source,"Qual entrega deseja fazer? 1 - KitReparo: "..kitreparoQtd.." | 2 - Pneu: "..pneuQtd..""," ")
+--	if parseInt(codEncomenda) >= 1 then
+		
+
+end
+
+function addCaminhao.receberPedidos(qtd)
+	local source = source
+	local user_id = vRP.getUserId(source)
+	print("caminhao",qtd)
 end
