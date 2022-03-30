@@ -2,12 +2,14 @@ local Tunnel = module("vrp","lib/Tunnel")
 local Proxy = module("vrp","lib/Proxy")
 local Tools = module("vrp","lib/Tools")
 vRP = Proxy.getInterface("vRP")
-empCaminhao = Proxy.getInterface("emp_caminhao")
+empCaminhao = Proxy.getInterface("amg_caminhoneiro")
 vRPclient = Tunnel.getInterface("vRP")
 vPlayerclient = Tunnel.getInterface("vrp_player")
 local idgens = Tools.newIDGenerator()
 src = {}
 Tunnel.bindInterface("vrp_player",src)
+
+cfg = module("amg_caminhoneiro", "config")
 
 -- [ WEBHOOK LINKS ] --
 local sendmoneylog = "https://discord.com/api/webhooks/842550027834359848/BcZ95q9XKOeVmdCZztd3BFBZye8MeBBvM-P51wj8UpFsSK_MA69PvWushFsj-GNOlmyY"
@@ -66,124 +68,6 @@ RegisterCommand('debug',function(source,args,rawCommand)
 	end
 end)
 
-vRP.prepare("empresa/getCaixaProdutos","SELECT caixa,produtos,encomendas from amg_empresas where cnpj = @cnpj")
-vRP.prepare("empresa/debitCaixa","UPDATE amg_empresas set caixa = @caixa where cnpj = @cnpj")
-vRP.prepare("empresa/getEncomendas","SELECT encomendas from amg_empresas where cnpj = @cnpj")
-vRP.prepare("empresa/setEncomendas","UPDATE amg_empresas set encomendas = JSON_SET(encomendas, @nomeProduto, @qtdProduto)")
-
---empCaminhao.receberPedidos(args[1])
-RegisterCommand('encomendar',function(source,args,rawCommand)
-	local source = source
-	local user_id = vRP.getUserId(source)
-	local cnpj = nil
-
-	if vRP.hasPermission(user_id,"bennysceo.permission") or vRP.hasPermission(user_id,"bennysmanager.permission") then
-		cnpj = 1
-	elseif vRP.hasPermission(user_id,"diretor.permission") then
-		cnpj = 1
-	else
-		TriggerClientEvent("Notify",source,"negado","Você não tem permissão")
-	end
-
-	if args[1] == nil or args[2] == nil then
-		TriggerClientEvent("Notify",source,"negado","Comando inválido")
-		Citizen.Wait(1500)
-		TriggerClientEvent("Notify",source,"importante","Utilize o /encomendar PRODUTO QTD")
-		
-	else
-		if args[2]%10 == 0 and parseInt(args[2]) > 1 then
-			local nomeProduto = args[1]
-			local totalKit = args[2] * 1
-			local rows = vRP.query("empresa/getCaixaProdutos",{ cnpj = cnpj })
-			local resultEmpresa = rows[1]
-
-			local totalCaixa = resultEmpresa.caixa
-			local allProdutos = json.decode(resultEmpresa.produtos)
-			local allEncomendas = json.decode(resultEmpresa.encomendas)
-
-			if allProdutos.produtos[nomeProduto] == nil then
-				TriggerClientEvent("Notify",source,"negado","Produto não identificado")
-			else
-				local valorTotal = parseInt(totalKit) * allProdutos.produtos[nomeProduto]
-				if totalCaixa > valorTotal then
-					local newNomeProduto = "$.encomendas."..nomeProduto..""
-					vRP.query("empresa/debitCaixa",{ caixa = (parseInt(totalCaixa) - parseInt(valorTotal)), cnpj = cnpj })
-					vRP.query("empresa/setEncomendas",{ nomeProduto = newNomeProduto, qtdProduto = (parseInt(allEncomendas.encomendas[nomeProduto]) + parseInt(totalKit)) })
-					TriggerClientEvent("Notify",source,"sucesso","Pedido efetuado")
-				else
-					TriggerClientEvent("Notify",source,"negado","A empresa não possui saldo")
-				end
-			end
-		else
-			TriggerClientEvent("Notify",source,"negado","O pedido só pode ser feito em multiplos de 10")
-		end
-	end
-end)
-
--- [ SALARIO CFG & THREAD ] --
---local salarios = {
---
---	-- [ POLICIA AMG ] -- 
---	{ ['posicao'] = "policia-recruta.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Recruta", ['payment'] = 7000 },
---	{ ['posicao'] = "policia-cabo.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Cabo", ['payment'] = 7500 },
---	{ ['posicao'] = "policia-soldado.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Soldado", ['payment'] = 8000 },
---	{ ['posicao'] = "policia-sargento.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Sargento", ['payment'] = 9000 },
---	{ ['posicao'] = "policia-tenente.permission",  ['grupo'] = "lspd.permission", ['nome'] = "Policia Tenente", ['payment'] = 10000 },
---	{ ['posicao'] = "policia-capitao.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Capitão", ['payment'] = 11000 },
---	{ ['posicao'] = "policia-major.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Major", ['payment'] = 12000 },
---	{ ['posicao'] = "policia-coronel.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Caronel", ['payment'] = 13000 },
---	{ ['posicao'] = "policia-subcomandante.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Sub.Comandante", ['payment'] = 14000 },
---	{ ['posicao'] = "policia-comandante.permission", ['grupo'] = "lspd.permission", ['nome'] = "Policia Comandante", ['payment'] = 15000 },
---
---	-- [ TATICA AMG ] -- 
---	{ ['posicao'] = "tatica-recruta.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Recruta", ['payment'] = 9000 },
---	{ ['posicao'] = "tatica-soldado.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Soldado", ['payment'] = 10000 },
---	{ ['posicao'] = "tatica-sargento.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Sargento", ['payment'] = 11000 },
---	{ ['posicao'] = "tatica-tenente.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Tenente", ['payment'] = 12000 },
---	{ ['posicao'] = "tatica-capitao.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Capitão", ['payment'] = 13000 },
---	{ ['posicao'] = "tatica-major.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Major", ['payment'] = 14000 },
---	{ ['posicao'] = "tatica-coronel.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Caronel", ['payment'] = 15000 },
---	{ ['posicao'] = "tatica-subcomandante.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Sub.Comandante", ['payment'] = 16000 },
---	{ ['posicao'] = "tatica-comandante.permission", ['grupo'] = "lspd.permission", ['nome'] = "Tática Comandante", ['payment'] = 17000 },
---
---	-- [ INVESTIGATIVA ] -- 
---	{ ['posicao'] = "investigativa-recruta.permission", ['grupo'] = "lspd.permission", ['nome'] = "Investigador", ['payment'] = 17000 },
---	{ ['posicao'] = "investigativa-soldado.permission", ['grupo'] = "lspd.permission", ['nome'] = "Escrivão", ['payment'] = 18000 },
---	{ ['posicao'] = "investigativa-sargento.permission", ['grupo'] = "lspd.permission", ['nome'] = "Delegado", ['payment'] = 19000 },
---	
---	-- [ HOSPITAL ] -- 
---	{ ['posicao'] = "estagiario.permission", ['grupo'] = "ems.permission", ['nome'] = "Estagiário(a)", ['payment'] = 12000 },
---	{ ['posicao'] = "enfermeiro.permission", ['grupo'] = "ems.permission", ['nome'] = "Enfermeiro(a)", ['payment'] = 13000 },
---	{ ['posicao'] = "samu.permission", ['grupo'] = "ems.permission", ['nome'] = "Samu", ['payment'] = 14000 },
---	{ ['posicao'] = "medico.permission", ['grupo'] = "ems.permission", ['nome'] = "Médico(a)", ['payment'] = 15000 },
---	{ ['posicao'] = "vicediretor.permission", ['grupo'] = "ems.permission", ['nome'] = "Vice Diretor(a)", ['payment'] = 16000 },
---	{ ['posicao'] = "diretor.permission", ['grupo'] = "ems.permission", ['nome'] = "Diretor(a)", ['payment'] = 17000 },
---
---	-- [ BENNYS ] -- 
---	{ ['posicao'] = "tow.permission", ['grupo'] = "bennys.permission", ['nome'] = "Benny's Guincho", ['payment'] = 1500 },
---	{ ['posicao'] = "mechanic.permission", ['grupo'] = "bennys.permission", ['nome'] = "Benny's Mecânico", ['payment'] = 2500 },
---	{ ['posicao'] = "bennysmanager.permission", ['grupo'] = "bennys.permission", ['nome'] = "Benny's Gerente", ['payment'] = 3200 },
---	{ ['posicao'] = "bennysceo.permission", ['grupo'] = "bennys.permission", ['nome'] = "Benny's CEO", ['payment'] = 3800 },
---
---}
-
---local salariosvip = {
---	-- [ DOADORES ] -- 
---	{ ['posicao'] = "bronze.pass", ['nome'] = "Bronze Pass", ['payment'] = 2500 },
---	{ ['posicao'] = "prata.pass", ['nome'] = "Prata Pass", ['payment'] = 4500 },
---	{ ['posicao'] = "ouro.pass", ['nome'] = "Ouro Pass", ['payment'] = 6500 },
---	{ ['posicao'] = "platina.pass", ['nome'] = "Platina Pass", ['payment'] = 8500 },
---	{ ['posicao'] = "amg.pass", ['nome'] = "AMG Pass", ['payment'] = 10500 },
---
---	{ ['posicao'] = "manager.permission", ['nome'] = "Bronze Pass", ['payment'] = 6000 },
---	{ ['posicao'] = "admin.permission", ['nome'] = "Prata Pass", ['payment'] = 5000 },
---	{ ['posicao'] = "mod.permission", ['nome'] = "Ouro Pass", ['payment'] = 4000 },
---	{ ['posicao'] = "support.permission", ['nome'] = "Platina Pass", ['payment'] = 3000 },
---
---	{ ['posicao'] = "advogado.permission", ['nome'] = "Advogado", ['payment'] = 10000 },
---	{ ['posicao'] = "juiz.permission", ['nome'] = "Juiz", ['payment'] = 15000 },
---}
-
 RegisterServerEvent('salario:pagamento')
 AddEventHandler('salario:pagamento',function()
 	local source = source
@@ -199,34 +83,6 @@ end)
 --	SendWebhookMessage(limbolog,"```prolog\n[ID]: "..user_id.."\n[COORDENADAS]: "..x..","..y..","..z..""..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").." \r```")
 --end)
 
---function src.publicPaycheck()
---	local source = source
---	local user_id = vRP.getUserId(source)
---	if user_id then
---		for k,v in pairs(salarios) do
---			if vRP.hasPermission(user_id,v.posicao) and vRP.hasPermission(user_id,v.grupo) then
---				TriggerClientEvent("vrp_sound:source",source,'coins',0.5)
---				TriggerClientEvent("Notify",source,"importante","Obrigado pelo seu trabalho, seu salario de <b>$"..vRP.format(parseInt(v.payment)).." dólares</b> foi depositado.", 10000)
---				vRP.giveBankMoney(user_id,parseInt(v.payment))
---			end
---		end
---	end
---end
-
---function src.publicPaycheckVIP()
---	local source = source
---	local user_id = vRP.getUserId(source)
---	if user_id then
---		for k,v in pairs(salariosvip) do
---			if vRP.hasPermission(user_id,v.posicao) then
---				TriggerClientEvent("vrp_sound:source",source,'coins',0.5)
---				TriggerClientEvent("Notify",source,"importante","Obrigado por colaborar com a cidade, seu salario de <b>$"..vRP.format(parseInt(v.payment)).." dólares</b> foi depositado.", 10000)
---				vRP.giveBankMoney(user_id,parseInt(v.payment))
---			end
---		end
---	end
---end
-
 -- [ VERIFICAR PERMISSÃO NO CLIENT-SIDE ] --
 function src.clientPermission(permission)
 	local source = source
@@ -235,6 +91,7 @@ function src.clientPermission(permission)
 		return vRP.hasPermission(user_id,permission)
 	end
 end
+
 -- [ TRANCAR PORTAS DOS CARROS (NAO NECESSARIO PARA CIDADE SEM NPC) ] --
 --[[ local veiculos = {}
 RegisterServerEvent("TryDoorsEveryone")
@@ -244,7 +101,7 @@ AddEventHandler("TryDoorsEveryone",function(veh,doors,placa)
 		veiculos[placa] = true
 	end
 end)]]
--- [ AFK KICK ] --
+
 RegisterServerEvent("kickAFK")
 AddEventHandler("kickAFK",function()
     local source = source
@@ -253,7 +110,7 @@ AddEventHandler("kickAFK",function()
         DropPlayer(source,"Voce foi desconectado por ficar ausente.")
     end
 end)
--- [ SEQUESTRO ] --
+
 RegisterCommand('sequestro',function(source,args,rawCommand)
 	local nplayer = vRPclient.getNearestPlayer(source,5)
 	if nplayer then
@@ -273,7 +130,7 @@ RegisterCommand('sequestro',function(source,args,rawCommand)
 		end
 	end
 end)
--- [ ENVIAR DINHEIRO ] --
+
 RegisterCommand('enviar',function(source,args,rawCommand)
 	local user_id = vRP.getUserId(source)
 	local nplayer = vRPclient.getNearestPlayer(source,2)
@@ -294,7 +151,7 @@ RegisterCommand('enviar',function(source,args,rawCommand)
 		end
 	end
 end)
--- [ GARMAS ] --
+
 RegisterCommand('garmas',function(source,args,rawCommand)
 	local user_id = vRP.getUserId(source)
 	local identity = vRP.getUserIdentity(user_id)
@@ -323,7 +180,7 @@ RegisterCommand('garmas',function(source,args,rawCommand)
 		TriggerClientEvent("Notify",source,"negado","Você não tem permissão.")
 	end
 end)
--- [ ROUBAR ] --
+
 RegisterCommand('roubar',function(source,args,rawCommand)
 	local user_id = vRP.getUserId(source)
 	local nplayer = vRPclient.getNearestPlayer(source,2)
@@ -434,7 +291,7 @@ RegisterCommand('roubar',function(source,args,rawCommand)
 		end
 	end
 end)
--- [ SAQUEAR ] --
+
 RegisterCommand('saquear',function(source,args,rawCommand)
 	local user_id = vRP.getUserId(source)
 	local nplayer = vRPclient.getNearestPlayer(source,2)

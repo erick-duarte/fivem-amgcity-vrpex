@@ -58,7 +58,7 @@ end)
 local chest = {
 	{ "lspd",-1087.44,-820.76,11.04,0,140,255, "[~b~E~w~] Para ~b~ABRIR~w~ o baú da ~b~POLICIA~w~" },
 	{ "ems",306.63,-601.49,43.29,255,25,25, "[~r~E~w~] Para ~r~ABRIR~w~ o baú do ~r~HOSPITAL~w~" },
-	{ "bennys",-196.25,-1315.29,31.09,255,180,0, "[~y~E~w~] Para ~y~ABRIR~w~ o baú da ~y~BENNY'S~w~" },
+	{ "bennys",1016.47,-2314.45,30.51,255,180,0, "[~y~E~w~] Para ~y~ABRIR~w~ o baú da ~y~BENNY'S~w~" },
 	
 --	{ "grove",-131.35,-1606.73,35.04,25,255,25, "[~g~E~w~] Para ~g~ABRIR~w~ o baú da ~g~GROVE ST.~w~" },
 --	{ "ballas",262.01,-1805.45,26.92,130,0,255, "[~p~E~w~] Para ~p~ABRIR~w~ o baú dos ~p~BALLAS~w~" },

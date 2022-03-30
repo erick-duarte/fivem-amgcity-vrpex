@@ -16,7 +16,7 @@
 
 ::-webkit-scrollbar-thumb {
     position: absolute;
-    background: #0044ff;
+    background: rgba(0, 218, 73,0.7);
     left: 10vw;
     
 }
@@ -89,22 +89,6 @@ input:placeholder{
     src: url('media/fonts/AvenirNextRoundedStd-Bold.ttf');
 }
 
-@font-face {
-    font-family: 'Poppins';
-    src: url('./fonts/Poppins-Regular.ttf');
-}
-
-@font-face {
-    font-family: 'Poppins';
-    src: url('./fonts/Poppins-Medium.ttf');
-}
-
-
-@font-face {
-    font-family: 'Poppins';
-    src: url('./fonts/Poppins-Bold.ttf');
-}
-
 .mainContainer {
     position: absolute;
     top: 50%;
@@ -112,7 +96,7 @@ input:placeholder{
     width: 65vw;
     height: 40vw;
     border-radius: 10px;
-    background-color: #E5E5E5;
+    background-color: rgb(201, 228, 213);
     transform: translate(-50%,-50%);
 }
 
@@ -124,7 +108,7 @@ input:placeholder{
     height: 40vw;
     border-radius: 10px;
     transform: translate(-50%,-50%);
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
 }
 
 .loginWatermark img{
@@ -135,17 +119,12 @@ input:placeholder{
     position: absolute;
     width: 35vw;
     height: 30vw;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: #fff;
     border-radius: 10px;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     
-}
-
-.background-image {
-    margin: auto;
-    margin-top: 35%;
 }
 
 .buttonAlign {
@@ -165,28 +144,27 @@ input:placeholder{
     width: 22%;
     text-align: center;
     height: 2vw;
-    background-image: linear-gradient(to right, rgba(0, 218, 73, 0)gb(0, 252, 126));
-    border-radius: 25px;
-    border: 1px solid #fff;
-
-    transition: background-color 0.2s;
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
+    border-radius: 10px;
+    
 }
 
 .loginButton p {
-    margin-top: 5px;
+	margin-top: 55%;
     font-family: 'Poppins', sans-serif;
     color: #fff;
-    font-size: 0.95vw;
+    font-size: 1.25vw;
+    
 }
 
 .loginButton:hover p {
-    color: #000000;
+    color: #b5b5b5;
     
 }
 
 .loginButton:hover {
-   background-color: #fff;
-   border: 2px solid #0044ff;
+    background-image: linear-gradient(to right, rgba(0, 218, 73,0.75), rgba(0, 252, 126,0.75));
+    
 }
 
 .backwards {
@@ -216,13 +194,13 @@ input:placeholder{
 
 .forgotPassword p {
     font-family: Poppins, sans-serif;
-    color:  #0044ff;
+    color:  rgba(0, 218, 73,1);
     font-size: 0.85vw;
     transition: 0.25s;
 }
 
 .forgotPassword:hover p {
-    color:  #0044ff;
+    color:  rgba(0, 218, 73,0.75);
     transform: scale(1.05,1.05);
     transition: 0.25s;
 }
@@ -240,47 +218,47 @@ input:placeholder{
 }
 
 .fleecaTitleImage p {
-    font-family: 'Poppins', sans-serif;
+    font-family: Poppins, sans-serif;
     font-size: 0.75vw;
 }
 
 .loginUsername {
     position: absolute;
     width: 15vw;
-    height: 2.0vw;
-    border: none;
-    border-color:  none;
-    background-color: #fff;
-    border-radius: 25px;
+    height: 1.5vw;
+    border: 2px solid;
+    border-color:  rgb(0, 218, 73);
+    background-color: rgb(245, 245, 245);
+    border-radius: 10px;
     top: 40%;
     left: 50%;
     transform: translate(-50%,-50%);
 }
 
 .loginUsername p {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 0.75vw;
-    margin-top: 0.40vw;
+    margin-top: 0.25vw;
     margin-left: 0.5vw;
 }
 
 .loginPassword {
     position: absolute;
     width: 15vw;
-    height: 2.0vw;
-    border: none;
-    border-color:  none;
-    background-color: #fff;
-    border-radius: 25px;
-    top: 50%;
+    height: 1.5vw;
+    border: 2px solid;
+    border-color:  rgb(0, 218, 73);
+    background-color: rgb(245, 245, 245);
+    border-radius: 10px;
+    top: 55%;
     left: 50%;
     transform: translate(-50%,-50%);
 }
 
 .loginPassword p {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 0.95vw;
-    margin-top: 0.40vw;
+    margin-top: 0.25vw;
     margin-left: 0.5vw;
 }
 
@@ -310,16 +288,6 @@ input:placeholder{
     color: rgb(75,75,75);
 }
 
-.title-bank {
-    color: #FFF;
-    font-weight: bold;
-    text-align: center;
-    font-family:  'Poppins', sans-serif;
-    font-size: 50px;
-    margin: auto;
-    margin-top: 65px;
-}
-
 .titleContainer {
     position: absolute;
     width: 65vw;
@@ -333,14 +301,13 @@ input:placeholder{
 .fleecaWaterMark {
     width: 10vw;
     height: 5vw;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
     border-top-left-radius: 10px;
 }
 
 .fleecaWaterMark img {
-    margin-top: 2vw;
-    width: 8vw;
-    margin-left: 1vw;
+    margin-top: 1vw;
+    width: 10vw;
 }
 
 .fleecaTitle {
@@ -350,7 +317,7 @@ input:placeholder{
 }
 
 .fleecaTitle span {
-    font-family: 'Poppins', sans-serif;
+    font-family: Poppins, sans-serif;
     font-size: 1.3vw;
     color: rgba(150,150,150,1);
 }
@@ -381,7 +348,7 @@ input:placeholder{
 }
 
 .userNameFirstName p {
-    font-family: 'Poppins', sans-serif;
+    font-family: Poppins, sans-serif;
     font-size: 1vw;
     color: rgba(100,100,100,0.7);
     
@@ -395,10 +362,6 @@ input:placeholder{
     background-color: rgba(255, 255, 255,1);
     border-bottom-left-radius: 10px;
     text-align: center;
-}
-
-.nome {
-    color: #000;
 }
 
 .depositButton {
@@ -430,12 +393,12 @@ input:placeholder{
 }
 
 .depositButton:hover p {
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
 .depositButton:hover .depositIcon{
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
@@ -469,12 +432,12 @@ input:placeholder{
 }
 
 .sacarButton:hover p {
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
 .sacarButton:hover .sacarIcon{
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
@@ -508,12 +471,12 @@ input:placeholder{
 }
 
 .transferButton:hover p {
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
 .transferButton:hover .transferIcon{
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
@@ -547,12 +510,12 @@ input:placeholder{
 }
 
 .citationButton:hover p {
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
 .citationButton:hover .citationIcon{
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     transition: 0.10s;
 }
 
@@ -563,7 +526,7 @@ input:placeholder{
     left: 11vw;
     top: 7vw;
     border-radius: 10px;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
 }
 
 .walletMoneyCard h1 {
@@ -605,7 +568,7 @@ input:placeholder{
     left: 28vw;
     top: 7vw;
     border-radius: 10px;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
 }
 
 .bankMoneyCard h1 {
@@ -639,7 +602,7 @@ input:placeholder{
     left: 45vw;
     top: 7vw;
     border-radius: 10px;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
 }
 
 .infoImg {
@@ -722,7 +685,7 @@ input:placeholder{
 }
 .infosArrow i {
     font-size: 2vw;
-    color: #0044ff;
+    color: rgb(0, 218, 73);
 }
 
 .infosArrow:hover {
@@ -739,7 +702,7 @@ input:placeholder{
 }
 .infosClose i {
     font-size: 2vw;
-    color: #0044ff;
+    color: rgb(0, 218, 73);
     
 }
 
@@ -836,7 +799,7 @@ input:placeholder{
     height: 3vw;
     border-top-left-radius: 10px;
     border-bottom-right-radius: 3px;
-    background-color: #103EBC;
+    background-color: rgb(0, 218, 73);
 }
 
 .historyTitle {
@@ -852,7 +815,7 @@ input:placeholder{
 }
 
 .historyTitle p {
-    font-family: 'Poppins', sans-serif;
+    font-family: Poppins, sans-serif;
     line-height: 4.5vw;
     margin-left: 1vw;
     font-size: 1vw;
@@ -915,7 +878,7 @@ input:placeholder{
 
 .form-depositar:hover{
     border: none;
-    border-bottom: 2px solid #0044ff;
+    border-bottom: 2px solid #45FF73;
 	transform: scale(1.04);
 }
 
@@ -927,7 +890,7 @@ input:placeholder{
     height: 1.5vw;
     top: 17vw;
     left: 9vw;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
     border-radius: 12px;
     transition: all .2s ease-in-out;
 }
@@ -937,7 +900,7 @@ input:placeholder{
 }
 
 .confirmar-depositar:hover .text-confirmar-depositar {
-    color: rgba(255, 255, 255, 0.822);
+    color: #fff;
     transition: 0.15s;
 }
 
@@ -948,7 +911,7 @@ input:placeholder{
     font-family: Poppins, sans-serif;
     font-size: 0.75vw;
     transition: 0.15s;
-    color: #fff;
+    color: #2C2F33;
 }
 
 .backButtonDeposit {
@@ -1025,7 +988,7 @@ input:placeholder{
 
 .form-sacar:hover{
     border: none;
-    border-bottom: 2px solid #0044ff;
+    border-bottom: 2px solid #45FF73;
 }
 
 .form-sacar:hover{
@@ -1038,7 +1001,7 @@ input:placeholder{
     height: 1.5vw;
     top: 17vw;
     left: 9vw;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
     border-radius: 12px;
     transition: all .2s ease-in-out;
 }
@@ -1048,7 +1011,7 @@ input:placeholder{
 }
 
 .confirmar-sacar:hover .text-confirmar-sacar {
-    color: rgba(255, 255, 255, 0.822);
+    color: #fff;
     transition: 0.15s;
 }
 
@@ -1059,7 +1022,7 @@ input:placeholder{
     font-family: Poppins, sans-serif;
     font-size: 0.75vw;
     transition: 0.15s;
-    color: #fff;
+    color: #2C2F33;
 }
 
 .backButtonSacar {
@@ -1146,13 +1109,13 @@ input:placeholder{
 
 .form-trans-to:hover{
     border: none;
-    border-bottom: 2px solid #0044ff;
+    border-bottom: 2px solid #45FF73;
     transform: scale(1.04);
 }
 
 .form-trans-amount:hover{
     border: none;
-    border-bottom: 2px solid #0044ff;
+    border-bottom: 2px solid #45FF73;
     transform: scale(1.04);
 }
 
@@ -1162,7 +1125,7 @@ input:placeholder{
     height: 1.5vw;
     top: 17vw;
     left: 9vw;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
     border-radius: 12px;
     transition: all .2s ease-in-out;
 }
@@ -1172,7 +1135,7 @@ input:placeholder{
 }
 
 .confirmar-trans:hover .text-confirmar-trans {
-    color: rgba(255, 255, 255, 0.822);
+    color: #fff;
     transition: 0.15s;
 }
 
@@ -1183,7 +1146,7 @@ input:placeholder{
     font-family: Poppins, sans-serif;
     font-size: 0.75vw;
     transition: 0.15s;
-    color: #fff;
+    color: #2C2F33;
 }
 
 .backButtonTrans {
@@ -1273,7 +1236,7 @@ input:placeholder{
 
 .form-multa:hover{
     border: none;
-    border-bottom: 2px solid #0044ff;
+    border-bottom: 2px solid #45FF73;
 }
 
 .form-multa:hover{
@@ -1286,7 +1249,7 @@ input:placeholder{
     height: 1.5vw;
     top: 19vw;
     left: 9vw;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
     border-radius: 12px;
     transition: all .2s ease-in-out;
 }
@@ -1296,7 +1259,7 @@ input:placeholder{
 }
 
 .confirmar-multa:hover .text-confirmar-multa {
-    color: rgba(255, 255, 255, 0.822);
+    color: #fff;
     transition: 0.15s;
 }
 
@@ -1307,7 +1270,7 @@ input:placeholder{
     font-family: Poppins, sans-serif;
     font-size: 0.75vw;
     transition: 0.15s;
-    color: #ffff;
+    color: #2C2F33;
 }
 
 .backButtonMulta {
@@ -1334,7 +1297,7 @@ input:placeholder{
     height: 1.5vw;
     left: 9vw;
     top: 11.4vw;
-    background-image: linear-gradient(to left, #103ebc, #13338f, #172763, #161c3a, #0e0e14);
+    background-image: linear-gradient(to right, rgb(0, 218, 73), rgb(0, 252, 126));
     border-radius: 12px;
     transition: 0.15s;
 }
@@ -1370,9 +1333,4 @@ input:placeholder{
     font-family: Poppins, sans-serif;
     font-size: 0.8vw;
     line-height: 1.5vw;
-}
-
-.amg {
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
 }

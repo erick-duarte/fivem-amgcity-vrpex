@@ -133,7 +133,7 @@ function src.checkPayment()
 			tecidoqtd[source] = math.random(1,3)
 			linhaqtd[source] = math.random(1,3)
 			placametalqtd[source] = 1
-			if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("tecido")*tecidoqtd[source]+vRP.getItemWeight("linha")*linhaqtd[source]+vRP.getItemWeight("placa-metal")*placametalqtd[source] <= vRP.getInventoryMaxWeight(user_id) then
+			if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("tecido")*tecidoqtd[source]+vRP.getItemWeight("linha")*linhaqtd[source]+vRP.getItemWeight("placametal")*placametalqtd[source] <= vRP.getInventoryMaxWeight(user_id) then
 				vRP.giveInventoryItem(user_id,"tecido",tecidoqtd[source])
 				vRP.giveInventoryItem(user_id,"linha",linhaqtd[source])
 				TriggerClientEvent("Notify",source,"importante","Você pegou<br> "..tecidoqtd[source].."x Tecido.")
@@ -142,7 +142,7 @@ function src.checkPayment()
 				SendWebhookMessage(itensilegais,"```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." \n[QTD LINHA]: "..linhaqtd[source].."\n"..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").." \r```")
 				local chances = math.random(1,10)
 				if chances > 8 then
-					vRP.giveInventoryItem(user_id,"placa-metal",placametalqtd[source])
+					vRP.giveInventoryItem(user_id,"placametal",placametalqtd[source])
 					TriggerClientEvent("Notify",source,"importante","Você pegou<br> "..placametalqtd[source].."x Placa de Metal.")
 					SendWebhookMessage(itensilegais,"```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." \n[QTD PLACA METAL]: "..placametalqtd[source].."\n"..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").." \r```")
 				end

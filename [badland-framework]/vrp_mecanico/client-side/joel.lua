@@ -6,9 +6,9 @@ vRPex = Tunnel.getInterface("vrp_mecanico")
 pontoX = 1025.65
 pontoY = -2316.06
 pontoZ = 30.51
-systemX = 1006.31
-systemY = -2369.84
-systemZ = 30.53
+systemX = 997.11
+systemY = -2360.32
+systemZ = 30.51
 onMenu = false
 
 local listBoats = {

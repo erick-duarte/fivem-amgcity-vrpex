@@ -28,9 +28,13 @@ AddEventHandler("bennys-comprar",function(item)
 			if item == v.item then
 				if vRP.getInventoryWeight(user_id)+vRP.getItemWeight(v.item)*v.amount <= vRP.getInventoryMaxWeight(user_id) then
 					if vRP.tryPayment(user_id,parseInt(v.price)) then
-						vRP.giveInventoryItem(user_id,v.item,parseInt(v.amount))
-						TriggerClientEvent("Notify",source,"sucesso","Comprou <b>"..parseInt(v.amount).."x "..vRP.itemNameList(v.item).."</b> por <b>$"..vRP.format(parseInt(v.price)).." dólares</b>.")
-						PerformHttpRequest(bennysLog, function(err, text, headers) end, 'POST', json.encode({embeds = {{ title = "REGISTRO DA BENNYS:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",thumbnail = {url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"}, fields = {{ name = "**Registro do usuário:**", value = "` "..identity.name.." "..identity.firstname.." ` "},{ name = "**Nº do ID:**", value = "` "..user_id.." ` "},{ name = "**Comprou:**", value = "` "..vRP.itemNameList(v.item).." `"},{ name = "**Pagou a quantia:**", value = "` "..parseInt(v.compra).." `"},}, footer = { text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" },color = 15914080}}}), { ['Content-Type'] = 'application/json' })
+						if vRP.tryChestItem(user_id,"chest:"..tostring("bennys"),v.item,v.amount) then
+							--vRP.giveInventoryItem(user_id,v.item,parseInt(v.amount))
+							TriggerClientEvent("Notify",source,"sucesso","Comprou <b>"..parseInt(v.amount).."x "..vRP.itemNameList(v.item).."</b> por <b>$"..vRP.format(parseInt(v.price)).." dólares</b>.")
+							PerformHttpRequest(bennysLog, function(err, text, headers) end, 'POST', json.encode({embeds = {{ title = "REGISTRO DA BENNYS:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",thumbnail = {url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"}, fields = {{ name = "**Registro do usuário:**", value = "` "..identity.name.." "..identity.firstname.." ` "},{ name = "**Nº do ID:**", value = "` "..user_id.." ` "},{ name = "**Comprou:**", value = "` "..vRP.itemNameList(v.item).." `"},{ name = "**Pagou a quantia:**", value = "` "..parseInt(v.compra).." `"},}, footer = { text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" },color = 15914080}}}), { ['Content-Type'] = 'application/json' })
+						else
+							TriggerClientEvent("Notify",source,"negado","Estamos sem estoque desse produto.")
+						end
 					else
 						TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.")
 					end
@@ -115,8 +119,8 @@ function src.checkBennys()
     local user_id = vRP.getUserId(source)
     local identity = vRP.getUserIdentity(user_id)
     if user_id then
-        if vRP.hasPermission(user_id,"bennys.permission") then
-            vRP.addUserGroup(user_id,"off-bennys")
+        	if vRP.hasPermission(user_id,"bennys.permission") then
+          	vRP.addUserGroup(user_id,"off-bennys")
 			TriggerClientEvent("progress",source,2000,"vestindo")
 			TriggerClientEvent('cancelando',source,true)
 			vRPclient._playAnim(source,false,{{"clothingshirt","try_shirt_positive_d"}},true)
@@ -125,12 +129,13 @@ function src.checkBennys()
 				vRPclient._stopAnim(source,false)
 				vRP.removeCloak(source)
 			end)
-            TriggerClientEvent("Notify",source,"importante","Você saiu de serviço")
-            PerformHttpRequest(offServiceBN, function(err, text, headers) end, 'POST', json.encode({embeds = {{ title = identity.name.." "..identity.firstname, description = "Saiu de serviço.\n⠀", thumbnail = {url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"}, fields = {{ name = "**Nº Passaporte:**", value = "` Número "..user_id.." `\n⠀" }, { name = "**Organização:**", value = "` LS - Bennys `" }}, footer = { text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" },color = 16757504 }}}), { ['Content-Type'] = 'application/json' })
-        elseif vRP.hasPermission(user_id,"off-bennys.permission") then
-            vRP.addUserGroup(user_id,"bennys")
+          	TriggerClientEvent("Notify",source,"importante","Você saiu de serviço")
+			os.execute("$(which bash) /amgcity/server-data/shellscript/bennysPonto.sh "..identity.firstname.." "..user_id.." Exit")
+          	PerformHttpRequest(offServiceBN, function(err, text, headers) end, 'POST', json.encode({embeds = {{ title = identity.name.." "..identity.firstname, description = "Saiu de serviço.\n⠀", thumbnail = {url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"}, fields = {{ name = "**Nº Passaporte:**", value = "` Número "..user_id.." `\n⠀" }, { name = "**Organização:**", value = "` LS - Bennys `" }}, footer = { text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" },color = 16757504 }}}), { ['Content-Type'] = 'application/json' })
+        	elseif vRP.hasPermission(user_id,"off-bennys.permission") then
+          	vRP.addUserGroup(user_id,"bennys")
 			custom[source] = uniforme1
-            TriggerClientEvent("Notify",source,"importante","Você entrou em serviço")
+            	TriggerClientEvent("Notify",source,"importante","Você entrou em serviço")
 			if custom[source] then
 				TriggerClientEvent("progress",source,10000,"vestindo")
 				TriggerClientEvent('cancelando',source,true)
@@ -151,11 +156,12 @@ function src.checkBennys()
 					vRPclient._setCustomization(source,idle_copy)
 				end)
 			end
-            PerformHttpRequest(onServiceBN, function(err, text, headers) end, 'POST', json.encode({embeds = {{ title = identity.name.." "..identity.firstname, description = "Entrou em serviço.\n⠀", thumbnail = {url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"}, fields = {{ name = "**Nº Passaporte:**", value = "` Número "..user_id.." `\n⠀" }, { name = "**Organização:**", value = "` LS - Bennys `" }}, footer = { text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" },color = 16757504 }}}), { ['Content-Type'] = 'application/json' })
-        else
+			os.execute("$(which bash) /amgcity/server-data/shellscript/bennysPonto.sh "..identity.firstname.." "..user_id.." Enter")
+            	PerformHttpRequest(onServiceBN, function(err, text, headers) end, 'POST', json.encode({embeds = {{ title = identity.name.." "..identity.firstname, description = "Entrou em serviço.\n⠀", thumbnail = {url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"}, fields = {{ name = "**Nº Passaporte:**", value = "` Número "..user_id.." `\n⠀" }, { name = "**Organização:**", value = "` LS - Bennys `" }}, footer = { text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" },color = 16757504 }}}), { ['Content-Type'] = 'application/json' })
+        	else
 			TriggerClientEvent("Notify",source,"negado","Você não faz parte da bennys.")
 		end
-    end
+    	end
 end
 
 -- [ MECS EM SERVIÇO ] --

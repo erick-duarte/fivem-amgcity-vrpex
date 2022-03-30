@@ -12,20 +12,16 @@ local selecionado = 0
 local vermelhosX = 1860.47
 local vermelhosY = 3463.51
 local vermelhosZ = 41.96
---1860.47,3463.51,41.96
 
 -- [ COCAINA ] --
 local verdesX = 1912.88
 local verdesY = 6455.19
 local verdesZ = 79.84
--- 1912.88,6455.19,79.84
 
 -- [ METANFETAMINA ] --
 local brancosX = -150.4
 local brancosY = 2129.12
 local brancosZ = 170.15
--- -150.4,2129.12,170.15
-
 
 -- ARRAY DAS ENTREGAS
 local locs = {

@@ -8,16 +8,11 @@ vSERVER = Tunnel.getInterface("bdl_ammodeliver")
 local blips = false
 local servico = false
 local selecionado = 0
---local CoordenadaX = 1391.09
---local CoordenadaY = 1164.39
---local CoordenadaZ = 114.34
 local CoordenadaX2 = 953.14
 local CoordenadaY2 = -113.74
 local CoordenadaZ2 = 75.02
 local processo = false 
 local segundos = 0
--- 1391.09,1164.39,114.34
--- 953.14, -113.74, 75.02
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- RESIDENCIAS
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -64,28 +59,12 @@ Citizen.CreateThread(function()
 		if not servico then
 			local ped = PlayerPedId()
 			local x,y,z = table.unpack(GetEntityCoords(ped))
---			local distance = Vdist(CoordenadaX,CoordenadaY,CoordenadaZ,x,y,z)
-			local distance2 = Vdist(CoordenadaX2,CoordenadaY2,CoordenadaZ2,x,y,z)
-
---			if distance <= 3 then
---				idle = 5
---				DrawMarker(23,CoordenadaX,CoordenadaY,CoordenadaZ-1,0,0,0,0,180.0,130.0,1.2,1.2,1.2,50,50,50,50,0,0,0,1)
---				DrawText3D(CoordenadaX,CoordenadaY,CoordenadaZ,"[~c~E~w~] Para ~c~INICIAR~w~ as entregas. (~c~MUNIÇÃO~w~)")
---				if distance <= 1.2 then
---					if IsControlJustPressed(0,38) and vSERVER.checkPermission() then
---						cancelDeliver()
---						servico = true
---						selecionado = math.random(32)
---						CriandoBlip(locs,selecionado)
---						TriggerEvent("Notify","sucesso","Você entrou em serviço.")
---					end
---				end
---			end
-			if distance2 <= 3 then
+			local distance = Vdist(CoordenadaX2,CoordenadaY2,CoordenadaZ2,x,y,z)
+			if distance <= 3 then
 				idle = 5
 				DrawMarker(23,CoordenadaX2,CoordenadaY2,CoordenadaZ2-1,0,0,0,0,180.0,130.0,1.2,1.2,1.2,50,50,50,50,0,0,0,1)
 				DrawText3D(CoordenadaX2,CoordenadaY2,CoordenadaZ2,"[~c~E~w~] Para ~c~INICIAR~w~ rota de itens para MUNIÇÃO")
-				if distance2 <= 1.2 then
+				if distance <= 1.2 then
 					if IsControlJustPressed(0,38) and vSERVER.checkPermission() then
 						cancelDeliver()
 						servico = true

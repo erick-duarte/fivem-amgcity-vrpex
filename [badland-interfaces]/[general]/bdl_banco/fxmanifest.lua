@@ -22,7 +22,6 @@ files {
     'nui/badland.css',
     'nui/badland.js',
     'nui/fonts/*.ttf',
-    'nui/images/*.png',
 }
 
 

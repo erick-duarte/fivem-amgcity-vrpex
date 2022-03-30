@@ -197,6 +197,7 @@ if BancoMenu then
 						TriggerServerEvent('banco:balance')
 						TriggerServerEvent("get:banco")
 						TriggerEvent('bdl:triggerhud')
+						print('BDL Bank v0.1.3 - E&G Vendas')
 						local ped = GetPlayerPed(-1)
 					else
 						TriggerEvent("Notify","importante","Funcionamento dos bancos é das <b>07:00</b> as <b>18:00</b>.") 
@@ -278,6 +279,7 @@ AddEventHandler('send:banco', function(banco)
 	  banco = banco
 	})
 end)
+
 -- [ CALLBACK DO DEPOSITO ] --
 RegisterNUICallback('depositar', function(data)
 	TriggerServerEvent('banco:depositar', tonumber(data.amount))
@@ -285,7 +287,7 @@ RegisterNUICallback('depositar', function(data)
 end)
 -- [ CALLBACK DO SAQUE ] --
 RegisterNUICallback('sacar', function(data)
-	TriggerServerEvent('banco:sacar', tonumber(data.amounts))
+	TriggerServerEvent('banco:sacar', tonumber(data.amounts), data.tos)
 	TriggerServerEvent('banco:balance')
 	TriggerEvent('balance')
 end)

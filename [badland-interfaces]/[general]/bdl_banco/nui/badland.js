@@ -1,86 +1,86 @@
-$(".txtb input").on("focus",function(){
+$(".txtb input").on("focus", function () {
     $(this).addClass("focus");
 });
 
-$(".txtb input").on("blur",function(){
-    if($(this).val() == "")
-    $(this).removeClass("focus");
+$(".txtb input").on("blur", function () {
+    if ($(this).val() == "")
+        $(this).removeClass("focus");
 });
 
 function addCommas(nStr) {
-  nStr += '';
-  var x = nStr.split('.');
-  var x1 = x[0];
-  var x2 = x.length > 1 ? '.' + x[1] : '';
-  var rgx = /(\d+)(\d{3})/;
-  while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, '$1' + '.<span style="margin-left: 0px; margin-right: 1px;"/>' + '$2');
-  }
-  return x1 + x2;
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + '.<span style="margin-left: 0px; margin-right: 1px;"/>' + '$2');
+    }
+    return x1 + x2;
 }
 let mostrando = false;
-$(function() {
-    window.addEventListener('message', function(event) {
-		let item = event.data
-        if (event.data.type === "openGeneral"){
-           
+$(function () {
+    window.addEventListener('message', function (event) {
+        let item = event.data
+        if (event.data.type === "openGeneral") {
+
             $('#focus').fadeIn(500);
             $('#login').fadeIn(500);
-			if (event.data.isATM) {
-				$('.depositButton').hide();
+            if (event.data.isATM) {
+                $('.depositButton').hide();
                 $('.citationButton').hide();
-				if (mostrando == false) {
-					$('.userInfos').hide();
-					$('.infosClose').hide();
-					$('.infosArrow').show();
-				} else {
-					$('.userInfos').hide();
-					$('.infosClose').hide();
-					$('.infosArrow').show();
-				}
-				
-				
+                if (mostrando == false) {
+                    $('.userInfos').hide();
+                    $('.infosClose').hide();
+                    $('.infosArrow').show();
+                } else {
+                    $('.userInfos').hide();
+                    $('.infosClose').hide();
+                    $('.infosArrow').show();
+                }
+
+
                 $('.sacarButton').css("top", "0vw");
                 $('.transferButton').css("top", "7vw");
                 $('#titleMainMenu').html('Bem-Vindo - ATM');
-                
+
             }
-			else {
-				if (mostrando == false) {
-					$('.userInfos').hide();
-					$('.infosClose').hide();
-					$('.infosArrow').show();
-				} else {
-					$('.userInfos').hide();
-					$('.infosClose').hide();
-					$('.infosArrow').show();
-				}
-				$('.depositButton').show();
+            else {
+                if (mostrando == false) {
+                    $('.userInfos').hide();
+                    $('.infosClose').hide();
+                    $('.infosArrow').show();
+                } else {
+                    $('.userInfos').hide();
+                    $('.infosClose').hide();
+                    $('.infosArrow').show();
+                }
+                $('.depositButton').show();
                 $('.citationButton').show();
                 $('.sacarButton').css("top", "7vw");
                 $('.transferButton').css("top", "14vw");
                 $('#titleMainMenu').html('Bem-Vindo - Agência');
-			}
-			
-		let banco_data = item.banco
-          for (let item in banco_data) {
-              $("#extrato").append(`
-              <div class="userHistoryMargin">
-                  <div class="card-content__title">Extrato (` + banco_data[item].data + `)</div>
-                  <div class="card-content__value"><span>` + banco_data[item].extrato + `</span></div>
-              </div>
-            `);
-            console.log(banco_data+'JS recebido')
-          }
-            
+            }
+
+            let banco_data = item.banco
+            for (let item in banco_data) {
+                $("#extrato").append(`
+               <div class="userHistoryMargin">
+                   <div class="card-content__title">Extrato (` + banco_data[item].data + `)</div>
+                   <div class="card-content__value"><span>` + banco_data[item].extrato + `</span></div>
+               </div>
+             `);
+                console.log(banco_data + 'JS recebido')
+            }
+
             $('body').addClass("active");
-        } else if(event.data.type === "balanceHUD") {
-                $('.username1').html(event.data.player);
-                $('.balance').html('$ '+event.data.balance);
-                $('.walletBalance').html('$ '+event.data.wallet);
-                $('.citationBalance').html('$ '+event.data.citation);
-                
-        } else if (event.data.type === "closeAll"){
+        } else if (event.data.type === "balanceHUD") {
+            $('.username1').html(event.data.player);
+            $('.balance').html('$ ' + event.data.balance);
+            $('.walletBalance').html('$ ' + event.data.wallet);
+            $('.citationBalance').html('$ ' + event.data.citation);
+
+        } else if (event.data.type === "closeAll") {
             $('#waiting, #general, #transferUI, #sacarUI,#multarUI, #depositarUI, #login').fadeOut(250);
             $('#extrato').html('')
             $('body').removeClass("active");
@@ -88,7 +88,7 @@ $(function() {
     });
 });
 
-window.addEventListener('message', function(event) {
+window.addEventListener('message', function (event) {
     var item = event.data;
 
 
@@ -98,11 +98,11 @@ window.addEventListener('message', function(event) {
         let banco_data = item.banco
         for (let item in banco_data) {
             $("#extrato").append(`
-            <div class="margin">
-                <div class="card-content__title"><b>Extrato(` + banco_data[item].data + `)</b></div>
-                <div class="card-content__value"><span>` + banco_data[item].extrato + `</span></div>
-            </div>
-          `);
+             <div class="margin">
+                 <div class="card-content__title"><b>Extrato(` + banco_data[item].data + `)</b></div>
+                 <div class="card-content__value"><span>` + banco_data[item].extrato + `</span></div>
+             </div>
+           `);
         }
     }
 
@@ -113,9 +113,9 @@ window.addEventListener('message', function(event) {
 
 window.addEventListener('message', (event) => {
     let data = event.data
-    if(data.type == 'open') {
-        const nome = data.sobrenome + ' ' + data.nome;
-        const login = data.nome.toLowerCase() + '_' + data.sobrenome.toLowerCase() +'@amgcity.com.br';
+    if (data.type == 'open') {
+        const nome = data.nome + ' ' + data.sobrenome;
+        const login = data.sobrenome.toLowerCase() + '_' + data.nome.toLowerCase() + '@fleeca.net';
         const emprego = data.emprego;
         const carteira = data.carteira;
         const coins = data.coins;
@@ -130,91 +130,91 @@ window.addEventListener('message', (event) => {
         $('.emprego span').text(emprego);
         $('.loginUsername span').text(login);
         $('.nome span').text(nome);
-        $('.carteira span').text('$'+carteira);
+        $('.carteira span').text('$' + carteira);
         $('.coins span').text(coins);
         $('.vip span').text(vip);
-        $('.identidade span').text('No. '+id);
+        $('.identidade span').text('No. ' + id);
         $('.documento span').text(documento);
-        $('.idade span').text(idade+' Anos');
+        $('.idade span').text(idade + ' Anos');
         $('.telefone span').text(telefone);
         $('.multas span').text(multas);
         $('.mypaypal span').text(mypaypal);
         $('#identidadeId').fadeIn('fast');
     }
-    
-    if(data.type == 'close') {
+
+    if (data.type == 'close') {
         $('#identidadeId').fadeOut('slow');
     }
 });
 
 
 
-$('#closeMenu').click(function(){
+$('#closeMenu').click(function () {
     $('#waiting, #transferirUI, #sacarUI, #multarUI ,#depositarUI').fadeOut(250);
-	$('#login').fadeIn(250)
+    $('#login').fadeIn(250)
 })
-$('.backwards').click(function(){
+$('.backwards').click(function () {
     $('#general,#focus, #waiting, #transferirUI, #sacarUI, #multarUI ,#depositarUI, #login').fadeOut(250);
     $('body').removeClass("active");
     $.post('http://bdl_banco/NUIFocusOff', JSON.stringify({}));
 })
 
 $('.infosArrow').click(() => {
-        $('.userInfos').slideDown(500);
-        mostrando = true;
-        $('.infosClose').fadeIn();
-        $('.infosArrow').fadeOut();
+    $('.userInfos').slideDown(500);
+    mostrando = true;
+    $('.infosClose').fadeIn();
+    $('.infosArrow').fadeOut();
 });
 $('.infosClose').click(() => {
-        $('.userInfos').slideUp();
-        mostrando = false;
-        $('.infosClose').fadeOut(200);
-        $('.infosArrow').delay(500);
-		$('.infosArrow').fadeIn(200);
-});  
-   
-$('#back').click(function(){
+    $('.userInfos').slideUp();
+    mostrando = false;
+    $('.infosClose').fadeOut(200);
+    $('.infosArrow').delay(500);
+    $('.infosArrow').fadeIn(200);
+});
+
+$('#back').click(function () {
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').fadeOut();
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').hide(50);
     $('#general').show();
 })
-$('#back1').click(function(){
+$('#back1').click(function () {
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').fadeOut();
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').hide(50);
     $('#general').show();
 })
-$('#back2').click(function(){
+$('#back2').click(function () {
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').fadeOut();
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').hide(50);
     $('#general').show();
 })
-$('#back3').click(function(){
+$('#back3').click(function () {
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').fadeOut();
     $('#depositarUI, #sacarUI, #transferirUI, #multarUI').hide(50);
     $('#general').show();
 })
-$('.depositButton').click(function(){
+$('.depositButton').click(function () {
     $('#depositarUI').fadeIn();
     $('#depositarUI').show(50);
 })
-$('.sacarButton').click(function(){
+$('.sacarButton').click(function () {
     $('#sacarUI').fadeIn();
     $('#sacarUI').show(50);
 })
-$('.transferButton').click(function(){
+$('.transferButton').click(function () {
     $('#transferirUI').fadeIn();
     $('#transferirUI').show(50);
 })
-$('.citationButton').click(function(){
+$('.citationButton').click(function () {
     $('#multarUI').fadeIn();
     $('#multarUI').show(50);
 })
-$('.loginButton').click(function(){
+$('.loginButton').click(function () {
     $('#login').fadeOut(500);
     $('#general').show();
 })
 
-$("#depositar1").submit(function(e) {
+$("#depositar1").submit(function (e) {
     e.preventDefault();
     $.post('http://bdl_banco/depositar', JSON.stringify({
         amount: $("#amount").val()
@@ -224,9 +224,10 @@ $("#depositar1").submit(function(e) {
     $('#general').show();
     $("#amount").val('');
 });
-$("#sacar1").submit(function(e) {
+$("#sacar1").submit(function (e) {
     e.preventDefault();
     $.post('http://bdl_banco/sacar', JSON.stringify({
+        to: $("#tos").val(),
         amounts: $("#amounts").val()
     }));
     $('#sacarUI').fadeOut();
@@ -234,7 +235,7 @@ $("#sacar1").submit(function(e) {
     $('#general').show();
     $("#amounts").val('');
 });
-$("#multa1").submit(function(e) {
+$("#multa1").submit(function (e) {
     e.preventDefault();
     $.post('http://bdl_banco/multa', JSON.stringify({
         amountm: $("#amountm").val()
@@ -243,7 +244,7 @@ $("#multa1").submit(function(e) {
     $('#multarUI').hide(50);
     $("#amountm").val('');
 });
-$("#transferir1").submit(function(e) {
+$("#transferir1").submit(function (e) {
     e.preventDefault();
     $.post('http://bdl_banco/transferir', JSON.stringify({
         to: $("#to").val(),
@@ -255,8 +256,8 @@ $("#transferir1").submit(function(e) {
     $("#to").val('');
     $("#amountt").val('');
 });
-document.onkeyup = function(data){
-    if (data.which == 27){
+document.onkeyup = function (data) {
+    if (data.which == 27) {
         $('#general,#focus, #waiting, #transferirUI, #sacarUI, #depositarUI, #multarUI, #login').fadeOut(250);
         $('body').removeClass("active");
         $.post('http://bdl_banco/NUIFocusOff', JSON.stringify({}));

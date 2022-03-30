@@ -28,15 +28,15 @@ end
 -----------------------------------------------------------------------------------------------------------------------------------------
 RegisterNUICallback("ButtonClick",function(data,cb)
 	
-	if data == "corpo-parafal" then
+	if data == "corpoparafal" then
 		ToggleActionMenu()
 		TriggerServerEvent("bdl_gunbody:bodyfactory","parafal")
 
-	elseif data == "corpo-ak103" then
+	elseif data == "corpoak103" then
 		ToggleActionMenu()
 		TriggerServerEvent("bdl_gunbody:bodyfactory","ak103")
 		
-	elseif data == "corpo-ak47" then
+	elseif data == "corpoak47" then
 		ToggleActionMenu()
 		TriggerServerEvent("bdl_gunbody:bodyfactory","ak47")
 		
@@ -46,7 +46,7 @@ RegisterNUICallback("ButtonClick",function(data,cb)
 	elseif data == "fabricar-mp5" then
 		TriggerServerEvent("bdl_gunbody:bodyfactory","mp5") ]]--
 		
-	elseif data == "corpo-tec9" then
+	elseif data == "corpotec9" then
 		ToggleActionMenu()
 		TriggerServerEvent("bdl_gunbody:bodyfactory","tec9")
 		
@@ -56,7 +56,7 @@ RegisterNUICallback("ButtonClick",function(data,cb)
 	elseif data == "fabricar-hk110" then
 		TriggerServerEvent("bdl_gunbody:bodyfactory","hk110") ]]--
 
-	elseif data == "corpo-fiveseven" then
+	elseif data == "corpofiveseven" then
 		ToggleActionMenu()
 		TriggerServerEvent("bdl_gunbody:bodyfactory","fiveseven")
 		

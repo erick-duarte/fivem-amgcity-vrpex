@@ -136,9 +136,9 @@ AddEventHandler("bdl_itens:factoryitens",function(item)
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("colete") <= vRP.getInventoryMaxWeight(user_id) then
 							if vRP.getInventoryItemAmount(user_id,"tecido") >= 50 then
 								if vRP.getInventoryItemAmount(user_id,"linha") >= 10 then
-									if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 2 then
+									if vRP.getInventoryItemAmount(user_id,"placametal") >= 2 then
 										vRP.antiflood(src,"Fabricação de itens",5)
-										if vRP.tryGetInventoryItem(user_id,"tecido",50) and vRP.tryGetInventoryItem(user_id,"linha",10) and vRP.tryGetInventoryItem(user_id,"placa-metal",2) then
+										if vRP.tryGetInventoryItem(user_id,"tecido",50) and vRP.tryGetInventoryItem(user_id,"linha",10) and vRP.tryGetInventoryItem(user_id,"placametal",2) then
 											TriggerClientEvent("progress",src,50000,"fazendo")
 											vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
 											inProgress[src] = true

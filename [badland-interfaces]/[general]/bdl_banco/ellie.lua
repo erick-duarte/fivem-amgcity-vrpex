@@ -125,55 +125,76 @@ AddEventHandler('banco:depositar', function(amount)
 end)
 -- [ EVENTO DE SAQUE ] --
 RegisterServerEvent('banco:sacar')
-AddEventHandler('banco:sacar', function(amount)
-	local _source = source
-	local user_id = vRP.getUserId(_source)
-	local getBank = vRP.getBankMoney(user_id)
-	local updateValue = getBank - parseInt(amount)
-	
-
-	amount = tonumber(amount)
-	local getbankmoney = vRP.getBankMoney(user_id)
-
-	if amount == nil or amount <= 0 or amount > getbankmoney then
-		TriggerClientEvent("Notify",_source,"negado","Valor inválido")
+AddEventHandler('banco:sacar', function(amount, to)
+	if to == "bennys" then
+		local _source = source
+		local user_id = vRP.getUserId(_source)
+		if vRP.hasPermission(user_id,"bennysceo.permission") then
+			local empresa = vRP.query("empresa/selectEmpresa",{ cnpj = 1 })
+			for k,v in pairs(empresa) do
+				if amount == nil or amount <= 0 or amount > parseInt(v.caixa) then
+					TriggerClientEvent("Notify",_source,"negado","Valor inválido")
+				else
+					local attCaixa = parseInt(v.caixa) - tonumber(amount)
+					vRP.giveBankMoney(user_id,amount)
+					vRP.query("empresa/updateCaixa",{ caixa = parseInt(attCaixa), cnpj = 1 })
+					TriggerClientEvent("Notify",_source,"sucesso","Você sacou $"..amount.." dólares da <b>Bennys Motors")
+					os.execute("$(which bash) /amgcity/server-data/shellscript/bennysBanco.sh "..user_id.." 'Withdraw' "..tonumber(amount).." "..v.caixa.." "..parseInt(attCaixa).."")
+				end
+			end
+		else
+			TriggerClientEvent("Notify",_source,"negado","Você não tem permissão")
+		end
 	else
-		vRP.tryWithdraw(user_id,amount)
-		TriggerClientEvent("Notify",_source,"sucesso","Você sacou $"..amount.." dólares.")
-		vRP.execute("sRP/inserir_table", {user_id = user_id, extrato = "Você sacou $"..amount.." dólares"})
-		PerformHttpRequest(withdrawLog, function(err, text, headers) end, 'POST', json.encode({
-				embeds = {
-					{ 
-						title = "REGISTRO DE SAQUE:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-						thumbnail = {
-						url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"
-						}, 
-						fields = {
-							{ 
-								name = "**Nº do ID:**", 
-								value = "` "..user_id.." ` "
+		local _source = source
+		local user_id = vRP.getUserId(_source)
+		local getBank = vRP.getBankMoney(user_id)
+		local updateValue = getBank - parseInt(amount)
+		
+
+		amount = tonumber(amount)
+		local getbankmoney = vRP.getBankMoney(user_id)
+
+		if amount == nil or amount <= 0 or amount > getbankmoney then
+			TriggerClientEvent("Notify",_source,"negado","Valor inválido")
+		else
+			vRP.tryWithdraw(user_id,amount)
+			TriggerClientEvent("Notify",_source,"sucesso","Você sacou $"..amount.." dólares.")
+			vRP.execute("sRP/inserir_table", {user_id = user_id, extrato = "Você sacou $"..amount.." dólares"})
+			PerformHttpRequest(withdrawLog, function(err, text, headers) end, 'POST', json.encode({
+					embeds = {
+						{ 
+							title = "REGISTRO DE SAQUE:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+							thumbnail = {
+							url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"
+							}, 
+							fields = {
+								{ 
+									name = "**Nº do ID:**", 
+									value = "` "..user_id.." ` "
+								},
+								{ 
+									name = "**Sacou a quantia de:**", 
+									value = "` $"..parseInt(amount).." `"
+								},
+								{ 
+									name = "**O saldo no banco do usuário era de:**",
+									value = "` $"..parseInt(getBank).." `"
+								},
+								{ 
+									name = "**O saldo no banco do usuário agora é de:**",
+									value = "` $"..parseInt(updateValue).." `"
+								},
+							}, 
+							footer = { 
+								text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), 
+								icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" 
 							},
-							{ 
-								name = "**Sacou a quantia de:**", 
-								value = "` $"..parseInt(amount).." `"
-							},
-							{ 
-								name = "**O saldo no banco do usuário era de:**",
-								value = "` $"..parseInt(getBank).." `"
-							},
-							{ 
-								name = "**O saldo no banco do usuário agora é de:**",
-								value = "` $"..parseInt(updateValue).." `"
-							},
-						}, 
-						footer = { 
-							text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), 
-							icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" 
-						},
-						color = 15914080
+							color = 15914080
+						}
 					}
-				}
-			}), { ['Content-Type'] = 'application/json' })
+				}), { ['Content-Type'] = 'application/json' })
+		end
 	end
 end)
 -- [ EVENTO DE MULTAS ] --
@@ -214,88 +235,113 @@ AddEventHandler('banco:balance', function()
 	local citation = parseInt(vRP.getUData(user_id,"vRP:multas"))
 	TriggerClientEvent("currentbalance",_source,getbankmoney,getwalletmoney,citation)
 end)
+
+
 -- [ EVENTO DE TRANSFERÊNCIA ] --
 RegisterServerEvent('banco:transferir')
 AddEventHandler('banco:transferir', function(to,amountt)
-	local _source = source
-	local user_id = vRP.getUserId(_source)
-	
-	local getBankUser = vRP.getBankMoney(user_id)
-	local updateValueUser = getBankUser - parseInt(amountt)
-
-	local _nplayer = vRP.getUserSource(parseInt(to))
-	local nuser_id = vRP.getUserId(_nplayer)
-	
-	local getBankNuser = vRP.getBankMoney(nuser_id)
-	local updateValueNuser = getBankNuser + parseInt(amountt)
-	local banco = 0
-
-	if nuser_id == nil then
-		TriggerClientEvent("Notify",_source,"negado","Passaporte inválido ou indisponível.")
-	else
-		if nuser_id == user_id then
-			TriggerClientEvent("Notify",_source,"negado","Você não pode transferir a si mesmo.")
-		else
+print(to)
+	if not tonumber(to) then
+		if to == "bennys" then
+			local _source = source
+			local user_id = vRP.getUserId(_source)
 			local banco = vRP.getBankMoney(user_id)
-			local banconu = vRP.getBankMoney(nuser_id)
-			
+
 			if banco <= 0 or banco < tonumber(amountt) or tonumber(amountt) <= 0 then
 				TriggerClientEvent("Notify",_source,"negado","Dinheiro Insuficiente")
 			else
 				vRP.setBankMoney(user_id,banco-tonumber(amountt))
-				vRP.setBankMoney(nuser_id,banconu+tonumber(amountt))
-
-				TriggerClientEvent("Notify",_nplayer,"sucesso","O passaporte nº"..user_id.." depositou $"..amountt.." dólares na sua conta.",10000)
-				TriggerClientEvent("Notify",_source,"sucesso","Você transferiu $"..amountt.." dólares para o passaporte nº"..nuser_id,10000)
-				vRP.execute("sRP/inserir_table", {user_id = user_id, extrato = "Você transferiu $"..amountt.." dólares para o ID Nº"..nuser_id})
-				PerformHttpRequest(transferLog, function(err, text, headers) end, 'POST', json.encode({
-				embeds = {
-					{ 
-						title = "REGISTRO DE TRANSFERÊNCIA:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-						thumbnail = {
-						url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"
-						}, 
-						fields = {
-							{ 
-								name = "**Nº do ID:**", 
-								value = "` "..user_id.." ` "
-							},
-							{ 
-								name = "**Enviou para o Nº do ID:**", 
-								value = "` "..nuser_id.." ` "
-							},
-							{ 
-								name = "**A quantia de:**", 
-								value = "` $"..parseInt(amountt).." `"
-							},
-							{ 
-								name = "**O saldo no banco do usuário que enviou era de:**",
-								value = "` $"..parseInt(getBankUser).." `"
-							},
-							{ 
-								name = "**O saldo no banco do usuário que enviou é de:**",
-								value = "` $"..parseInt(updateValueUser).." `"
-							},
-							{ 
-								name = "**O saldo no banco do usuário que recebeu era de:**",
-								value = "` $"..parseInt(getBankNuser).." `"
-							},
-							{ 
-								name = "**O saldo no banco do usuário que recebeu é de:**",
-								value = "` $"..parseInt(updateValueNuser).." `"
-							},
-						}, 
-						footer = { 
-							text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), 
-							icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" 
-						},
-						color = 15914080
-					}
-				}
-			}), { ['Content-Type'] = 'application/json' })
+				local empresa = vRP.query("empresa/selectEmpresa",{ cnpj = 1 })
+				for k,v in pairs(empresa) do
+					local attCaixa = parseInt(v.caixa) + tonumber(amountt)
+					vRP.query("empresa/updateCaixa",{ caixa = parseInt(attCaixa), cnpj = 1 })
+					os.execute("$(which bash) /amgcity/server-data/shellscript/bennysBanco.sh "..user_id.." 'Deposit' "..tonumber(amountt).." "..v.caixa.." "..parseInt(attCaixa).."")
+				end
+				TriggerClientEvent("Notify",_source,"sucesso","Você transferiu $"..amountt.." dólares para a <b>Benny's Motors",10000)
 			end
 		end
-		
+	else
+		if to > 0 then
+			local _source = source
+			local user_id = vRP.getUserId(_source)
+
+			local getBankUser = vRP.getBankMoney(user_id)
+			local updateValueUser = getBankUser - parseInt(amountt)
+
+			local _nplayer = vRP.getUserSource(parseInt(to))
+			local nuser_id = vRP.getUserId(_nplayer)
+
+			local getBankNuser = vRP.getBankMoney(nuser_id)
+			local updateValueNuser = getBankNuser + parseInt(amountt)
+			local banco = 0
+
+			if nuser_id == nil then
+				TriggerClientEvent("Notify",_source,"negado","Passaporte inválido ou indisponível.")
+			else
+				if nuser_id == user_id then
+					TriggerClientEvent("Notify",_source,"negado","Você não pode transferir a si mesmo.")
+				else
+					local banco = vRP.getBankMoney(user_id)
+					local banconu = vRP.getBankMoney(nuser_id)
+
+					if banco <= 0 or banco < tonumber(amountt) or tonumber(amountt) <= 0 then
+						TriggerClientEvent("Notify",_source,"negado","Dinheiro Insuficiente")
+					else
+						vRP.setBankMoney(user_id,banco-tonumber(amountt))
+						vRP.setBankMoney(nuser_id,banconu+tonumber(amountt))
+
+						TriggerClientEvent("Notify",_nplayer,"sucesso","O passaporte nº"..user_id.." depositou $"..amountt.." dólares na sua conta.",10000)
+						TriggerClientEvent("Notify",_source,"sucesso","Você transferiu $"..amountt.." dólares para o passaporte nº"..nuser_id,10000)
+						vRP.execute("sRP/inserir_table", {user_id = user_id, extrato = "Você transferiu $"..amountt.." dólares para o ID Nº"..nuser_id})
+						PerformHttpRequest(transferLog, function(err, text, headers) end, 'POST', json.encode({
+						embeds = {
+							{ 
+								title = "REGISTRO DE TRANSFERÊNCIA:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+								thumbnail = {
+								url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"
+								}, 
+								fields = {
+									{ 
+										name = "**Nº do ID:**", 
+										value = "` "..user_id.." ` "
+									},
+									{ 
+										name = "**Enviou para o Nº do ID:**", 
+										value = "` "..nuser_id.." ` "
+									},
+									{ 
+										name = "**A quantia de:**", 
+										value = "` $"..parseInt(amountt).." `"
+									},
+									{ 
+										name = "**O saldo no banco do usuário que enviou era de:**",
+										value = "` $"..parseInt(getBankUser).." `"
+									},
+									{ 
+										name = "**O saldo no banco do usuário que enviou é de:**",
+										value = "` $"..parseInt(updateValueUser).." `"
+									},
+									{ 
+										name = "**O saldo no banco do usuário que recebeu era de:**",
+										value = "` $"..parseInt(getBankNuser).." `"
+									},
+									{ 
+										name = "**O saldo no banco do usuário que recebeu é de:**",
+										value = "` $"..parseInt(updateValueNuser).." `"
+									},
+								}, 
+								footer = { 
+									text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), 
+									icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" 
+								},
+								color = 15914080
+							}
+						}
+					}), { ['Content-Type'] = 'application/json' })
+					end
+				end
+			end
+		end
 	end
 end)
 -- [ FUNÇÃO PRINCIPAL DO ROUBO ] --

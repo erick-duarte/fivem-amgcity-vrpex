@@ -9,12 +9,14 @@ ui_page 'nui/badland.html'
 
 client_scripts {
 	'@vrp/lib/utils.lua',
-	'client-side/*.lua'
+	'client-side/*.lua',
+	'client-side/maconha/*.lua'
 }
 
 server_scripts {
 	'@vrp/lib/utils.lua',
-	'ellie.lua'
+	'ellie.lua',
+	'maconha/*.lua'
 }
 
 files {

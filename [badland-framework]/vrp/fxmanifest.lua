@@ -53,6 +53,7 @@ files {
 	'loading/script.js',
 	'loading/music/loading.ogg',
 	'loading/img/logo.png',
+	'loading/img/logo2.png',
 	'loading/font/*',
     'loading/css/*',
 

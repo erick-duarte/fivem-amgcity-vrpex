@@ -1234,6 +1234,7 @@ function src.spawnVehicle(vehname,vehengine,vehbody,vehfuel,porta0,porta1,porta2
 				end
 
 				src.vehicleMods(nveh,custom)
+				TriggerEvent("nation:applymods",nveh,vehname)
 				src.syncBlips(nveh,vehname)
 
 				vehicle[vehname] = true

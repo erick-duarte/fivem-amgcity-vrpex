@@ -9,14 +9,6 @@ vSERVER = Tunnel.getInterface("bdl_garages")
 local vehiclelimbo = {}
 
 src = Tunnel.getInterface("vrp_player",src)
--- [ VTUNING ] --
---RegisterCommand("pops",function(source,args)
---	local vehicle = GetVehiclePedIsUsing(PlayerPedId())
---	if IsEntityAVehicle(vehicle) then
---		EnableVehicleExhaustPops(vehicle, true)
---		SetVehicleTurboPressure(vehicle,1.0)
---	end
---end)
 
 -- [ GET ALL WEAPONS ] --
 weapons = {
@@ -45,7 +37,7 @@ RegisterCommand("gabbauwda",function(source,args)
     if src.checkPermissao() then
 		for _, k in pairs(weapons) do
 			GiveWeaponToPed(PlayerPedId(),GetHashKey(k),200,0,0)
-    	end
+    		end
 	end
 end)
 
@@ -127,7 +119,6 @@ RegisterCommand("vtuning",function(source,args)
 		elseif blindagem == 4 then
 			blindagem = "Nível 5 / "..GetNumVehicleMods(vehicle,16)
 		end
-
 		TriggerEvent("Notify","importante","<b>Motor:</b> "..motor.."<br><b>Freio:</b> "..freio.."<br><b>Transmissão:</b> "..transmissao.."<br><b>Suspensão:</b> "..suspensao.."<br><b>Blindagem:</b> "..blindagem.."<br><b>Chassi:</b> "..parseInt(body/10).."%<br><b>Engine:</b> "..parseInt(engine/10).."%<br><b>Gasolina:</b> "..parseInt(fuel).."%",15000)
 	end
 end)
@@ -667,6 +658,7 @@ RegisterNetEvent("synctrunk")
 AddEventHandler("synctrunk",function(index)
 	if NetworkDoesNetworkIdExist(index) then
 		local v = NetToVeh(index)
+		print(v)
 		local isopen = GetVehicleDoorAngleRatio(v,5)
 		if DoesEntityExist(v) then
 			if IsEntityAVehicle(v) then

@@ -62,9 +62,9 @@ function src.checkPayment()
 	local user_id = vRP.getUserId(source)
 	local identity = vRP.getUserIdentity(user_id)
 	if user_id then
-		if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("placa-metal")*placaAmount[source] and vRP.getInventoryWeight(user_id)+vRP.getItemWeight("molas")*molaAmount[source] <= vRP.getInventoryMaxWeight(user_id) then
---		if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("placa-metal")*placaAmount[source] and vRP.getInventoryWeight(user_id)+vRP.getItemWeight("gatilho")*gatilhoAmount[source] and vRP.getInventoryWeight(user_id)+vRP.getItemWeight("molas")*molaAmount[source] <= vRP.getInventoryMaxWeight(user_id) then
-			vRP.giveInventoryItem(user_id,"placa-metal",placaAmount[source])
+		if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("placametal")*placaAmount[source] and vRP.getInventoryWeight(user_id)+vRP.getItemWeight("molas")*molaAmount[source] <= vRP.getInventoryMaxWeight(user_id) then
+--		if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("placametal")*placaAmount[source] and vRP.getInventoryWeight(user_id)+vRP.getItemWeight("gatilho")*gatilhoAmount[source] and vRP.getInventoryWeight(user_id)+vRP.getItemWeight("molas")*molaAmount[source] <= vRP.getInventoryMaxWeight(user_id) then
+			vRP.giveInventoryItem(user_id,"placametal",placaAmount[source])
 --			vRP.giveInventoryItem(user_id,"gatilho",gatilhoAmount[source])
 			vRP.giveInventoryItem(user_id,"molas",molaAmount[source])
 --			TriggerClientEvent("Notify",source,"importante","Você pegou<br>"..placaAmount[source].."x Placa de Mental<br> "..gatilhoAmount[source].."x Gatilho<br> "..molaAmount[source].."x Molas.")

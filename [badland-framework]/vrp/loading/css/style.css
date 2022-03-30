@@ -4,7 +4,7 @@
 }
 
 html {
-  background: linear-gradient(135deg, rgb(24, 24, 24) 50%, #0084ff 100%)
+  background: linear-gradient(135deg, rgb(24, 24, 24) 50%, #1224ab 100%)
   fixed;
   overflow: hidden;
   font-family: 'Orbitron', sans-serif;
@@ -85,7 +85,7 @@ li {
 
 #img-1 {
   opacity: 0.25;
-  background: url('https://image.ibb.co/jcTvpv/dust1.jpg');
+  background: url('https://cdn.discordapp.com/attachments/849317264288382976/945421324858294273/Lovepik_com-401194520-triangle-fragment-background.png');
   background-repeat: repeat;
   animation-duration: 600s;
 }

@@ -525,7 +525,7 @@ function src.myVehicles(work)
 						status = "<span class=\"green\">Gratuita</span>"
 					end
 
-					if vehicle[k].state == 1 then
+					if vehicle[k].state == 1 or vehicle[k].venda == 1 then
 						vehstate = "<span class=\"vehOut\"><i class=\"fas fa-car\"></i></span>"
 					else
 						vehstate = "<span class=\"green\"><i class=\"fas fa-car\"></i></span>"
@@ -573,7 +573,7 @@ function src.myVehicles(work)
 								else
 									status = "<span class=\"green\">Gratuita</span>"
 								end
-								if vehicle[k2].state == 1 then
+								if vehicle[k2].state == 1 or vehicle[k2].venda == 1 then
 									vehstate = "<span class=\"vehOut\"><i class=\"fas fa-car\"></i></span>"
 								else
 									vehstate = "<span class=\"green\"><i class=\"fas fa-car\"></i></span>"
@@ -612,7 +612,7 @@ function src.myVehicles(work)
 								else
 									status = "<span class=\"green\">Gratuita</span>"
 								end
-								if vehicle[k2].state == 1 then
+								if vehicle[k2].state == 1 or vehicle[k2].venda == 1 then
 									vehstate = "<span class=\"vehOut\"><i class=\"fas fa-car\"></i></span>"
 								else
 									vehstate = "<span class=\"green\"><i class=\"fas fa-car\"></i></span>"
@@ -653,7 +653,7 @@ function src.myVehicles(work)
 						else
 							status = "<span class=\"green\">Gratuita</span>"
 						end
-						if vehicle[k2].state == 1 then
+						if vehicle[k2].state == 1 or vehicle[k2].venda == 1 then
 							vehstate = "<span class=\"vehOut\"><i class=\"fas fa-car\"></i></span>"
 						else
 							vehstate = "<span class=\"green\"><i class=\"fas fa-car\"></i></span>"
@@ -693,115 +693,119 @@ function src.spawnVehicles(name,use)
 			end
 			if not vCLIENT.returnVehicle(source,name) then
 				local vehicle = vRP.query("creative/get_vehicles",{ user_id = parseInt(user_id), vehicle = name })
-				local tuning = vRP.getSData("custom:u"..user_id.."veh_"..name) or {}
-				local custom = json.decode(tuning) or {}
-				if vehicle[1] ~= nil then
-					if parseInt(os.time()) <= parseInt(vehicle[1].time+24*60*60) then
-						local ok = vRP.request(source,"Veículo na detenção, retira-lo por <b>$"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.02)).."</b> dólares ?",60)
-						if ok then
-							if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.02)) then
-								vRP.execute("creative/set_detido",{ user_id = parseInt(user_id), vehicle = name, detido = 0, time = 0 })
-								TriggerClientEvent("Notify",source,"sucesso","Veículo liberado.",10000)
-							else
-								TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
-							end
-						end
-					elseif parseInt(vehicle[1].detido) >= 1 then
-						local ok = vRP.request(source,"Veículo na detenção, retira-lo por <b>$"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.02)).."</b> dólares ?",60)
-						if ok then
-							if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.02)) then
-								vRP.execute("creative/set_detido",{ user_id = parseInt(user_id), vehicle = name, detido = 0, time = 0 })
-								TriggerClientEvent("Notify",source,"sucesso","Veículo liberado.",10000)
-							else
-								TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
-							end
-						end
-					elseif parseInt(vehicle[1].desmanchado) >= 1 then
-						local ok = vRP.request(source,"Veículo foi desmanchado, deseja acionar o seguro pagando <b>$"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.1)).."</b> dólares ?",60)
-						if ok then
-							if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.1)) then
-								vRP.execute("creative/set_desmanchado",{ user_id = parseInt(user_id), vehicle = name, desmanchado = 0, time = 0 })
-								TriggerClientEvent("Notify",source,"sucesso","Veículo recuperado.",10000)
-							else
-								TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
-							end
-						end
-					else
-						if parseInt(os.time()) <= parseInt(vehicle[1].ipva+24*15*60*60) then
-							if garages[use].payment then
-								if vRP.vehicleType(tostring(name)) == "exclusive" or vRP.vehicleType(tostring(name)) == "rental" or vRP.vehicleType(tostring(name)) == "vips" then
-									local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,vehicle[1].engine,vehicle[1].body,vehicle[1].fuel,vehicle[1].porta0,vehicle[1].porta1,vehicle[1].porta2,vehicle[1].porta3,vehicle[1].porta4,vehicle[1].porta5,custom)
-									vehlist[vehid] = { parseInt(user_id),name }
-									TriggerEvent("setPlateEveryone",identity.registration)
-									TriggerClientEvent("Notify",source,"sucesso","Veículo Exclusivo, VIP e Alugado, não será cobrado a taxa de liberação.",10000)
-
-
-								end
-								if (vRP.getBankMoney(user_id)+vRP.getMoney(user_id)) >= parseInt(vRP.vehiclePrice(name)*0.005 and not vRP.vehicleType(tostring(name)) == "exclusive" or vRP.vehicleType(tostring(name)) == "rental" or vRP.vehicleType(tostring(name)) == "vips") then
-									local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,vehicle[1].engine,vehicle[1].body,vehicle[1].fuel,vehicle[1].porta0,vehicle[1].porta1,vehicle[1].porta2,vehicle[1].porta3,vehicle[1].porta4,vehicle[1].porta5,custom)
-									if spawnveh and vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.005)) then
-										vehlist[vehid] = { parseInt(user_id),name }
-										TriggerEvent("setPlateEveryone",identity.registration)
-
-									end
+				if parseInt(vehicle[1].venda) == 0 then
+					local tuning = vRP.getSData("custom:u"..user_id.."veh_"..name) or {}
+					local custom = json.decode(tuning) or {}
+					if vehicle[1] ~= nil then
+						if parseInt(os.time()) <= parseInt(vehicle[1].time+24*60*60) then
+							local ok = vRP.request(source,"Veículo na detenção, retira-lo por <b>$"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.02)).."</b> dólares ?",60)
+							if ok then
+								if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.02)) then
+									vRP.execute("creative/set_detido",{ user_id = parseInt(user_id), vehicle = name, detido = 0, time = 0 })
+									TriggerClientEvent("Notify",source,"sucesso","Veículo liberado.",10000)
 								else
 									TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
 								end
-							else
-								local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,vehicle[1].engine,vehicle[1].body,vehicle[1].fuel,vehicle[1].porta0,vehicle[1].porta1,vehicle[1].porta2,vehicle[1].porta3,vehicle[1].porta4,vehicle[1].porta5,custom,parseInt(vehicle[1].colorR),parseInt(vehicle[1].colorG),parseInt(vehicle[1].colorB),parseInt(vehicle[1].color2R),parseInt(vehicle[1].color2G),parseInt(vehicle[1].color2B),false)
-								if spawnveh then
-									vehlist[vehid] = { user_id,name }
-									TriggerEvent("setPlateEveryone",identity.registration)
-									vRP.execute("creative/set_vehicle_state",{ user_id = parseInt(user_id), vehicle = name, state = 1})
+							end
+						elseif parseInt(vehicle[1].detido) >= 1 then
+							local ok = vRP.request(source,"Veículo na detenção, retira-lo por <b>$"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.02)).."</b> dólares ?",60)
+							if ok then
+								if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.02)) then
+									vRP.execute("creative/set_detido",{ user_id = parseInt(user_id), vehicle = name, detido = 0, time = 0 })
+									TriggerClientEvent("Notify",source,"sucesso","Veículo liberado.",10000)
+								else
+									TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
+								end
+							end
+						elseif parseInt(vehicle[1].desmanchado) >= 1 then
+							local ok = vRP.request(source,"Veículo foi desmanchado, deseja acionar o seguro pagando <b>$"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.1)).."</b> dólares ?",60)
+							if ok then
+								if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.1)) then
+									vRP.execute("creative/set_desmanchado",{ user_id = parseInt(user_id), vehicle = name, desmanchado = 0, time = 0 })
+									TriggerClientEvent("Notify",source,"sucesso","Veículo recuperado.",10000)
+								else
+									TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
 								end
 							end
 						else
-							if vRP.vehicleType(tostring(name)) == "exclusive" or vRP.vehicleType(tostring(name)) == "rental" or vRP.vehicleType(tostring(name)) == "vips" then
-								local ok = vRP.request(source,"Deseja pagar O IPVA do veículo "..vRP.vehicleName(name).." por $"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.00)).." dólares?",60)
-								if ok then
-									if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.00)) then
-										vRP.execute("creative/set_ipva",{ user_id = parseInt(user_id), vehicle = name, ipva = parseInt(os.time()) })
-										TriggerClientEvent("Notify",source,"sucesso","Pagamento do <b>IPVA</b> conclúido com sucesso.",10000)
+							if parseInt(os.time()) <= parseInt(vehicle[1].ipva+24*15*60*60) then
+								if garages[use].payment then
+									if vRP.vehicleType(tostring(name)) == "exclusive" or vRP.vehicleType(tostring(name)) == "rental" or vRP.vehicleType(tostring(name)) == "vips" then
+										local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,vehicle[1].engine,vehicle[1].body,vehicle[1].fuel,vehicle[1].porta0,vehicle[1].porta1,vehicle[1].porta2,vehicle[1].porta3,vehicle[1].porta4,vehicle[1].porta5,custom)
+										vehlist[vehid] = { parseInt(user_id),name }
+										TriggerEvent("setPlateEveryone",identity.registration)
+										TriggerClientEvent("Notify",source,"sucesso","Veículo Exclusivo, VIP e Alugado, não será cobrado a taxa de liberação.",10000)
+
+
+									end
+									if (vRP.getBankMoney(user_id)+vRP.getMoney(user_id)) >= parseInt(vRP.vehiclePrice(name)*0.005 and not vRP.vehicleType(tostring(name)) == "exclusive" or vRP.vehicleType(tostring(name)) == "rental" or vRP.vehicleType(tostring(name)) == "vips") then
+										local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,vehicle[1].engine,vehicle[1].body,vehicle[1].fuel,vehicle[1].porta0,vehicle[1].porta1,vehicle[1].porta2,vehicle[1].porta3,vehicle[1].porta4,vehicle[1].porta5,custom)
+										if spawnveh and vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.005)) then
+											vehlist[vehid] = { parseInt(user_id),name }
+											TriggerEvent("setPlateEveryone",identity.registration)
+
+										end
 									else
 										TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
 									end
+								else
+									local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,vehicle[1].engine,vehicle[1].body,vehicle[1].fuel,vehicle[1].porta0,vehicle[1].porta1,vehicle[1].porta2,vehicle[1].porta3,vehicle[1].porta4,vehicle[1].porta5,custom,parseInt(vehicle[1].colorR),parseInt(vehicle[1].colorG),parseInt(vehicle[1].colorB),parseInt(vehicle[1].color2R),parseInt(vehicle[1].color2G),parseInt(vehicle[1].color2B),false)
+									if spawnveh then
+										vehlist[vehid] = { user_id,name }
+										TriggerEvent("setPlateEveryone",identity.registration)
+										vRP.execute("creative/set_vehicle_state",{ user_id = parseInt(user_id), vehicle = name, state = 1})
+									end
 								end
 							else
-								local price_tax = parseInt(vRP.vehiclePrice(name)*0.05)
-								if vRP.hasPermission(user_id,"bronze.pass") then
-									local vlporcentagem = parseInt(price_tax) * 0.1
-									price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
-								elseif vRP.hasPermission(user_id,"prata.pass") then
-									local vlporcentagem = parseInt(price_tax) * 0.2
-									price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
-								elseif vRP.hasPermission(user_id,"ouro.pass") then
-									local vlporcentagem = parseInt(price_tax) * 0.3
-									price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
-								elseif vRP.hasPermission(user_id,"platina.pass") then
-									local vlporcentagem = parseInt(price_tax) * 0.4
-									price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
-								elseif vRP.hasPermission(user_id,"amg.pass") then
-									local vlporcentagem = parseInt(price_tax) * 0.5
-									price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
-								end
-								local ok = vRP.request(source,"Deseja pagar o <b>IPVA</b> do veículo <b>"..vRP.vehicleName(name).." por <b>$"..vRP.format(price_tax).." dólares?",60)
-								if ok then
-									if vRP.tryFullPayment(user_id,price_tax) then
-										vRP.execute("creative/set_ipva",{ user_id = parseInt(user_id), vehicle = name, ipva = parseInt(os.time()) })
-										TriggerClientEvent("Notify",source,"sucesso","Pagamento do <b>IPVA</b> conclúido com sucesso.",10000)
-									else
-										TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
+								if vRP.vehicleType(tostring(name)) == "exclusive" or vRP.vehicleType(tostring(name)) == "rental" or vRP.vehicleType(tostring(name)) == "vips" then
+									local ok = vRP.request(source,"Deseja pagar O IPVA do veículo "..vRP.vehicleName(name).." por $"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.00)).." dólares?",60)
+									if ok then
+										if vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.00)) then
+											vRP.execute("creative/set_ipva",{ user_id = parseInt(user_id), vehicle = name, ipva = parseInt(os.time()) })
+											TriggerClientEvent("Notify",source,"sucesso","Pagamento do <b>IPVA</b> conclúido com sucesso.",10000)
+										else
+											TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
+										end
+									end
+								else
+									local price_tax = parseInt(vRP.vehiclePrice(name)*0.05)
+									if vRP.hasPermission(user_id,"bronze.pass") then
+										local vlporcentagem = parseInt(price_tax) * 0.1
+										price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
+									elseif vRP.hasPermission(user_id,"prata.pass") then
+										local vlporcentagem = parseInt(price_tax) * 0.2
+										price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
+									elseif vRP.hasPermission(user_id,"ouro.pass") then
+										local vlporcentagem = parseInt(price_tax) * 0.3
+										price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
+									elseif vRP.hasPermission(user_id,"platina.pass") then
+										local vlporcentagem = parseInt(price_tax) * 0.4
+										price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
+									elseif vRP.hasPermission(user_id,"amg.pass") then
+										local vlporcentagem = parseInt(price_tax) * 0.5
+										price_tax = parseInt(price_tax) - parseInt(vlporcentagem) - 1
+									end
+									local ok = vRP.request(source,"Deseja pagar o <b>IPVA</b> do veículo <b>"..vRP.vehicleName(name).." por <b>$"..vRP.format(price_tax).." dólares?",60)
+									if ok then
+										if vRP.tryFullPayment(user_id,price_tax) then
+											vRP.execute("creative/set_ipva",{ user_id = parseInt(user_id), vehicle = name, ipva = parseInt(os.time()) })
+											TriggerClientEvent("Notify",source,"sucesso","Pagamento do <b>IPVA</b> conclúido com sucesso.",10000)
+										else
+											TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
+										end
 									end
 								end
 							end
 						end
+					else
+						local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,1000,1000,100,0,0,0,0,0,0,custom,0,0,0,0,0,0,true)
+						if spawnveh then
+							vehlist[vehid] = { user_id,name }
+							TriggerEvent("setPlateEveryone",identity.registration)
+						end
 					end
 				else
-					local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,1000,1000,100,0,0,0,0,0,0,custom,0,0,0,0,0,0,true)
-					if spawnveh then
-						vehlist[vehid] = { user_id,name }
-						TriggerEvent("setPlateEveryone",identity.registration)
-					end
+					TriggerClientEvent("Notify",source,"aviso","Este veiculo esta a venda.",10000)
 				end
 			else
 				TriggerClientEvent("Notify",source,"aviso","Já possui um veículo deste modelo fora da garagem.",10000)

@@ -94,17 +94,17 @@ local itemlist = {
 	["capsulas"] = { index = "capsulas", nome = "Capsulas" },
 	["molas"] = { index = "molas", nome = "Molas" },
 	["gatilho"] = { index = "gatilho", nome = "Gatilho" },
-	["placa-metal"] = { index = "placa-metal", nome = "Placa de Metal" },
-	["corpo-ak103"] = { index = "corpo-ak103", nome = "Corpo de AK-103" },
-	["corpo-ak47"] = { index = "corpo-ak47", nome = "Corpo de AK-47" },
-	["corpo-ak74"] = { index = "corpo-ak74", nome = "Corpo de AK-74" },
-	["corpo-mp5"] = { index = "corpo-mp5", nome = "Corpo de MP-5" },
-	["corpo-tec9"] = { index = "corpo-tec9", nome = "Corpo de Tec-9" },
-	["corpo-m1911"] = { index = "corpo-m1911", nome = "Corpo de M1911" },
-	["corpo-hk110"] = { index = "corpo-hk110", nome = "Corpo de HK110" },
-	["corpo-parafal"] = { index = "corpo-parafal", nome = "Corpo de Parafal" },
-	["corpo-fiveseven"] = { index = "corpo-fiveseven", nome = "Corpo de Five S." },
-	["corpo-glock"] = { index = "corpo-glock", nome = "Corpo de Glock" },
+	["placametal"] = { index = "placametal", nome = "Placa de Metal" },
+	["corpoak103"] = { index = "corpoak103", nome = "Corpo de AK-103" },
+	["corpoak47"] = { index = "corpoak47", nome = "Corpo de AK-47" },
+	["corpoak74"] = { index = "corpoak74", nome = "Corpo de AK-74" },
+	["corpomp5"] = { index = "corpomp5", nome = "Corpo de MP-5" },
+	["corpotec9"] = { index = "corpotec9", nome = "Corpo de Tec-9" },
+	["corpom1911"] = { index = "corpom1911", nome = "Corpo de M1911" },
+	["corpohk110"] = { index = "corpohk110", nome = "Corpo de HK110" },
+	["corpoparafal"] = { index = "corpoparafal", nome = "Corpo de Parafal" },
+	["corpofiveseven"] = { index = "corpofiveseven", nome = "Corpo de Five S." },
+	["corpoglock"] = { index = "corpoglock", nome = "Corpo de Glock" },
 
 	-- [ Remédios ] --
 	["paracetamol"] = { index = "paracetamol", nome = "Paracetamol"},
@@ -965,6 +965,22 @@ RegisterCommand('cds2',function(source,args,rawCommand)
 	if vRP.hasPermission(user_id,"staff.permission") then
 		local x,y,z = vRPclient.getPosition(source)
 		vRP.prompt(source,"Cordenadas:",tD(x)..","..tD(y)..","..tD(z))
+	end
+end)
+
+RegisterCommand('cdssv',function(source,args,rawCommand)
+	local user_id = vRP.getUserId(source)
+	if vRP.hasPermission(user_id,"staff.permission") then
+		local x,y,z = vRPclient.getPosition(source)
+		print("Cordenadas:",tD(x)..","..tD(y)..","..tD(z))
+	end
+end)
+
+RegisterCommand('cdssv2',function(source,args,rawCommand)
+	local user_id = vRP.getUserId(source)
+	if vRP.hasPermission(user_id,"staff.permission") then
+		local x,y,z = vRPclient.getPosition(source)
+		print("Cordenadas:","['x'] = "..tD(x)..", ['y'] = "..tD(y)..", ['z'] = "..tD(z))
 	end
 end)
 

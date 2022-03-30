@@ -33,11 +33,11 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 				if not inProgress[src] then
 					if item == "parafal" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_SPECIALCARBINE") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-parafal") >= 1 then
-								if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 10 then
+							if vRP.getInventoryItemAmount(user_id,"corpoparafal") >= 1 then
+								if vRP.getInventoryItemAmount(user_id,"placametal") >= 10 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 2 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-parafal",1) and vRP.tryGetInventoryItem(user_id,"placa-metal",8) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
+											if vRP.tryGetInventoryItem(user_id,"corpoparafal",1) and vRP.tryGetInventoryItem(user_id,"placametal",8) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
 												--TriggerClientEvent("progress",src,180000,"fazendo")
 												TriggerClientEvent("progress",src,25000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -71,11 +71,11 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 
 					elseif item == "ak103" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_ASSAULTRIFLE_MK2") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-ak103") >= 1 then
-								if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 10 then
+							if vRP.getInventoryItemAmount(user_id,"corpoak103") >= 1 then
+								if vRP.getInventoryItemAmount(user_id,"placametal") >= 10 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 2 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-ak103",1) and vRP.tryGetInventoryItem(user_id,"placa-metal",8) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
+											if vRP.tryGetInventoryItem(user_id,"corpoak103",1) and vRP.tryGetInventoryItem(user_id,"placametal",8) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
 												--TriggerClientEvent("progress",src,180000,"fazendo")
 												TriggerClientEvent("progress",src,25000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -109,11 +109,11 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 						
 					elseif item == "ak47" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_ASSAULTRIFLE") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-ak47") >= 1 then
-								if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 5 then
+							if vRP.getInventoryItemAmount(user_id,"corpoak47") >= 1 then
+								if vRP.getInventoryItemAmount(user_id,"placametal") >= 5 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 2 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-ak47",1) and vRP.tryGetInventoryItem(user_id,"placa-metal",6) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
+											if vRP.tryGetInventoryItem(user_id,"corpoak47",1) and vRP.tryGetInventoryItem(user_id,"placametal",6) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
 												--TriggerClientEvent("progress",src,160000,"fazendo")
 												TriggerClientEvent("progress",src,20000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -147,11 +147,11 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 						
 --[[				elseif item == "ak74" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_COMPACTRIFLE") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-ak74") >= 1 then
-								if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 6 then
+							if vRP.getInventoryItemAmount(user_id,"corpoak74") >= 1 then
+								if vRP.getInventoryItemAmount(user_id,"placametal") >= 6 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 1 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-ak74",1) and vRP.tryGetInventoryItem(user_id,"placa-metal",6) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
+											if vRP.tryGetInventoryItem(user_id,"corpoak74",1) and vRP.tryGetInventoryItem(user_id,"placametal",6) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
 												--TriggerClientEvent("progress",src,170000,"fazendo")
 												TriggerClientEvent("progress",src,25000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -184,11 +184,11 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 						
 					elseif item == "mp5" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_SMG") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-mp5") >= 1 then
-								if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 4 then
+							if vRP.getInventoryItemAmount(user_id,"corpomp5") >= 1 then
+								if vRP.getInventoryItemAmount(user_id,"placametal") >= 4 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 2 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-mp5",1) and vRP.tryGetInventoryItem(user_id,"placa-metal",4) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
+											if vRP.tryGetInventoryItem(user_id,"corpomp5",1) and vRP.tryGetInventoryItem(user_id,"placametal",4) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",2) then
 												--TriggerClientEvent("progress",src,140000,"fazendo")
 												TriggerClientEvent("progress",src,25000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -221,11 +221,11 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 						
 					elseif item == "tec9" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_MACHINEPISTOL") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-tec9") >= 1 then
-								if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 3 then
+							if vRP.getInventoryItemAmount(user_id,"corpotec9") >= 1 then
+								if vRP.getInventoryItemAmount(user_id,"placametal") >= 3 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 1 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-tec9",1) and vRP.tryGetInventoryItem(user_id,"placa-metal",4) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
+											if vRP.tryGetInventoryItem(user_id,"corpotec9",1) and vRP.tryGetInventoryItem(user_id,"placametal",4) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
 												--TriggerClientEvent("progress",src,140000,"fazendo")
 												TriggerClientEvent("progress",src,15000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -259,11 +259,11 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 						
 --[[				elseif item == "m1911" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_PISTOL") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-m1911") >= 1 then
-								if vRP.getInventoryItemAmount(user_id,"placa-metal") >= 2 then
+							if vRP.getInventoryItemAmount(user_id,"corpom1911") >= 1 then
+								if vRP.getInventoryItemAmount(user_id,"placametal") >= 2 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 1 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-m1911",1) and vRP.tryGetInventoryItem(user_id,"placa-metal",2) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
+											if vRP.tryGetInventoryItem(user_id,"corpom1911",1) and vRP.tryGetInventoryItem(user_id,"placametal",2) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
 												--TriggerClientEvent("progress",src,100000,"fazendo")
 												TriggerClientEvent("progress",src,25000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -296,10 +296,10 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 						
 					elseif item == "hk110" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_SNSPISTOL") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-hk110") >= 1 then
+							if vRP.getInventoryItemAmount(user_id,"corpohk110") >= 1 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 1 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-hk110",1) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
+											if vRP.tryGetInventoryItem(user_id,"corpohk110",1) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
 												--TriggerClientEvent("progress",src,80000,"fazendo")
 												TriggerClientEvent("progress",src,25000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)
@@ -329,10 +329,10 @@ AddEventHandler("bdl_gunfactory:weaponfactory",function(item)
 
 					elseif item == "fiveseven" then
 						if vRP.getInventoryWeight(user_id)+vRP.getItemWeight("wbody|WEAPON_PISTOL_MK2") <= vRP.getInventoryMaxWeight(user_id) then
-							if vRP.getInventoryItemAmount(user_id,"corpo-fiveseven") >= 1 then
+							if vRP.getInventoryItemAmount(user_id,"corpofiveseven") >= 1 then
 									if vRP.getInventoryItemAmount(user_id,"gatilho") >= 1 then
 										if vRP.getInventoryItemAmount(user_id,"molas") >= 1 then
-											if vRP.tryGetInventoryItem(user_id,"corpo-fiveseven",1) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
+											if vRP.tryGetInventoryItem(user_id,"corpofiveseven",1) and vRP.tryGetInventoryItem(user_id,"gatilho",1) and vRP.tryGetInventoryItem(user_id,"molas",1) then
 												--TriggerClientEvent("progress",src,80000,"fazendo")
 												TriggerClientEvent("progress",src,10000,"fazendo")
 												vRPclient._playAnim(src,false,{{"amb@prop_human_parking_meter@female@idle_a","idle_a_female"}},true)

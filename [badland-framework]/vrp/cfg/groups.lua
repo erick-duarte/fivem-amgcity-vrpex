@@ -781,30 +781,30 @@ cfg.groups = {
 	-- [ ILEGAL ] --
 	-- [ GANGUES DE RUA ] --
 --	-- [ Grove ] --
---	["grove"] = {
---		_config = {
---			title = "Grove St.",
---			gtype = "job"
---		},
---		"grove.permission",
---		"ilegal.permission"
---	},
---
---	["l-grove"] = {
---		_config = {
---			title = "Líder",
---			gtype = "position"
---		},
---		"l-grove.permission",
---	},
---
---	["m-grove"] = {
---		_config = {
---			title = "Membro",
---			gtype = "position"
---		},
---		"m-grove.permission",
---	},
+	["grove"] = {
+		_config = {
+			title = "Grove St.",
+			gtype = "job"
+		},
+		"grove.permission",
+		"ilegal.permission"
+	},
+
+	["l-grove"] = {
+		_config = {
+			title = "Líder",
+			gtype = "position"
+		},
+		"l-grove.permission",
+	},
+
+	["m-grove"] = {
+		_config = {
+			title = "Membro",
+			gtype = "position"
+		},
+		"m-grove.permission",
+	},
 
 	--[ VERDES ] --
 	["verdes"] = {
@@ -852,30 +852,30 @@ cfg.groups = {
 	},
 
 	-- [ Ballas ] --
---	["ballas"] = {
---		_config = {
---			title = "Ballas",
---			gtype = "job"
---		},
---		"ballas.permission",
---		"ilegal.permission"
---	},
---
---	["l-ballas"] = {
---		_config = {
---			title = "Líder",
---			gtype = "position"
---		},
---		"l-ballas.permission",
---	},
---
---	["m-ballas"] = {
---		_config = {
---			title = "Membro",
---			gtype = "position"
---		},
---		"m-ballas.permission",
---	},
+	["ballas"] = {
+		_config = {
+			title = "Ballas",
+			gtype = "job"
+		},
+		"ballas.permission",
+		"ilegal.permission"
+	},
+
+	["l-ballas"] = {
+		_config = {
+			title = "Líder",
+			gtype = "position"
+		},
+		"l-ballas.permission",
+	},
+
+	["m-ballas"] = {
+		_config = {
+			title = "Membro",
+			gtype = "position"
+		},
+		"m-ballas.permission",
+	},
 
 	--[ VERMELHOS ] --
 	["vermelhos"] = {
@@ -923,30 +923,30 @@ cfg.groups = {
 	},
 
 	-- [ Vagos ] --
---	["vagos"] = {
---		_config = {
---			title = "Vagos",
---			gtype = "job"
---		},
---		"vagos.permission",
---		"ilegal.permission"
---	},
---
---	["l-vagos"] = {
---		_config = {
---			title = "Líder",
---			gtype = "position"
---		},
---		"l-vagos.permission",
---	},
---
---	["m-vagos"] = {
---		_config = {
---			title = "Membro",
---			gtype = "position"
---		},
---		"m-vagos.permission",
---	},
+	["vagos"] = {
+		_config = {
+			title = "Vagos",
+			gtype = "job"
+		},
+		"vagos.permission",
+		"ilegal.permission"
+	},
+
+	["l-vagos"] = {
+		_config = {
+			title = "Líder",
+			gtype = "position"
+		},
+		"l-vagos.permission",
+	},
+
+	["m-vagos"] = {
+		_config = {
+			title = "Membro",
+			gtype = "position"
+		},
+		"m-vagos.permission",
+	},
 
 	--[ BRANCO ] --
 	["brancos"] = {

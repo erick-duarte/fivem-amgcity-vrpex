@@ -683,6 +683,11 @@ local vehList = {
 	{ ['name'] = "taycan", ['hash'] = 1295777722, ['banned'] = false },
 	{ ['name'] = "m2f22", ['hash'] = -747269546, ['banned'] = false },
 	{ ['name'] = "p1gtr", ['hash'] = 1215232069, ['banned'] = false },
+
+	{ ['name'] = "18Velar", ['hash'] = -984938540, ['banned'] = false },
+	{ ['name'] = "bmwg07", ['hash'] = 497572160, ['banned'] = false },
+	{ ['name'] = "ram2500", ['hash'] = -301519603, ['banned'] = false },
+
 	{ ['name'] = "rmodf40", ['hash'] =  -1637862878, ['banned'] = false },
 	{ ['name'] = "rmodgtr50", ['hash'] =  1674460262, ['banned'] = false },
 
