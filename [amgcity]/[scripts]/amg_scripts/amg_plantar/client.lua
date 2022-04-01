@@ -2,8 +2,9 @@ local Tunnel = module("vrp","lib/Tunnel")
 local Proxy = module("vrp","lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 emP = Tunnel.getInterface("amg_plantar")
-src = {}
-Tunnel.bindInterface("amg_plantar",src)
+
+plantarAMG = {}
+Tunnel.bindInterface("amg_plantar",plantarAMG)
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- Variaveis
@@ -25,17 +26,18 @@ local hashSmall = GetHashKey('bkr_prop_weed_01_small_01a')
 local hashMedium = GetHashKey('bkr_prop_weed_med_01a')
 local hashBig = GetHashKey('bkr_prop_weed_lrg_01a')
 
-function src.syncPlantacao(data)
+function plantarAMG.syncPlantacao(data)
+	print('alndlawndlnwaldald')
 	syncPlantacao = data
 end
 
-function src.deleteSyncPlantacao(hashPlantacao)
+function plantarAMG.deleteSyncPlantacao(hashPlantacao)
 	Citizen.InvokeNative(0xAD738C3085FE7E11,hashPlantacao,true,true)
 	SetObjectAsNoLongerNeeded(Citizen.PointerValueIntInitialized(hashPlantacao))
 	DeleteObject(hashPlantacao)
 end
 
-function src.attPlantacao(data)
+function plantarAMG.attPlantacao(data)
 	atualizarPlantacao = data
 	for k,v in pairs(atualizarPlantacao) do
 		if v ~= nil then
@@ -157,7 +159,7 @@ Citizen.CreateThread(function()
 								atualizarPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = fasePlantacao, resultID = v.resultID, statusProgress = true }
 								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true }
 								emP.syncProgress(syncPlantacao)
-								src.attPlantacao(atualizarPlantacao)
+								plantarAMG.attPlantacao(atualizarPlantacao)
 							end
 						end
 					end
@@ -173,7 +175,7 @@ Citizen.CreateThread(function()
 								atualizarPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = fasePlantacao, resultID = v.resultID, statusProgress = true }
 								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true }
 								emP.syncProgress(syncPlantacao)
-								src.attPlantacao(atualizarPlantacao)
+								plantarAMG.attPlantacao(atualizarPlantacao)
 							end
 						end
 					end

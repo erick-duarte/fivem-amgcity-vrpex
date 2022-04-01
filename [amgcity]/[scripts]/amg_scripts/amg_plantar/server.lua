@@ -5,7 +5,8 @@ vRPclient = Tunnel.getInterface("vRP")
 
 emP = {}
 Tunnel.bindInterface("amg_plantar",emP)
-vCLIENT = Tunnel.getInterface("amg_plantar")
+plantarAMGCLIENT = Tunnel.getInterface("amg_plantar")
+
 
 vRP._prepare("plantacao/createDataBase",[[
   CREATE TABLE IF NOT EXISTS amg_plantacao(
@@ -51,19 +52,19 @@ function emP.reSync(hashPlantacao)
 	local source = source
 	local user_id = vRP.getUserId(source)
 	syncPlantacao[hashPlantacao] = nil
-	vCLIENT.syncPlantacao(-1,syncPlantacao)
+	plantarAMGCLIENT.syncPlantacao(-1,syncPlantacao)
 end
 
 function emP.reSyncDelete(hashPlantacao)
 	local source = source
 	local user_id = vRP.getUserId(source)
-	vCLIENT.deleteSyncPlantacao(-1,hashPlantacao)
+	plantarAMGCLIENT.deleteSyncPlantacao(-1,hashPlantacao)
 end
 
 function emP.syncProgress(syncPlantacao)
 	local source = source
 	local user_id = vRP.getUserId(source)
-	vCLIENT.syncPlantacao(-1,syncPlantacao)
+	plantarAMGCLIENT.syncPlantacao(-1,syncPlantacao)
 end
 
 function emP.syncPlantacao(hashPlantacao, coordPlantacao, fasePlantacao, resultID, statusProgress)
@@ -96,7 +97,7 @@ function emP.syncPlantacao(hashPlantacao, coordPlantacao, fasePlantacao, resultI
 			})
 		end
 		syncPlantacao[hashPlantacao] = { coordPlantacao = coordPlantacao, fasePlantacao = fasePlantacao, resultID = resultID, statusProgress = statusProgress }
-		vCLIENT.syncPlantacao(-1,syncPlantacao)
+		plantarAMGCLIENT.syncPlantacao(-1,syncPlantacao)
 	end
 end
 
@@ -117,9 +118,9 @@ function emP.colherPlantacao(hashPlantacao, coordPlantacao, fasePlantacao, resul
 					position = coordPlantacao.x..","..coordPlantacao.y..""..coordPlantacao.z,
 					status = fasePlantacao
 				})
-			vCLIENT.deleteSyncPlantacao(-1,hashPlantacao)
+			plantarAMGCLIENT.deleteSyncPlantacao(-1,hashPlantacao)
 			syncPlantacao[hashPlantacao] = nil
-			vCLIENT.syncPlantacao(-1,syncPlantacao)
+			plantarAMGCLIENT.syncPlantacao(-1,syncPlantacao)
 			TriggerClientEvent("Notify",source,"sucesso","Você pegou 1 maconha")
 		else
 			TriggerClientEvent("Notify",source,"negado","Voce nao possui espaco suficiente na mochila!")
