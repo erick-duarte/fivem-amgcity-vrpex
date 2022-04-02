@@ -53,6 +53,7 @@ local itemlist = {
 	["capuz"] = { index = "capuz", nome = "Capuz", type = "usar" },
 	["jammer"] = { index = "jammer", nome = "Jammer", type = "usar" },
 	["placa"] = { index = "placa", nome = "Placa Clonada", type = "usar" },
+	["vaso"] = { index = "vaso", nome = "Vaso de planta", type = "usar" },
 
 	--#Ballas
 	["pe-maconha"] = { index = "pe-maconha", nome = "Pé de Maconha", type = "usar" },

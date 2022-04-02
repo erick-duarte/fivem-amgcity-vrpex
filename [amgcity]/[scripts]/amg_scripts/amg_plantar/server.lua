@@ -39,8 +39,12 @@ function emP.iniciarPlantacao()
 	local source = source
 	local user_id = vRP.getUserId(source)
 	if user_id then
-		if vRP.tryGetInventoryItem(user_id,"adubo",1) then
-			return true
+		if vRP.getInventoryItemAmount(user_id,"adubo") > 0 then
+			if vRP.tryGetInventoryItem(user_id,"vaso",1) then
+				if vRP.tryGetInventoryItem(user_id,"adubo",1) then
+					return true
+				end
+			end
 		else
 			TriggerClientEvent("Notify",source,"negado","Você não tem adubo")
 			return false

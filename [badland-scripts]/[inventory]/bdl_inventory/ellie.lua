@@ -25,6 +25,7 @@ vPOLICIA = Tunnel.getInterface("vrp_policia")
 vDRUGS = Tunnel.getInterface("bdl_drugs")
 vHUD = Tunnel.getInterface("vrp_hud")
 vHOMES = Tunnel.getInterface("vrp_homes")
+vPLANTACAO = Tunnel.getInterface("amg_plantar")
 vRPclient = Tunnel.getInterface("vRP")
 
 local bandagem = {}
@@ -487,6 +488,7 @@ function vRPex.Mochila()
 end
 -- [ FUNÇÃO DE USAR OS ITEMS (CONFIGURAR) ] --
 function vRPex.useItem(itemName,type,ramount)
+	print(itemName, type, ramount)
 	local source = source
 	local user_id = vRP.getUserId(source)
 	if user_id and ramount ~= nil and parseInt(ramount) >= 0 and not actived[user_id] and actived[user_id] == nil then
@@ -667,26 +669,26 @@ function vRPex.useItem(itemName,type,ramount)
 						end
 					end
 				end
-			elseif itemName == "melhoria" then
-				if not vRPclient.isInVehicle(source) then
-					local vehicle = vRPclient.getNearestVehicle(source,3.5)
-					if vehicle then
-						if vRP.tryGetInventoryItem(user_id,"melhoria",1) then
-							actived[user_id] = true
-							TriggerClientEvent('Creative:Update',source,'updateMochila')
-							TriggerClientEvent('cancelando',source,true)
-							vRPclient._playAnim(source,false,{{"mini@repair","fixing_a_player"}},true)
-							TriggerClientEvent("progress",source,5000,"melhorando")
-							SetTimeout(5000,function()
-								actived[user_id] = nil
-								TriggerClientEvent('cancelando',source,false)
-								TriggerClientEvent('melhoria',vehicle)
-								print(vehicle)
-								vRPclient._stopAnim(source,false)
-							end)
-						end
-					end
-				end
+			--elseif itemName == "melhoria" then
+			--	if not vRPclient.isInVehicle(source) then
+			--		local vehicle = vRPclient.getNearestVehicle(source,3.5)
+			--		if vehicle then
+			--			if vRP.tryGetInventoryItem(user_id,"melhoria",1) then
+			--				actived[user_id] = true
+			--				TriggerClientEvent('Creative:Update',source,'updateMochila')
+			--				TriggerClientEvent('cancelando',source,true)
+			--				vRPclient._playAnim(source,false,{{"mini@repair","fixing_a_player"}},true)
+			--				TriggerClientEvent("progress",source,5000,"melhorando")
+			--				SetTimeout(5000,function()
+			--					actived[user_id] = nil
+			--					TriggerClientEvent('cancelando',source,false)
+			--					TriggerClientEvent('melhoria',vehicle)
+			--					print(vehicle)
+			--					vRPclient._stopAnim(source,false)
+			--				end)
+			--			end
+			--		end
+			--	end
 				
 			elseif itemName == "dorflex" or itemName == "voltaren" or itemName == "tandrilax" or itemName == "buscopan" or itemName == "paracetamol" then
 				if (vRP.tryGetInventoryItem(user_id,"dorflex",1) or vRP.tryGetInventoryItem(user_id,"voltaren",1) or vRP.tryGetInventoryItem(user_id,"tandrilax",1) or vRP.tryGetInventoryItem(user_id,"buscopan",1) or vRP.tryGetInventoryItem(user_id,"paracetamol",1)) then
@@ -747,6 +749,14 @@ function vRPex.useItem(itemName,type,ramount)
 						vRPclient.playScreenEffect(source,"DrugsTrevorClownsFight",180)
 						TriggerClientEvent("Notify",source,"sucesso","Metanfetamina utilizada com sucesso.",8000)
 					end)
+				end
+
+			elseif itemName == "vaso" then
+				if vRP.getInventoryItemAmount(user_id,"vaso") > 0 then
+					actived[user_id] = true
+					TriggerClientEvent('Creative:Update',source,'updateMochila')
+					vPLANTACAO.plantar(source)
+					actived[user_id] = nil
 				end
 			--------------------------------------------------------------------------------------------------------------------------------------------------
 			--[ ULTILITÁRIOS ILEGAIS ]------------------------------------------------------------------------------------------------------------------------

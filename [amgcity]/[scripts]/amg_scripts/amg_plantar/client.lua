@@ -27,7 +27,6 @@ local hashMedium = GetHashKey('bkr_prop_weed_med_01a')
 local hashBig = GetHashKey('bkr_prop_weed_lrg_01a')
 
 function plantarAMG.syncPlantacao(data)
-	print('alndlawndlnwaldald')
 	syncPlantacao = data
 end
 
@@ -114,7 +113,8 @@ function plantarAMG.attPlantacao(data)
 	end
 end
 
-RegisterCommand("plantar",function(source,args)
+--RegisterCommand("plantar",function(source,args)
+function plantarAMG.plantar()
 	local coordPlantacao = GetOffsetFromEntityInWorldCoords(PlayerPedId(),0.0,1.0,-0.94)
 	local h = GetEntityHeading(PlayerPedId())
 	if emP.iniciarPlantacao() and not IsPedInAnyVehicle(PlayerPedId()) and GetEntityHealth(PlayerPedId()) > 101 then
@@ -138,7 +138,7 @@ RegisterCommand("plantar",function(source,args)
 		FreezeEntityPosition(hashObject,true)
 		emP.syncPlantacao(hashObject, coordPlantacao, 1, 0, false)
 	end
-end)
+end
 
 Citizen.CreateThread(function()
 	while true do

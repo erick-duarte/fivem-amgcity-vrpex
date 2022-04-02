@@ -53,6 +53,7 @@ cfg.items = {
 	["dinheiro-sujo"] = { "Dinheiro Sujo", 0.0 },
 	["jammer"] = { "Jammer",0.3 },
 	["placa"] = { "Placa Clonada",0.3 },
+	["vaso"] = { "Vaso de planta",0.3 },
 
 
 

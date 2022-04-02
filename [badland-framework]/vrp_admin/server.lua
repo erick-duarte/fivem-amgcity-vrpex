@@ -67,6 +67,7 @@ local itemlist = {
 	["capuz"] = { index = "capuz", nome = "Capuz" },
 	["jammer"] = { index = "jammer", nome = "Jammer" },
 	["placa"] = { index = "placa", nome = "Placa Clonada"},
+	["vaso"] = { index = "vaso", nome = "Vaso de Planta"},
 
 	--#Ballas
 	["pe-maconha"] = { index = "pe-maconha", nome = "Pé de Maconha" },
