@@ -38,7 +38,7 @@ local vehClass = {
 	[12] = 1.0,
 	[13] = 0.0,
 	[14] = 0.0,
-	[15] = 1.0,
+	[15] = 3.0,
 	[16] = 1.0,
 	[17] = 1.0,
 	[18] = 1.0,
@@ -210,7 +210,11 @@ Citizen.CreateThread(function()
 				local speed = GetEntitySpeed(vehicle) * 2.236936
 				if IsVehicleEngineOn(vehicle) and GetPedInVehicleSeat(vehicle,-1) == ped and GetVehicleFuelLevel(vehicle) >= 2 and speed > 5 then
 					local vehNet = NetworkGetNetworkIdFromEntity(vehicle)
-					TriggerServerEvent("engine:tryFuel",VehToNet(vehicle),GetVehicleFuelLevel(vehicle) - (vehFuel[floor(GetVehicleCurrentRpm(vehicle))] or 1.0) * (vehClass[GetVehicleClass(vehicle)] or 1.0) / 10)
+					if GetVehicleClass(vehicle) == 15 then
+						TriggerServerEvent("engine:tryFuel",VehToNet(vehicle),GetVehicleFuelLevel(vehicle) - (vehFuel[floor(GetEntitySpeed(ped))] or 1.0) * (vehClass[GetVehicleClass(vehicle)] or 1.0) / 10)
+					else
+						TriggerServerEvent("engine:tryFuel",VehToNet(vehicle),GetVehicleFuelLevel(vehicle) - (vehFuel[floor(GetVehicleCurrentRpm(vehicle))] or 1.0) * (vehClass[GetVehicleClass(vehicle)] or 1.0) / 10)
+					end
 				end
 			end
 		end
