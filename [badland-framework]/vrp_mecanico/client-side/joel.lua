@@ -79,7 +79,7 @@ Citizen.CreateThread(function()
             if not onMenu then
                 DrawMarker(30, systemX,systemY,systemZ-0.6,0,0,0,0.0,0,0,0.5,0.5,0.4,255,180,0,90,0,0,0,1)
                 if distance2 <= 2 then
-                    DrawText3D(systemX,systemY,systemZ, "[~y~E~w~] Para ~y~ABRIR~w~ o sistema.")
+                    DrawText3D(systemX,systemY,systemZ, "[~y~E~w~] Para ~y~ABRIR~w~ loja.")
                     if distance2 <= 1.1 then
                         if IsControlJustPressed(0,38) and vRPex.checkPermission() then
                             ToggleActionMenu()
