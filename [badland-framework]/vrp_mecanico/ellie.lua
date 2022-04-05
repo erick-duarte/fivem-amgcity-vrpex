@@ -6,7 +6,9 @@ vRPclient = Tunnel.getInterface("vRP")
 src = {}
 Tunnel.bindInterface("vrp_mecanico", src)
 
-local valortotal = 0
+local valorTotal, caixaEmpresa = 0
+local listEncomendas = nil
+local caixaEmpresa = 0
 local onServiceBN = "https://discord.com/api/webhooks/842983587560423444/YLsv12UXKCstj52PkhsXsEdEr0Psn8azxSP3cNfgQtlm5KJ7ss536Vvpe0vSMRj-a0LC"
 local offServiceBN = "https://discord.com/api/webhooks/842983650483241012/o7H4WzlhvzdHTcPJ1Js44gbSPjZ_WLnG7m60JUdZODm56kxxdH9Jn0MFeCVcftS7Ubqg"
 local positionBennys = "https://discord.com/api/webhooks/842983691537088574/hP-eGEW2zG6JYPjDkc5pGq6-9RVhV_d7IHdbRHOfqbCNkSRGUg_GuRGWHSM5g0Ii2Xrh"
@@ -26,15 +28,21 @@ AddEventHandler("bennys-comprar",function(item)
 		for k,v in pairs(forSale) do
 			if item == v.item then
 				if vRP.getInventoryWeight(user_id)+vRP.getItemWeight(v.item)*v.amount <= vRP.getInventoryMaxWeight(user_id) then
-					valortotal = parseInt(v.price)
+					valorTotal = parseInt(v.price)
 					if vRP.hasPermission(user_id,"bennys.permission") then
-						valortotal = parseInt(v.price / 2)
+						valorTotal = parseInt(v.price / 2)
 					end
-					if vRP.tryPayment(user_id,parseInt(valortotal)) then
+					local rows = vRP.query("empresa/selectEmpresa",{ cnpj = 1 })
+					for k, v in pairs(rows) do
+						caixaEmpresa = v.caixa
+						break
+					end
+					if vRP.tryPayment(user_id,parseInt(valorTotal)) then
 						if vRP.tryChestItem(user_id,"chest:"..tostring("bennys"),v.item,v.amount) then
-							--vRP.giveInventoryItem(user_id,v.item,parseInt(v.amount))
-							TriggerClientEvent("Notify",source,"sucesso","Comprou <b>"..parseInt(v.amount).."x "..vRP.itemNameList(v.item).."</b> por <b>$"..vRP.format(parseInt(valortotal)).." dólares</b>.")
-							PerformHttpRequest(bennysLog, function(err, text, headers) end, 'POST', json.encode({embeds = {{ title = "REGISTRO DA BENNYS:⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",thumbnail = {url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png"}, fields = {{ name = "**Registro do usuário:**", value = "` "..identity.name.." "..identity.firstname.." ` "},{ name = "**Nº do ID:**", value = "` "..user_id.." ` "},{ name = "**Comprou:**", value = "` "..vRP.itemNameList(v.item).." `"},{ name = "**Pagou a quantia:**", value = "` "..parseInt(v.compra).." `"},}, footer = { text = os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S"), icon_url = "https://cdn.discordapp.com/attachments/740912067095035955/757142616054824970/badland2.png" },color = 15914080}}}), { ['Content-Type'] = 'application/json' })
+							local attCaixa = parseInt(caixaEmpresa) + parseInt(valorTotal)
+							vRP.query("empresa/updateCaixa",{ caixa = parseInt(attCaixa), cnpj = 1 })
+							TriggerClientEvent("Notify",source,"sucesso","Comprou <b>"..parseInt(v.amount).."x "..vRP.itemNameList(v.item).."</b> por <b>$"..vRP.format(parseInt(valorTotal)).." dólares</b>.")
+							os.execute("$(which bash) /amgcity/server-data/shellscript/bennysBanco.sh "..user_id.." 'Shop' "..parseInt(valorTotal).." "..parseInt(caixaEmpresa).." "..parseInt(attCaixa).."")
 						else
 							TriggerClientEvent("Notify",source,"negado","Estamos sem estoque desse produto.")
 						end
