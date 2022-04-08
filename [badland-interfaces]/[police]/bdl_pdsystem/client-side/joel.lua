@@ -35,22 +35,22 @@ end
 -----------------------------------------------------------------------------------------------------------------------------------------
 RegisterNUICallback("ButtonClick",function(data,cb)
 	local ped = PlayerPedId()
-	if data == "m4a1" then
+	if data == "m4a4" then
 		if vRPex.checkPermission("lspd.permission") then
 			RemoveWeaponFromPed(ped,GetHashKey("WEAPON_CARBINERIFLE"))
 			GiveWeaponToPed(ped,GetHashKey("WEAPON_CARBINERIFLE_MK2"),150,0,0)
-			TriggerEvent("Notify","sucesso","Você pegou uma M4A1 do arsenal.",9000)
-			TriggerServerEvent("bdl:takeWeapons","M4-A1")
+			TriggerEvent("Notify","sucesso","Você pegou uma M4A4 do arsenal.",9000)
+			TriggerServerEvent("bdl:takeWeapons","M4-A4")
 		else
 			TriggerEvent("Notify","negado","Você precisa entrar em serviço para isso.",9000)
 		end
 
-	elseif data == "m4a4" then
+	elseif data == "m4a1" then
 		if vRPex.checkPermission("lspd.permission") then
 			RemoveWeaponFromPed(ped,GetHashKey("WEAPON_CARBINERIFLE_MK2"))
 			GiveWeaponToPed(ped,GetHashKey("WEAPON_CARBINERIFLE"),150,0,0)
-			TriggerEvent("Notify","sucesso","Você pegou uma M4A4 do arsenal.",9000)
-			TriggerServerEvent("bdl:takeWeapons","M4-A4")
+			TriggerEvent("Notify","sucesso","Você pegou uma M4A1 do arsenal.",9000)
+			TriggerServerEvent("bdl:takeWeapons","M4-A1")
 		else
 			TriggerEvent("Notify","negado","Você precisa entrar em serviço para isso.",9000)
 		end
@@ -65,7 +65,7 @@ RegisterNUICallback("ButtonClick",function(data,cb)
 			TriggerEvent("Notify","negado","Você precisa entrar em serviço para isso.",9000)
 		end
 
-	elseif data == "mpx" then
+	elseif data == "pwd" then
 		if vRPex.checkPermission("lspd.permission") then
 			RemoveWeaponFromPed(ped,GetHashKey("WEAPON_SMG"))
 			GiveWeaponToPed(ped,GetHashKey("WEAPON_COMBATPDW"),130,0,0)
@@ -75,7 +75,7 @@ RegisterNUICallback("ButtonClick",function(data,cb)
 			TriggerEvent("Notify","negado","Você precisa entrar em serviço para isso.",9000)
 		end
 
-	elseif data == "shot45" then
+	elseif data == "shot12" then
 		if vRPex.checkPermission("lspd.permission") then
 			RemoveWeaponFromPed(ped,GetHashKey("WEAPON_PUMPSHOTGUN"))
 			GiveWeaponToPed(ped,GetHashKey("WEAPON_PUMPSHOTGUN_MK2"),10,0,0)
@@ -85,7 +85,7 @@ RegisterNUICallback("ButtonClick",function(data,cb)
 			TriggerEvent("Notify","negado","Você precisa entrar em serviço para isso.",9000)
 		end
 
-	elseif data == "shot12" then
+	elseif data == "shot45" then
 		if vRPex.checkPermission("lspd.permission") then
 			RemoveWeaponFromPed(ped,GetHashKey("WEAPON_PUMPSHOTGUN_MK2"))
 			GiveWeaponToPed(ped,GetHashKey("WEAPON_PUMPSHOTGUN"),10,0,0)
