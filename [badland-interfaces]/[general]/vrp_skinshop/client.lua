@@ -23,7 +23,7 @@ local lojaderoupa = {
     {x =  1196.8, y = 2709.83, z = 38.23, provador = {x =  1196.8, y = 2709.83, z = 38.23, heading = 91.504}},
     {x = -3170.18, y = 1044.54, z = 20.86, provador = {x = -3170.18, y = 1044.54, z = 20.86, heading = 0.0}},
     {x = -1101.46, y = 2710.57, z = 19.10, provador = {x = -1101.46, y = 2710.57, z = 19.10, heading = 126.941}},
-    {x =  -1093.49, y =  -832.25, z = 14.29, provador = {x =  -1093.49, y =  -832.25, z = 14.29, heading = 35.0}},
+    {x =  -1094.26, y = -832.79, z = 14.29, provador = {x =  -1094.26, y =  -832.79, z = 14.29, heading = 35.0}},
     {x =  105.28, y = -1303.1, z = 28.77, provador = {x =  105.28, y = -1303.1, z = 28.77, heading = 302.317}},
     {x =  200.97, y = -874.32, z = 30.72, provador = {x =  200.97, y = -874.32, z = 30.72, heading = 67.72}},
     {x =  199.79, y = -876.9, z = 30.72, provador = {x =  199.79, y = -876.9, z = 30.72, heading = 67.72}},
@@ -314,7 +314,11 @@ end)
 RegisterNUICallback("reset", function(data, cb)
     vRP.setCustomization(old_custom)
     closeGuiLojaRoupa()
+    Citizen.Wait(100)
     ClearPedTasks(PlayerPedId())
+    Citizen.Wait(100)
+    ClearPedTasksImmediately(PlayerPedId())
+    FreezeEntityPosition(PlayerPedId(), false)
 end)
 
 function closeGuiLojaRoupa()
@@ -339,10 +343,20 @@ AddEventHandler('LojaDeRoupas:ReceberCompra', function(comprar)
     if comprar then
         in_loja = false
         closeGuiLojaRoupa()
+        Citizen.Wait(100)
+        ClearPedTasks(PlayerPedId())
+        Citizen.Wait(100)
+        ClearPedTasksImmediately(PlayerPedId())
+        FreezeEntityPosition(PlayerPedId(), false)
     else
         in_loja = false
         vRP.setCustomization(old_custom)
         closeGuiLojaRoupa()
+        Citizen.Wait(100)
+        ClearPedTasks(PlayerPedId())
+        Citizen.Wait(100)
+        ClearPedTasksImmediately(PlayerPedId())
+        FreezeEntityPosition(PlayerPedId(), false)
     end
 end)
 
