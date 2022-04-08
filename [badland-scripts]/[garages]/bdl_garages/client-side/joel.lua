@@ -1498,7 +1498,7 @@ Citizen.CreateThread(function()
 							DrawMarker(23,v.x,v.y,v.z-0.97,0,0,0,0,0,0,1.0,1.0,0.5,255,50,50,155,0,0,0,1)
 							if Vdist(x,y,z,v.x,v.y,v.z) <= 1 then
 								if IsControlJustPressed(0,38) then
-									print("Garagem:", k)
+									--print("Garagem:", k)
 									vSERVER.returnHouses(v.name,k)
 								end
 							end

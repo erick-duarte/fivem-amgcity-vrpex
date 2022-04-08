@@ -693,10 +693,10 @@ function src.spawnVehicles(name,use)
 			end
 			if not vCLIENT.returnVehicle(source,name) then
 				local vehicle = vRP.query("creative/get_vehicles",{ user_id = parseInt(user_id), vehicle = name })
-				if parseInt(vehicle[1].venda) == 0 then
-					local tuning = vRP.getSData("custom:u"..user_id.."veh_"..name) or {}
-					local custom = json.decode(tuning) or {}
-					if vehicle[1] ~= nil then
+				if vehicle[1] ~= nil then
+					if parseInt(vehicle[1].venda) == 0 then
+						local tuning = vRP.getSData("custom:u"..user_id.."veh_"..name) or {}
+						local custom = json.decode(tuning) or {}
 						if parseInt(os.time()) <= parseInt(vehicle[1].time+24*60*60) then
 							local ok = vRP.request(source,"Veículo na detenção, retira-lo por <b>$"..vRP.format(parseInt(vRP.vehiclePrice(name)*0.02)).."</b> dólares ?",60)
 							if ok then
@@ -735,15 +735,15 @@ function src.spawnVehicles(name,use)
 										vehlist[vehid] = { parseInt(user_id),name }
 										TriggerEvent("setPlateEveryone",identity.registration)
 										TriggerClientEvent("Notify",source,"sucesso","Veículo Exclusivo, VIP e Alugado, não será cobrado a taxa de liberação.",10000)
-
-
+									
+									
 									end
 									if (vRP.getBankMoney(user_id)+vRP.getMoney(user_id)) >= parseInt(vRP.vehiclePrice(name)*0.005 and not vRP.vehicleType(tostring(name)) == "exclusive" or vRP.vehicleType(tostring(name)) == "rental" or vRP.vehicleType(tostring(name)) == "vips") then
 										local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,vehicle[1].engine,vehicle[1].body,vehicle[1].fuel,vehicle[1].porta0,vehicle[1].porta1,vehicle[1].porta2,vehicle[1].porta3,vehicle[1].porta4,vehicle[1].porta5,custom)
 										if spawnveh and vRP.tryFullPayment(user_id,parseInt(vRP.vehiclePrice(name)*0.005)) then
 											vehlist[vehid] = { parseInt(user_id),name }
 											TriggerEvent("setPlateEveryone",identity.registration)
-
+										
 										end
 									else
 										TriggerClientEvent("Notify",source,"negado","Dinheiro insuficiente.",10000)
@@ -798,14 +798,14 @@ function src.spawnVehicles(name,use)
 							end
 						end
 					else
-						local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,1000,1000,100,0,0,0,0,0,0,custom,0,0,0,0,0,0,true)
-						if spawnveh then
-							vehlist[vehid] = { user_id,name }
-							TriggerEvent("setPlateEveryone",identity.registration)
-						end
+						TriggerClientEvent("Notify",source,"aviso","Este veiculo esta a venda.",10000)
 					end
 				else
-					TriggerClientEvent("Notify",source,"aviso","Este veiculo esta a venda.",10000)
+					local spawnveh,vehid = vCLIENT.spawnVehicle(source,name,1000,1000,100,0,0,0,0,0,0,custom,0,0,0,0,0,0,true)
+					if spawnveh then
+						vehlist[vehid] = { user_id,name }
+						TriggerEvent("setPlateEveryone",identity.registration)
+					end
 				end
 			else
 				TriggerClientEvent("Notify",source,"aviso","Já possui um veículo deste modelo fora da garagem.",10000)
