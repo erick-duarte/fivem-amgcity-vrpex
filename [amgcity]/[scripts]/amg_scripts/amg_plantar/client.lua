@@ -14,6 +14,7 @@ local atualizarPlantacao = {}
 local progressPlantacao = {}
 local atualizando = false
 local ativarwhile = false
+local authPlant = false
 local attCoordX = nil
 local attCoordY = nil
 local attCoordZ = nil
@@ -55,6 +56,7 @@ function plantarAMG.attPlantacao(data)
 			attResultID = v.resultID
 			attFasePlantacao = v.fasePlantacao
 			attStatusProgress = v.statusProgress
+			attItemName = v.itemName
 			ativarwhile = true
 
 			Citizen.CreateThread(function()
@@ -79,7 +81,7 @@ function plantarAMG.attPlantacao(data)
 									RequestModel(hash)
 									Citizen.Wait(10)
 								end
-								syncPlantacao[attOldHash] = { coordPlantacao = attCoordAll, fasePlantacao = attFasePlantacao, resultID = attResultID, statusProgress = false }
+								syncPlantacao[attOldHash] = { coordPlantacao = attCoordAll, fasePlantacao = attFasePlantacao, resultID = attResultID, statusProgress = false, itemName = attItemName }
 								emP.reSyncDelete(attOldHash)
 								emP.reSync(attOldHash)
 								local hashPlantacao = CreateObject(hash,attCoordX,attCoordY-0.5,attCoordZ,true,true,true)
@@ -89,7 +91,7 @@ function plantarAMG.attPlantacao(data)
 								SetEntityHeading(hashPlantacao,GetEntityHeading(PlayerPedId()))
 								FreezeEntityPosition(hashPlantacao,true)
 								Citizen.Wait(500)
-								emP.syncPlantacao(hashPlantacao, attCoordAll, fasePlant, attResultID, false)
+								emP.syncPlantacao(hashPlantacao, attCoordAll, fasePlant, attResultID, false, attItemName)
 								attCoordAll = nil
 								attCoordX = nil
 								attCoordY = nil
@@ -113,30 +115,47 @@ function plantarAMG.attPlantacao(data)
 	end
 end
 
---RegisterCommand("plantar",function(source,args)
-function plantarAMG.plantar()
+function plantarAMG.plantar(itemName)
 	local coordPlantacao = GetOffsetFromEntityInWorldCoords(PlayerPedId(),0.0,1.0,-0.94)
-	local h = GetEntityHeading(PlayerPedId())
-	if emP.iniciarPlantacao() and not IsPedInAnyVehicle(PlayerPedId()) and GetEntityHealth(PlayerPedId()) > 101 then
-		
-		vRP._playAnim(false,{{"amb@world_human_gardener_plant@female@idle_a","idle_a_female"}},false)
-		Citizen.Wait(500)
-		vRP._stopAnim(false)
-		TriggerEvent("cancelando",false)
+	local distance1 = Vdist(2356.5,4899.61,43.58,coordPlantacao.x,coordPlantacao.y-0.5,coordPlantacao.z) --Defini os pontos de plantação
+	local distance2 = Vdist(-974.75,4613.2,230.65,coordPlantacao.x,coordPlantacao.y-0.5,coordPlantacao.z)
+	
+	if distance1< 750 then
+		authPlant = true
+	elseif distance2 < 750 then
+		authPlant = true
+	end
+	
+	if not IsPedSwimming(PlayerPedId()) then
+		if authPlant then
+			authPlant = false
+			local h = GetEntityHeading(PlayerPedId())
+			if emP.iniciarPlantacao(itemName) and not IsPedInAnyVehicle(PlayerPedId()) and GetEntityHealth(PlayerPedId()) > 101 then
 
-		RequestModel(hashSmall)
-		while not HasModelLoaded(hashSmall) do
-			RequestModel(hashSmall)
-			Citizen.Wait(10)
+				vRP._playAnim(false,{{"amb@world_human_gardener_plant@female@idle_a","idle_a_female"}},false)
+				Citizen.Wait(500)
+				vRP._stopAnim(false)
+				TriggerEvent("cancelando",false)
+
+				RequestModel(hashSmall)
+				while not HasModelLoaded(hashSmall) do
+					RequestModel(hashSmall)
+					Citizen.Wait(10)
+				end
+
+				local hashObject = CreateObject(hashSmall,coordPlantacao.x,coordPlantacao.y-0.5,coordPlantacao.z,true,true,true)
+				PlaceObjectOnGroundProperly(hashObject)
+				SetModelAsNoLongerNeeded(hashObject)
+				Citizen.InvokeNative(0xAD738C3085FE7E11,hashObject,true,true)
+				SetEntityHeading(hashObject,h)
+				FreezeEntityPosition(hashObject,true)
+				emP.syncPlantacao(hashObject, coordPlantacao, 1, 0, false, itemName)
+			end
+		else
+			TriggerEvent("Notify","negado","Não é permitido plantar neste local")
 		end
-
-		local hashObject = CreateObject(hashSmall,coordPlantacao.x,coordPlantacao.y-0.5,coordPlantacao.z,true,true,true)
-		PlaceObjectOnGroundProperly(hashObject)
-		SetModelAsNoLongerNeeded(hashObject)
-		Citizen.InvokeNative(0xAD738C3085FE7E11,hashObject,true,true)
-		SetEntityHeading(hashObject,h)
-		FreezeEntityPosition(hashObject,true)
-		emP.syncPlantacao(hashObject, coordPlantacao, 1, 0, false)
+	else
+		TriggerEvent("Notify","negado","Você não pode plantar na água")
 	end
 end
 
@@ -147,6 +166,7 @@ Citizen.CreateThread(function()
 		local coord = GetOffsetFromEntityInWorldCoords(PlayerPedId(),0.0,1.0,-0.94)
 		for k,v in pairs(syncPlantacao) do
 			if v ~= nil then
+				print(v.itemName)
 				local distance = Vdist(coord.x,coord.y,coord.z,v.coordPlantacao.x,v.coordPlantacao.y,v.coordPlantacao.z)
 				if v.fasePlantacao == 1 then 
 					if distance <= 5 and not v.statusProgress then
@@ -156,8 +176,8 @@ Citizen.CreateThread(function()
 							idle = 5
 							if 	IsControlJustPressed(1,38) then
 								local fasePlantacao = v.fasePlantacao + 1
-								atualizarPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = fasePlantacao, resultID = v.resultID, statusProgress = true }
-								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true }
+								atualizarPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = fasePlantacao, resultID = v.resultID, statusProgress = true, itemName = v.itemName }
+								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true, itemName = v.itemName  }
 								emP.syncProgress(syncPlantacao)
 								plantarAMG.attPlantacao(atualizarPlantacao)
 							end
@@ -172,8 +192,8 @@ Citizen.CreateThread(function()
 							idle = 5
 							if 	IsControlJustPressed(1,38) then
 								local fasePlantacao = v.fasePlantacao + 1
-								atualizarPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = fasePlantacao, resultID = v.resultID, statusProgress = true }
-								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true }
+								atualizarPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = fasePlantacao, resultID = v.resultID, statusProgress = true, itemName = v.itemName }
+								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true, itemName = v.itemName }
 								emP.syncProgress(syncPlantacao)
 								plantarAMG.attPlantacao(atualizarPlantacao)
 							end
@@ -188,13 +208,13 @@ Citizen.CreateThread(function()
 							idle = 5
 							if 	IsControlJustPressed(1,38) then
 								local fasePlantacao = v.fasePlantacao + 1
-								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true }
+								syncPlantacao[k] = { coordPlantacao = v.coordPlantacao, fasePlantacao = v.fasePlantacao, resultID = v.resultID, statusProgress = true, itemName = v.itemName }
 								emP.syncProgress(syncPlantacao)
 								vRP._playAnim(false,{{"amb@world_human_gardener_plant@female@idle_a","idle_a_female"}},false)
 								Citizen.Wait(500)
 								vRP._stopAnim(false)
 								TriggerEvent("cancelando",false)
-								emP.colherPlantacao(k, v.coordPlantacao, fasePlantacao, v.resultID)
+								emP.colherPlantacao(k, v.coordPlantacao, fasePlantacao, v.resultID, v.itemName )
 							end
 						end
 					end
