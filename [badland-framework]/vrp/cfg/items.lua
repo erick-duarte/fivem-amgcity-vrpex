@@ -55,14 +55,18 @@ cfg.items = {
 	["placa"] = { "Placa Clonada",0.3 },
 	["vaso"] = { "Vaso de planta",0.3 },
 
+	["maconhasemente"] = { "Sem. de Maconha",0.1 },
+	["papoulasemente"] = { "Sem. de Papoula",0.1 },
+	["cocainasemente"] = { "Sem. de Cocaina",0.1 },
+
 
 
 	--#Ballas
 	["adubo"] = { "Adubo", 0.3 },
-	["maconha"] = { "Maconha", 0.5 },
+	["maconha"] = { "Maconha", 0.3 },
 	["maconha-embalada"] = { "Maconha Emb.", 1.0 },
 	--#Grove
-	["folha-coca"] = { "Folha de Coca", 0.1 },
+	["folha-coca"] = { "Folha de Coca", 0.3 },
 	["pasta-coca"] = { "Pasta de Coca", 0.5 },
 	["cocaína"] = { "Cocaína", 0.3 },
 	["coca-embalada"] = { "Cocaína Emb.", 1.0 },

@@ -54,6 +54,10 @@ local itemlist = {
 	["jammer"] = { index = "jammer", nome = "Jammer", type = "usar" },
 	["placa"] = { index = "placa", nome = "Placa Clonada", type = "usar" },
 	["vaso"] = { index = "vaso", nome = "Vaso de planta", type = "usar" },
+	
+	["maconhasemente"] = { index = "maconhasemente", nome = "Sem. de Maconha", type = "usar" },
+	["papoulasemente"] = { index = "papoulasemente", nome = "Sem. de Papoula", type = "usar" },
+	["cocainasemente"]  = { index = "cocainasemente", nome = "Sem. de Cocaina", type = "usar" },
 
 	--#Ballas
 	["pe-maconha"] = { index = "pe-maconha", nome = "Pé de Maconha", type = "usar" },
