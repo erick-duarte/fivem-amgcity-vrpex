@@ -12,7 +12,7 @@ Proxy.addInterface("AMG_Coin",sRPex )
 
 local idgens = Tools.newIDGenerator()
 local blips = {}
-local comprabeneficios = "https://discord.com/api/webhooks/845838994390384721/vs1R6kZvbw1ndKJAKCWGenWQ2VjlpQbdusDjb-nwSO5o8pPZjalEEhNrpmYMx6ynoIzC"
+local comprabeneficios = ""
 local timeboostemprego = 3600
 
 vRP._prepare("vRP/all_amgcoin","SELECT * from amgcoin")
