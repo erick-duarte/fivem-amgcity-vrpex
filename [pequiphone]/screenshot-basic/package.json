@@ -14,7 +14,7 @@
     "@citizenfx/server": "^1.0.1012-1",
     "@citizenfx/three": "^0.100.0",
     "@types/koa": "^2.0.48",
-    "@types/koa-router": "^7.0.37",
+    "@types/koa-router": "^7.4.8",
     "@types/mv": "^2.1.0",
     "@types/uuid": "^3.4.4",
     "html-webpack-inline-source-plugin": "^0.0.10",
